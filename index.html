@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="color-scheme" content="dark"/>
+<title>Fore! Fathers Golf Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#140A0A;--surface:#1E0F0F;--card:#261414;--border:#6B2020;
+  --neon:#C9A227;--gold:#E8C84A;--red:#8B1010;--red-bright:#B01515;
+  --text:#F5EDD8;--text-dim:#C4A882;--cream:#FAF3E0;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;
+  background-image:radial-gradient(ellipse at center,#1E0F0F 0%,#140A0A 60%,#0A0505 100%);
+  background-attachment:fixed;min-height:100vh}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--neon);border-radius:3px}
+/* TYPOGRAPHY */
+.font-heading{font-family:'Playfair Display',serif}
+.font-label{font-family:'Montserrat',sans-serif}
+.font-accent{font-family:'Orbitron',sans-serif}
+/* LOGIN */
+#login-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.97);z-index:9999;
+  display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.login-box{background:var(--surface);border:2px solid var(--neon);border-radius:12px;
+  padding:44px 38px;width:100%;max-width:420px;text-align:center;
+  box-shadow:0 0 60px rgba(201,162,39,0.3),0 0 120px rgba(139,16,16,0.2)}
+.login-logo-wrap{width:110px;height:110px;border-radius:50%;margin:0 auto 22px;
+  background:radial-gradient(circle,#261414,#140A0A);
+  border:2px solid var(--neon);padding:5px;
+  box-shadow:0 0 24px rgba(201,162,39,0.4)}
+.login-logo-wrap img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.login-title{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;
+  color:var(--gold);letter-spacing:0.12em;margin-bottom:4px}
+.login-sub{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;
+  color:var(--text-dim);letter-spacing:0.15em;margin-bottom:28px}
+.login-label{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
+  color:var(--text-dim);letter-spacing:0.12em;text-align:left;margin-bottom:6px;display:block}
+.login-select,.login-input{width:100%;background:#140A0A;border:1px solid var(--border);
+  color:var(--text);font-family:'Inter',sans-serif;font-size:16px;padding:13px 15px;
+  border-radius:6px;margin-bottom:18px;outline:none;transition:border-color 0.2s;
+  -webkit-appearance:none}
+.login-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23C4A882' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.login-select:focus,.login-input:focus{border-color:var(--neon)}
+.login-select option{background:#140A0A;color:var(--text);font-size:15px}
+.login-btn{width:100%;background:linear-gradient(135deg,var(--red),var(--red-bright));
+  color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;
+  letter-spacing:0.1em;padding:15px;border:none;border-radius:6px;cursor:pointer;
+  transition:opacity 0.2s,box-shadow 0.2s}
+.login-btn:hover{opacity:0.88;box-shadow:0 0 20px rgba(176,21,21,0.5)}
+.login-error{color:#ff6b6b;font-family:'Inter',sans-serif;font-size:13px;
+  margin-top:10px;min-height:18px;display:block}
+.login-hint{font-family:'Inter',sans-serif;font-size:12px;color:var(--text-dim);
+  margin-top:14px;line-height:1.6}
+/* NAV */
+#site-nav{position:sticky;top:0;z-index:100;background:rgba(20,10,10,0.97);
+  border-bottom:1px solid var(--border);backdrop-filter:blur(8px)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;
+  justify-content:space-between;padding:0 20px;height:62px;gap:12px}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-logo{width:40px;height:40px;border-radius:50%;border:1px solid var(--neon);
+  box-shadow:0 0 10px rgba(201,162,39,0.3)}
+.nav-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:900;
+  color:var(--gold);letter-spacing:0.1em}
+.nav-links{display:flex;gap:2px;align-items:center;flex-wrap:wrap}
+.nav-link{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:0.08em;color:var(--text-dim);padding:7px 10px;border-radius:4px;
+  text-decoration:none;transition:color 0.2s,background 0.2s;cursor:pointer;
+  border:none;background:none;text-transform:uppercase}
+.nav-link:hover{color:var(--gold);background:rgba(201,162,39,0.1)}
+.nav-user{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.nav-user-name{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;
+  color:var(--text-dim);white-space:nowrap}
+.signout-btn{background:rgba(139,16,16,0.3);border:1px solid var(--border);
+  color:var(--text-dim);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:0.08em;padding:6px 11px;border-radius:4px;cursor:pointer;
+  transition:background 0.2s,color 0.2s;white-space:nowrap}
+.signout-btn:hover{background:var(--red);color:var(--gold)}
+@media(max-width:768px){.nav-links{display:none}.nav-user-name{display:none}}
+/* SECTIONS */
+.section-wrapper{max-width:1200px;margin:0 auto;padding:60px 20px}
+.section-head{margin-bottom:36px}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,38px);
+  font-weight:900;color:var(--gold);margin-bottom:6px;
+  text-shadow:0 0 20px rgba(201,162,39,0.25)}
+.section-label{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:0.18em;color:var(--text-dim);text-transform:uppercase}
+/* HERO */
+#home{min-height:82vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:80px 20px 48px;flex-direction:column}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-14px) rotate(1deg)}}
+.hero-logo{width:260px;height:260px;border-radius:50%;
+  filter:drop-shadow(0 0 28px rgba(201,162,39,0.5)) drop-shadow(0 0 60px rgba(139,16,16,0.3));
+  animation:float 5s ease-in-out infinite;margin-bottom:30px}
+.hero-title{font-family:'Orbitron',sans-serif;font-size:clamp(34px,7vw,70px);
+  font-weight:900;letter-spacing:0.08em;color:var(--gold);
+  text-shadow:0 0 40px rgba(201,162,39,0.4),0 0 80px rgba(139,16,16,0.3);
+  line-height:1.1;margin-bottom:14px}
+.hero-subtitle{font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(16px,2.5vw,21px);color:var(--text-dim);
+  max-width:580px;margin:0 auto 16px;line-height:1.6}
+.hero-est{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;
+  letter-spacing:0.25em;color:var(--red)}
+/* WEATHER */
+.weather-alert-bar{background:var(--red);border-radius:6px;
+  padding:12px 20px;margin-bottom:20px;text-align:center;
+  box-shadow:0 0 20px rgba(139,16,16,0.4)}
+.weather-alert-text{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;
+  letter-spacing:0.12em;color:var(--gold)}
+.weather-meta{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:0.12em;color:var(--text-dim);margin-bottom:20px}
+.weather-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:24px}
+.wcard{background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:14px 10px;text-align:center}
+.wcard.pre{border-top:3px solid var(--red)}
+.wcard.tee{border-top:3px solid var(--gold)}
+.wcard-time{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  color:var(--gold);letter-spacing:0.1em;margin-bottom:5px}
+.wcard-icon{font-size:26px;margin-bottom:5px;display:block;line-height:1}
+.wcard-temp{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:700;color:var(--text)}
+.wcard-cond{font-family:'Inter',sans-serif;font-size:10px;color:var(--text-dim);margin:3px 0 6px}
+.wcard-row{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;
+  color:var(--text-dim);margin-top:2px}
+.weather-summary{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
+@media(min-width:600px){.weather-summary{grid-template-columns:repeat(4,1fr)}}
+.wscard{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center}
+.wscard-val{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:700;color:var(--gold)}
+.wscard-key{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:0.1em;color:var(--text-dim);margin-top:4px}
+/* ROSTER */
+.roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:22px}
+@media(max-width:599px){.roster-grid{grid-template-columns:1fr}}
+/* FLIP CARD */
+.flip-card{height:430px;perspective:1200px;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;
+  transition:transform 0.55s cubic-bezier(0.4,0,0.2,1);transform-style:preserve-3d}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;background:var(--card);
+  border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.flip-back{transform:rotateY(180deg)}
+.flip-front{display:flex;flex-direction:column}
+.flip-back{display:flex;flex-direction:column}
+/* CARD FRONT */
+.card-top{padding:16px 14px 10px;display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.card-avatar{width:68px;height:68px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;
+  color:#fff;border:2px solid rgba(255,255,255,0.2)}
+.card-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;
+  color:var(--text);text-align:center;margin-top:7px;line-height:1.2}
+.card-nick{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:0.15em;color:var(--gold);text-align:center;margin-top:2px}
+.card-role{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;
+  letter-spacing:0.1em;color:var(--text-dim);text-align:center;margin-top:2px}
+.rsvp-badge{display:inline-block;font-family:'Montserrat',sans-serif;font-size:9px;
+  font-weight:700;letter-spacing:0.08em;padding:3px 9px;border-radius:20px;margin-top:5px}
+.rsvp-badge.confirmed{background:rgba(45,90,39,0.35);color:#6fcf6f;border:1px solid #2D5A27}
+.rsvp-badge.tbd{background:rgba(107,32,32,0.3);color:var(--text-dim);border:1px solid var(--border)}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);flex-shrink:0;
+  border-top:1px solid var(--border);border-left:1px solid var(--border)}
+.stat-cell{border-right:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:8px 4px;text-align:center}
+.stat-val{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;color:var(--gold)}
+.stat-key{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:0.06em;color:var(--text-dim)}
+.hcp-bar-wrap{padding:9px 14px 4px;border-top:1px solid var(--border);flex-shrink:0}
+.hcp-bar-lbl{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:0.1em;color:var(--text-dim);margin-bottom:3px}
+.hcp-bar-bg{background:rgba(107,32,32,0.3);border-radius:3px;height:5px}
+.hcp-bar-fill{background:linear-gradient(90deg,var(--neon),var(--gold));height:5px;
+  border-radius:3px;transition:width 0.4s;max-width:100%}
+.tap-hint{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;
+  letter-spacing:0.1em;color:var(--text-dim);text-align:center;
+  padding:7px;border-top:1px solid var(--border);
+  background:rgba(0,0,0,0.25);flex-shrink:0;margin-top:auto}
+/* CARD BACK */
+.back-header{background:var(--surface);border-bottom:1px solid var(--border);
+  padding:8px 12px;display:flex;gap:0;flex-shrink:0}
+.back-tab{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:0.08em;color:var(--text-dim);padding:7px 12px;
+  border-radius:4px;cursor:pointer;transition:all 0.2s;
+  background:none;border:none;flex:1;text-align:center}
+.back-tab.active{background:rgba(201,162,39,0.15);color:var(--gold)}
+.back-pane{display:none;overflow-y:auto;padding:10px 12px;flex:1;position:relative}
+.back-pane.active{display:block}
+.back-pane::-webkit-scrollbar{width:3px}
+.back-pane::-webkit-scrollbar-thumb{background:var(--border)}
+/* SCORES PANE */
+.hcp-display{text-align:center;padding:6px 0 10px;border-bottom:1px solid var(--border);margin-bottom:8px}
+.hcp-number{font-family:'Orbitron',sans-serif;font-size:38px;font-weight:900;color:var(--gold)}
+.hcp-sublbl{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:0.12em;color:var(--text-dim)}
+.round-list{list-style:none;margin-bottom:8px}
+.round-item{display:flex;justify-content:space-between;align-items:center;
+  padding:5px 6px;border-bottom:1px solid rgba(107,32,32,0.35)}
+.round-item .ri-left{display:flex;flex-direction:column}
+.round-item .ri-course{font-family:'Inter',sans-serif;font-size:11px;color:var(--text)}
+.round-item .ri-date{font-family:'Inter',sans-serif;font-size:10px;color:var(--text-dim)}
+.round-item .ri-score{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;color:var(--gold)}
+.round-item .ri-diff{font-family:'Montserrat',sans-serif;font-size:9px;color:var(--text-dim);text-align:right}
+.no-rounds{font-family:'Inter',sans-serif;font-size:12px;color:var(--text-dim);
+  text-align:center;padding:12px 0;font-style:italic}
+.form-mini{background:rgba(0,0,0,0.35);border:1px solid var(--border);
+  border-radius:6px;padding:9px;margin-top:6px}
+.form-mini-title{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:0.1em;color:var(--gold);margin-bottom:7px}
+.mini-select,.mini-input{width:100%;background:#140A0A;border:1px solid var(--border);
+  color:var(--text);font-family:'Inter',sans-serif;font-size:13px;
+  padding:7px 9px;border-radius:4px;margin-bottom:6px;outline:none;
+  -webkit-appearance:none;appearance:none}
+.mini-select:focus,.mini-input:focus{border-color:var(--neon)}
+.mini-btn{width:100%;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:0.08em;padding:8px;border:none;border-radius:4px;cursor:pointer;
+  transition:opacity 0.2s}
+.mini-btn.add{background:var(--red);color:var(--gold)}
+.mini-btn.rem{background:rgba(107,32,32,0.4);border:1px solid var(--border);
+  color:var(--text-dim);margin-top:5px}
+.mini-btn:hover{opacity:0.8}
+.locked-scores{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;
+  color:var(--text-dim);text-align:center;padding:10px;
+  background:rgba(0,0,0,0.2);border-radius:4px;border:1px solid var(--border);margin-top:6px}
+/* PROFILE PANE */
+.lock-overlay{position:absolute;inset:0;background:rgba(20,10,10,0.93);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:20px;z-index:10}
+.lock-icon{font-size:34px;margin-bottom:10px}
+.lock-msg{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;
+  color:var(--text-dim);line-height:1.5}
+.rsvp-toggle{width:100%;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:800;
+  letter-spacing:0.08em;padding:11px;border:none;border-radius:6px;cursor:pointer;
+  margin-bottom:10px;transition:all 0.2s}
+.rsvp-toggle.in{background:rgba(45,90,39,0.4);border:1px solid #2D5A27;color:#6fcf6f}
+.rsvp-toggle.out{background:rgba(107,32,32,0.3);border:1px solid var(--border);color:var(--text-dim)}
+.pf-field{margin-bottom:9px}
+.pf-field label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:0.1em;color:var(--text-dim);display:block;margin-bottom:3px}
+.pf-input{width:100%;background:#140A0A;border:1px solid var(--border);
+  color:var(--text);font-family:'Inter',sans-serif;font-size:13px;
+  padding:7px 9px;border-radius:4px;outline:none}
+.pf-input:focus{border-color:var(--neon)}
+.color-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:3px}
+.color-swatch{width:26px;height:26px;border-radius:50%;cursor:pointer;
+  border:2px solid transparent;transition:transform 0.15s,border-color 0.15s}
+.color-swatch:hover{transform:scale(1.15)}
+.color-swatch.selected{border-color:var(--gold);transform:scale(1.1)}
+.save-btn{width:100%;background:var(--neon);color:#140A0A;font-family:'Montserrat',sans-serif;
+  font-size:11px;font-weight:800;letter-spacing:0.08em;padding:9px;border:none;
+  border-radius:4px;cursor:pointer;margin-top:6px;transition:opacity 0.2s}
+.save-btn:hover{opacity:0.85}
+/* LEADERBOARD */
+.lb-tabs{display:flex;border:1px solid var(--border);border-radius:6px;
+  overflow:hidden;margin-bottom:20px}
+.lb-tab{flex:1;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:0.08em;padding:12px;text-align:center;cursor:pointer;
+  background:var(--card);color:var(--text-dim);border:none;transition:all 0.2s}
+.lb-tab.active{background:rgba(201,162,39,0.15);color:var(--gold)}
+.lb-table{width:100%;border-collapse:collapse}
+.lb-table th{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:0.1em;color:var(--text-dim);padding:10px 12px;
+  border-bottom:1px solid var(--border);text-align:left;background:var(--surface)}
+.lb-table td{font-family:'Inter',sans-serif;font-size:14px;color:var(--text);
+  padding:10px 12px;border-bottom:1px solid rgba(107,32,32,0.3)}
+.lb-table tr:hover td{background:rgba(201,162,39,0.04)}
+.lb-rank{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:var(--gold)}
+.empty-state{border:2px dashed var(--border);border-radius:8px;padding:44px;
+  text-align:center;color:var(--text-dim);font-family:'Montserrat',sans-serif;
+  font-size:13px;font-weight:600;letter-spacing:0.1em}
+/* TEE TIMES */
+.rsvp-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:10px;margin-bottom:28px}
+.rsvp-cell{background:var(--card);border:1px solid var(--border);border-radius:6px;
+  padding:11px 7px;text-align:center}
+.rc-name{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
+  color:var(--text);margin-bottom:5px}
+.rc-status{font-size:22px;line-height:1}
+.tee-info-box{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:22px}
+.tee-info-box p{font-family:'Inter',sans-serif;font-size:15px;color:var(--text-dim);
+  margin-bottom:8px;line-height:1.6}
+.tee-info-box strong{color:var(--gold);font-weight:600}
+/* GALLERY */
+.gallery-toolbar{display:flex;justify-content:flex-end;margin-bottom:18px}
+.upload-btn{background:var(--red);color:var(--gold);font-family:'Montserrat',sans-serif;
+  font-size:12px;font-weight:800;letter-spacing:0.1em;padding:12px 22px;
+  border:none;border-radius:6px;cursor:pointer;transition:opacity 0.2s}
+.upload-btn:hover{opacity:0.85}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:14px}
+.gallery-item{position:relative;border-radius:8px;overflow:hidden;
+  border:1px solid var(--border);cursor:pointer;aspect-ratio:4/3;background:var(--card)}
+.gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s}
+.gallery-item:hover img{transform:scale(1.05)}
+.gallery-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.6);
+  opacity:0;transition:opacity 0.2s;display:flex;align-items:flex-start;
+  justify-content:flex-end;padding:8px}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-del{background:var(--red);color:var(--gold);border:none;border-radius:4px;
+  font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  padding:5px 10px;cursor:pointer}
+.gallery-cap{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.78);
+  color:var(--text-dim);font-family:'Inter',sans-serif;font-size:11px;
+  padding:6px 9px;line-height:1.3}
+.gallery-add{border:2px dashed var(--border);border-radius:8px;aspect-ratio:4/3;
+  background:var(--card);display:flex;flex-direction:column;align-items:center;
+  justify-content:center;cursor:pointer;transition:border-color 0.2s,color 0.2s;
+  color:var(--text-dim);gap:7px}
+.gallery-add:hover{border-color:var(--neon);color:var(--gold)}
+.gallery-add-icon{font-size:30px;line-height:1}
+.gallery-add-lbl{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.1em}
+/* UPLOAD MODAL */
+#upload-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);
+  z-index:500;align-items:center;justify-content:center}
+#upload-modal.show{display:flex}
+.upload-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:30px;width:100%;max-width:420px}
+.upload-box h3{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);margin-bottom:18px}
+.uf{margin-bottom:12px}
+.uf label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:0.1em;color:var(--text-dim);display:block;margin-bottom:4px}
+.uf input,.uf select{width:100%;background:#140A0A;border:1px solid var(--border);
+  color:var(--text);font-family:'Inter',sans-serif;font-size:14px;padding:9px 11px;
+  border-radius:4px;outline:none}
+.uf input[type=file]{padding:7px;font-size:13px}
+.upload-acts{display:flex;gap:9px;margin-top:16px}
+.upload-acts button{flex:1;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:0.08em;padding:11px;border:none;border-radius:4px;cursor:pointer;transition:opacity 0.2s}
+.upload-acts button:hover{opacity:0.85}
+.upload-acts .u-save{background:var(--neon);color:#140A0A}
+.upload-acts .u-cancel{background:rgba(107,32,32,0.4);border:1px solid var(--border);color:var(--text-dim)}
+/* LIGHTBOX */
+#lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.96);
+  z-index:600;align-items:center;justify-content:center;cursor:pointer}
+#lightbox.show{display:flex}
+#lightbox img{max-width:90vw;max-height:85vh;border-radius:6px;object-fit:contain;
+  border:1px solid var(--border)}
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--border);
+  text-align:center;padding:40px 20px}
+.footer-logo{width:76px;height:76px;border-radius:50%;margin:0 auto 12px;
+  filter:drop-shadow(0 0 14px rgba(201,162,39,0.4));border:1px solid var(--neon)}
+.footer-title{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:900;
+  letter-spacing:0.12em;color:var(--gold);margin-bottom:4px}
+.footer-tagline{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;
+  letter-spacing:0.12em;color:var(--text-dim);margin-bottom:10px}
+.footer-credit{font-family:'Inter',sans-serif;font-size:11px;color:rgba(196,168,130,0.45)}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<!-- LOGIN MODAL -->
+<div id="login-overlay">
+  <div class="login-box">
+    <div class="login-logo-wrap">
+      <img src="logo.png" alt="Fore! Fathers logo"/>
+    </div>
+    <div class="login-title">FORE! FATHERS</div>
+    <div class="login-sub">MEMBERS ONLY · ENTER TO CONTINUE</div>
+    <label class="login-label">SELECT YOUR NAME</label>
+    <select class="login-select" id="login-player">
+      <option value="">— Choose Player —</option>
+      <option value="scott">Scott Ewing</option>
+      <option value="greg">Greg Hennessey</option>
+      <option value="wayne">Wayne Roberson</option>
+      <option value="brady">Brady Allan</option>
+      <option value="juan">Juan Hernandez</option>
+      <option value="sam">Sam Coleridge</option>
+      <option value="cody">Cody Sears</option>
+      <option value="chad">Chad Kirkland</option>
+      <option value="walt">Walt Stevens</option>
+    </select>
+    <label class="login-label" id="pin-label">LAST 4 DIGITS OF YOUR PHONE</label>
+    <input class="login-input" id="login-pin" type="tel" inputmode="numeric"
+      maxlength="4" placeholder="1234" autocomplete="off"/>
+    <button class="login-btn" onclick="doLogin()">ENTER THE CLUB</button>
+    <span class="login-error" id="login-error"></span>
+    <p class="login-hint" id="login-hint">First time? Your 4-digit PIN will be set automatically.</p>
+  </div>
+</div>
+<!-- UPLOAD MODAL -->
+<div id="upload-modal">
+  <div class="upload-box">
+    <h3>📷 Add Photo</h3>
+    <div class="uf">
+      <label>SELECT PHOTO</label>
+      <input type="file" id="upload-file" accept="image/*"/>
+    </div>
+    <div class="uf">
+      <label>CAPTION (optional)</label>
+      <input type="text" id="upload-caption" placeholder="What's happening?"/>
+    </div>
+    <div class="uf">
+      <label>TAG A PLAYER (optional)</label>
+      <select id="upload-tag">
+        <option value="">— No Tag —</option>
+        <option value="scott">Scott Ewing</option>
+        <option value="greg">Greg Hennessey</option>
+        <option value="wayne">Wayne Roberson</option>
+        <option value="brady">Brady Allan</option>
+        <option value="juan">Juan Hernandez</option>
+        <option value="sam">Sam Coleridge</option>
+        <option value="cody">Cody Sears</option>
+        <option value="chad">Chad Kirkland</option>
+        <option value="walt">Walt Stevens</option>
+      </select>
+    </div>
+    <div class="uf">
+      <label>DATE</label>
+      <input type="date" id="upload-date"/>
+    </div>
+    <div class="upload-acts">
+      <button class="u-cancel" onclick="closeUpload()">CANCEL</button>
+      <button class="u-save" onclick="saveUpload()">SAVE PHOTO</button>
+    </div>
+  </div>
+</div>
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="document.getElementById('lightbox').classList.remove('show')">
+  <img id="lightbox-img" src="" alt=""/>
+</div>
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#home">
+      <img class="nav-logo" src="logo.png" alt="FF"/>
+      <span class="nav-title">FORE! FATHERS</span>
+    </a>
+    <div class="nav-links">
+      <button class="nav-link" onclick="scrollTo('home')">HOME</button>
+      <button class="nav-link" onclick="scrollTo('weather')">WEATHER</button>
+      <button class="nav-link" onclick="scrollTo('roster')">ROSTER</button>
+      <button class="nav-link" onclick="scrollTo('leaderboard')">LEADERBOARD</button>
+      <button class="nav-link" onclick="scrollTo('teetimes')">TEE TIMES</button>
+      <button class="nav-link" onclick="scrollTo('gallery')">GALLERY</button>
+    </div>
+    <div class="nav-user">
+      <span class="nav-user-name" id="nav-user-name"></span>
+      <button class="signout-btn" onclick="signOut()">SIGN OUT</button>
+    </div>
+  </div>
+</nav>
+<!-- HERO -->
+<section id="home">
+  <img class="hero-logo" src="logo.png" alt="Fore! Fathers Golf Club Logo"/>
+  <h1 class="hero-title">FORE! FATHERS</h1>
+  <p class="hero-subtitle">"The Only Thing Consistent About Your Game is the Disappointment."</p>
+  <div class="hero-est">EST. 2020</div>
+</section>
+<hr style="border:none;border-top:1px solid var(--border)"/>
+<!-- WEATHER -->
+<section id="weather">
+<div class="section-wrapper">
+  <div class="section-head">
+    <h2 class="section-title">// Sunday Morning Forecast</h2>
+    <div class="section-label">SAGINAW · FORT WORTH, TX · SOURCE: WEATHER UNDERGROUND</div>
+  </div>
+  <div class="weather-alert-bar">
+    <div class="weather-alert-text">✅ CLEAR TO PLAY — CONDITIONS LOOK GOOD, GENTLEMEN</div>
+  </div>
+  <div class="weather-grid">
+    <div class="wcard pre">
+      <div class="wcard-time">3 AM</div><span class="wcard-icon">🌙</span>
+      <div class="wcard-temp">68°</div>
+      <div class="wcard-cond">Mostly Clear</div>
+      <div class="wcard-row">💧 3% · 💦 92%</div>
+      <div class="wcard-row">💨 2mph NE</div>
+    </div>
+    <div class="wcard pre">
+      <div class="wcard-time">4 AM</div><span class="wcard-icon">🌙</span>
+      <div class="wcard-temp">67°</div>
+      <div class="wcard-cond">Mostly Clear</div>
+      <div class="wcard-row">💧 4% · 💦 92%</div>
+      <div class="wcard-row">💨 1mph NE</div>
+    </div>
+    <div class="wcard pre">
+      <div class="wcard-time">5 AM</div><span class="wcard-icon">🌤</span>
+      <div class="wcard-temp">67°</div>
+      <div class="wcard-cond">Partly Cloudy</div>
+      <div class="wcard-row">💧 4% · 💦 93%</div>
+      <div class="wcard-row">💨 2mph NNE</div>
+    </div>
+    <div class="wcard pre">
+      <div class="wcard-time">6 AM</div><span class="wcard-icon">🌤</span>
+      <div class="wcard-temp">67°</div>
+      <div class="wcard-cond">Partly Cloudy</div>
+      <div class="wcard-row">💧 4% · 💦 89%</div>
+      <div class="wcard-row">💨 4mph NNE</div>
+    </div>
+    <div class="wcard tee">
+      <div class="wcard-time">7 AM</div><span class="wcard-icon">⛅</span>
+      <div class="wcard-temp">67°</div>
+      <div class="wcard-cond">Partly Cloudy</div>
+      <div class="wcard-row">💧 4% · 💦 90%</div>
+      <div class="wcard-row">💨 4mph NE</div>
+    </div>
+    <div class="wcard tee">
+      <div class="wcard-time">8 AM</div><span class="wcard-icon">⛅</span>
+      <div class="wcard-temp">69°</div>
+      <div class="wcard-cond">Partly Cloudy</div>
+      <div class="wcard-row">💧 3% · 💦 88%</div>
+      <div class="wcard-row">💨 5mph NNE</div>
+    </div>
+    <div class="wcard tee">
+      <div class="wcard-time">9 AM</div><span class="wcard-icon">⛅</span>
+      <div class="wcard-temp">73°</div>
+      <div class="wcard-cond">Partly Cloudy</div>
+      <div class="wcard-row">💧 3% · 💦 80%</div>
+      <div class="wcard-row">💨 4mph NE</div>
+    </div>
+    <div class="wcard tee">
+      <div class="wcard-time">10 AM</div><span class="wcard-icon">⛅</span>
+      <div class="wcard-temp">76°</div>
+      <div class="wcard-cond">Partly Cloudy</div>
+      <div class="wcard-row">💧 4% · 💦 71%</div>
+      <div class="wcard-row">💨 5mph NE</div>
+    </div>
+    <div class="wcard tee">
+      <div class="wcard-time">11 AM</div><span class="wcard-icon">🌤</span>
+      <div class="wcard-temp">80°</div>
+      <div class="wcard-cond">Mostly Sunny</div>
+      <div class="wcard-row">💧 2% · 💦 64%</div>
+      <div class="wcard-row">💨 6mph ENE</div>
+    </div>
+    <div class="wcard tee">
+      <div class="wcard-time">12 PM</div><span class="wcard-icon">⛅</span>
+      <div class="wcard-temp">82°</div>
+      <div class="wcard-cond">Partly Cloudy</div>
+      <div class="wcard-row">💧 4% · 💦 59%</div>
+      <div class="wcard-row">💨 6mph ENE</div>
+    </div>
+  </div>
+  <div class="weather-summary">
+    <div class="wscard"><div class="wscard-val">82°F</div><div class="wscard-key">HIGH</div></div>
+    <div class="wscard"><div class="wscard-val">59–93%</div><div class="wscard-key">HUMIDITY</div></div>
+    <div class="wscard"><div class="wscard-val">1–6mph</div><div class="wscard-key">WIND</div></div>
+    <div class="wscard"><div class="wscard-val">Partly→Sunny</div><div class="wscard-key">CONDITIONS</div></div>
+  </div>
+</div>
+</section>
+<hr style="border:none;border-top:1px solid var(--border)"/>
+<!-- ROSTER -->
+<section id="roster">
+<div class="section-wrapper">
+  <div class="section-head">
+    <h2 class="section-title">The Roster</h2>
+    <div class="section-label">FORE! FATHERS GOLF CLUB — 9 MEMBERS</div>
+  </div>
+  <div class="roster-grid" id="roster-grid">
+    <!-- Cards injected by JS -->
+  </div>
+</div>
+</section>
+<hr style="border:none;border-top:1px solid var(--border)"/>
+<!-- LEADERBOARD -->
+<section id="leaderboard">
+<div class="section-wrapper">
+  <div class="section-head">
+    <h2 class="section-title">Leaderboard</h2>
+    <div class="section-label">RANKINGS · UPDATED FROM SCORE ENTRIES</div>
+  </div>
+  <div class="lb-tabs">
+    <button class="lb-tab active" id="lb-weekly-btn" onclick="showLB('weekly')">⛳ WEEKLY RESULTS</button>
+    <button class="lb-tab" id="lb-season-btn" onclick="showLB('season')">🏆 SEASON STANDINGS</button>
+  </div>
+  <div id="lb-weekly"></div>
+  <div id="lb-season" class="hidden"></div>
+</div>
+</section>
+<hr style="border:none;border-top:1px solid var(--border)"/>
+<!-- TEE TIMES -->
+<section id="teetimes">
+<div class="section-wrapper">
+  <div class="section-head">
+    <h2 class="section-title">Tee Times</h2>
+    <div class="section-label">SUNDAY MORNING · RSVP STATUS</div>
+  </div>
+  <div class="rsvp-strip" id="rsvp-strip"><!-- injected by JS --></div>
+  <div class="tee-info-box">
+    <p><strong>📍 Default Course:</strong> Pecan Valley Hills, Benbrook TX (Par 72)</p>
+    <p><strong>⏰ Usual Tee Time:</strong> 7:00 AM – 8:00 AM Sunday mornings</p>
+    <p><strong>📞 Book Tee Time:</strong> Call the pro shop or book online at the course website</p>
+    <p><strong>💡 Tip:</strong> Confirm your RSVP in your player profile card so everyone knows you're in.</p>
+  </div>
+</div>
+</section>
+<hr style="border:none;border-top:1px solid var(--border)"/>
+<!-- GALLERY -->
+<section id="gallery">
+<div class="section-wrapper">
+  <div class="section-head">
+    <h2 class="section-title">Gallery</h2>
+    <div class="section-label">MEMBER PHOTOS · CLICK TO EXPAND</div>
+  </div>
+  <div class="gallery-toolbar">
+    <button class="upload-btn" onclick="openUpload()">+ ADD PHOTO</button>
+  </div>
+  <div class="gallery-grid" id="gallery-grid"><!-- injected by JS --></div>
+</div>
+</section>
+<!-- FOOTER -->
+<footer>
+  <img class="footer-logo" src="logo.png" alt="Fore! Fathers"/>
+  <div class="footer-title">FORE! FATHERS</div>
+  <div class="footer-tagline">Tradition · Shit Talk · Celebration</div>
+  <div class="footer-credit">Built by Scott Ewing · Est. 2020</div>
+</footer>
+<script>
+// ══════════════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════════════
+const DEFAULTS = [
+  {id:'scott', name:'Scott Ewing',    nick:'THE ARCHITECT', role:'CO-FOUNDER · WEB DESIGN', color:'#2A5A8A', pinned:true},
+  {id:'greg',  name:'Greg Hennessey', nick:'THE ORIGINAL',  role:'ORIGINAL FOUNDER',        color:'#2D5A27'},
+  {id:'wayne', name:'Wayne Roberson', nick:'STEADY HAND',   role:'MEMBER',                  color:'#5A4A2A'},
+  {id:'brady', name:'Brady Allan',    nick:'THE CLOSER',    role:'MEMBER',                  color:'#8A6A2A'},
+  {id:'juan',  name:'Juan Hernandez', nick:'EL JEFE',       role:'MEMBER',                  color:'#7A4A1A'},
+  {id:'sam',   name:'Sam Coleridge',  nick:'"DOC"',         role:'THE DOC',                 color:'#5A2A2A'},
+  {id:'cody',  name:'Cody Sears',     nick:'HEISENBERG',    role:'MEMBER',                  color:'#7A5A1A'},
+  {id:'chad',  name:'Chad Kirkland',  nick:'IRONMAN',       role:'MEMBER',                  color:'#3A3A5A'},
+  {id:'walt',  name:'Walt Stevens',   nick:'THE VETERAN',   role:'SENIOR STATESMAN',        color:'#4A4A6A'},
+];
+const COURSES = [
+  {name:'Pecan Valley Hills', par:72, loc:'Benbrook, TX'},
+  {name:'Meadowbrook',        par:71, loc:'Fort Worth, TX'},
+  {name:'Rockwood',           par:71, loc:'Fort Worth, TX'},
+];
+const SWATCHES = ['#2A5A8A','#2D5A27','#5A4A2A','#8A6A2A','#7A4A1A','#5A2A2A','#7A5A1A','#3A3A5A','#4A4A6A','#8B1010','#1A4A5A','#4A1A5A'];
+
+// ── STATE ──
+let currentUser = null;
+let members = [];
+
+// ══════════════════════════════════════════════
+//  PERSISTENCE
+// ══════════════════════════════════════════════
+function loadMembers() {
+  members = DEFAULTS.map(def => {
+    const saved = JSON.parse(localStorage.getItem('ff_member_' + def.id) || '{}');
+    return Object.assign({}, def, saved, {id: def.id, pinned: def.pinned});
+  });
+}
+function saveMember(m) {
+  const {id, pinned, ...rest} = m;
+  localStorage.setItem('ff_member_' + id, JSON.stringify(rest));
+}
+function getScores(id) {
+  return JSON.parse(localStorage.getItem('ff_scores_' + id) || '[]');
+}
+function saveScores(id, arr) {
+  localStorage.setItem('ff_scores_' + id, JSON.stringify(arr));
+}
+function getRsvp(id) {
+  return localStorage.getItem('ff_rsvp_' + id) === '1';
+}
+function setRsvp(id, val) {
+  localStorage.setItem('ff_rsvp_' + id, val ? '1' : '0');
+}
+function getGallery() {
+  return JSON.parse(localStorage.getItem('ff_gallery') || '[]');
+}
+function saveGallery(arr) {
+  localStorage.setItem('ff_gallery', JSON.stringify(arr));
+}
+
+// ══════════════════════════════════════════════
+//  HANDICAP
+// ══════════════════════════════════════════════
+function calcHandicap(scores) {
+  if (!scores.length) return null;
+  const diffs = scores.map(s => s.gross - s.par).sort((a,b) => a-b);
+  const take = Math.max(1, Math.floor(diffs.length * 0.4));
+  const best = diffs.slice(0, take);
+  const avg = best.reduce((a,b) => a+b, 0) / best.length;
+  return Math.max(0, Math.round(avg * 10) / 10);
+}
+function getStats(id) {
+  const scores = getScores(id);
+  const hcp = calcHandicap(scores);
+  const rounds = scores.length;
+  const avg = rounds ? Math.round(scores.reduce((a,s) => a + s.gross, 0) / rounds * 10) / 10 : null;
+  const wins = parseInt(localStorage.getItem('ff_wins_' + id) || '0');
+  return {hcp, avg, rounds, wins};
+}
+
+// ══════════════════════════════════════════════
+//  LOGIN
+// ══════════════════════════════════════════════
+function doLogin() {
+  const pid = document.getElementById('login-player').value;
+  const pin = document.getElementById('login-pin').value.trim();
+  const errEl = document.getElementById('login-error');
+  errEl.textContent = '';
+  if (!pid) { errEl.textContent = 'Please select your name.'; return; }
+  if (pin.length !== 4 || !/^\d{4}$/.test(pin)) {
+    errEl.textContent = 'Enter exactly 4 digits.'; return;
+  }
+  const stored = localStorage.getItem('ff_pin_' + pid);
+  if (!stored) {
+    localStorage.setItem('ff_pin_' + pid, pin);
+  } else if (stored !== pin) {
+    errEl.textContent = 'Incorrect PIN. Try again.'; return;
+  }
+  currentUser = pid;
+  sessionStorage.setItem('ff_user', pid);
+  document.getElementById('login-overlay').style.display = 'none';
+  document.getElementById('nav-user-name').textContent = members.find(m=>m.id===pid)?.name || pid;
+  renderRoster();
+  renderLeaderboard();
+  renderTeetimes();
+  renderGallery();
+}
+function signOut() {
+  sessionStorage.removeItem('ff_user');
+  currentUser = null;
+  document.getElementById('login-pin').value = '';
+  document.getElementById('login-player').value = '';
+  document.getElementById('login-error').textContent = '';
+  document.getElementById('login-overlay').style.display = 'flex';
+}
+function isAdmin() { return currentUser === 'scott'; }
+function canEdit(id) { return isAdmin() || currentUser === id; }
+
+// ══════════════════════════════════════════════
+//  NAV
+// ══════════════════════════════════════════════
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ══════════════════════════════════════════════
+//  ROSTER RENDERING
+// ══════════════════════════════════════════════
+function initials(name) {
+  return name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+}
+function renderRoster() {
+  const grid = document.getElementById('roster-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  members.forEach(m => { grid.appendChild(buildCard(m)); });
+}
+function buildCard(m) {
+  const stats = getStats(m.id);
+  const rsvp = getRsvp(m.id);
+  const hcpPct = stats.hcp !== null ? Math.min(100, (stats.hcp / 36) * 100) : 0;
+  const hcpStr = stats.hcp !== null ? stats.hcp.toFixed(1) : '--';
+  const avgStr = stats.avg !== null ? stats.avg.toFixed(1) : '--';
+  const rsvpBadge = rsvp
+    ? '<span class="rsvp-badge confirmed">✅ IN</span>'
+    : '<span class="rsvp-badge tbd">❓ TBD</span>';
+  // FRONT
+  const front = `
+    <div class="flip-front">
+      <div class="card-top">
+        <div class="card-avatar" style="background:${m.color}">${initials(m.name)}</div>
+        <div class="card-name">${m.name}</div>
+        <div class="card-nick">${m.nick}</div>
+        <div class="card-role">${m.role}</div>
+        ${rsvpBadge}
+      </div>
+      <div class="stat-grid">
+        <div class="stat-cell"><div class="stat-val">${hcpStr}</div><div class="stat-key">HCP</div></div>
+        <div class="stat-cell"><div class="stat-val">${avgStr}</div><div class="stat-key">AVG</div></div>
+        <div class="stat-cell"><div class="stat-val">${stats.rounds}</div><div class="stat-key">ROUNDS</div></div>
+        <div class="stat-cell"><div class="stat-val">${stats.wins}</div><div class="stat-key">WINS</div></div>
+      </div>
+      <div class="hcp-bar-wrap">
+        <div class="hcp-bar-lbl">HANDICAP INDEX</div>
+        <div class="hcp-bar-bg"><div class="hcp-bar-fill" style="width:${hcpPct}%"></div></div>
+      </div>
+      <div class="tap-hint">TAP TO VIEW DETAILS</div>
+    </div>`;
+  // BACK — SCORES
+  const scores = getScores(m.id);
+  const last5 = scores.slice(-5).reverse();
+  const roundsHtml = last5.length
+    ? last5.map(s=>`<li class="round-item">
+        <div class="ri-left"><span class="ri-course">${s.course}</span><span class="ri-date">${s.date}</span></div>
+        <div style="text-align:right"><div class="ri-score">${s.gross}</div><div class="ri-diff">+${s.gross-s.par} diff</div></div>
+      </li>`).join('')
+    : '<li class="no-rounds">No rounds logged yet</li>';
+  const courseOpts = COURSES.map(c=>`<option value="${c.name}|${c.par}">${c.name} (Par ${c.par})</option>`).join('');
+  const today = new Date().toISOString().split('T')[0];
+  const logForm = canEdit(m.id) ? `
+    <div class="form-mini">
+      <div class="form-mini-title">LOG A ROUND</div>
+      <select class="mini-select" id="course-${m.id}">${courseOpts}</select>
+      <input class="mini-input" type="date" id="date-${m.id}" value="${today}"/>
+      <input class="mini-input" type="number" id="gross-${m.id}" min="60" max="130" placeholder="Gross score"/>
+      <button class="mini-btn add" onclick="logRound('${m.id}');event.stopPropagation()">ADD ROUND</button>
+      <button class="mini-btn rem" onclick="removeLastRound('${m.id}');event.stopPropagation()">REMOVE LAST ROUND</button>
+    </div>` : `<div class="locked-scores">🔒 Only ${m.name} or admin can log rounds.</div>`;
+  const scoresPane = `
+    <div class="hcp-display">
+      <div class="hcp-number" id="hcp-num-${m.id}">${hcpStr}</div>
+      <div class="hcp-sublbl">HANDICAP INDEX</div>
+    </div>
+    <ul class="round-list" id="rounds-list-${m.id}">${roundsHtml}</ul>
+    ${logForm}`;
+  // BACK — PROFILE
+  const lockOverlay = !canEdit(m.id) ? `
+    <div class="lock-overlay">
+      <div class="lock-icon">🔒</div>
+      <div class="lock-msg">ONLY ${m.name.split(' ')[0].toUpperCase()} CAN EDIT THIS PROFILE</div>
+    </div>` : '';
+  const rsvpToggleClass = rsvp ? 'in' : 'out';
+  const rsvpToggleText = rsvp ? '✅ CONFIRMED — PLAYING SUNDAY' : '❌ NOT CONFIRMED — TAP TO CONFIRM';
+  const swatchHtml = SWATCHES.map(c=>`<div class="color-swatch${c===m.color?' selected':''}" style="background:${c}" data-color="${c}" onclick="pickColor('${m.id}','${c}');event.stopPropagation()"></div>`).join('');
+  const profilePane = `
+    ${lockOverlay}
+    <button class="rsvp-toggle ${rsvpToggleClass}" id="rsvp-btn-${m.id}" onclick="toggleRsvp('${m.id}');event.stopPropagation()">${rsvpToggleText}</button>
+    <div class="pf-field"><label>NAME</label><input class="pf-input" id="pf-name-${m.id}" value="${m.name}" onclick="event.stopPropagation()"/></div>
+    <div class="pf-field"><label>NICKNAME</label><input class="pf-input" id="pf-nick-${m.id}" value="${m.nick}" onclick="event.stopPropagation()"/></div>
+    <div class="pf-field"><label>ROLE</label><input class="pf-input" id="pf-role-${m.id}" value="${m.role}" onclick="event.stopPropagation()"/></div>
+    <div class="pf-field"><label>AVATAR COLOR</label><div class="color-row" id="swatch-row-${m.id}">${swatchHtml}</div></div>
+    <button class="save-btn" onclick="saveProfile('${m.id}');event.stopPropagation()">SAVE PROFILE</button>`;
+  const back = `
+    <div class="flip-back">
+      <div class="back-header">
+        <button class="back-tab active" id="tab-scores-${m.id}" onclick="switchTab('${m.id}','scores');event.stopPropagation()">⛳ SCORES</button>
+        <button class="back-tab" id="tab-profile-${m.id}" onclick="switchTab('${m.id}','profile');event.stopPropagation()">✏️ PROFILE</button>
+      </div>
+      <div class="back-pane active" id="pane-scores-${m.id}">${scoresPane}</div>
+      <div class="back-pane" id="pane-profile-${m.id}" style="position:relative">${profilePane}</div>
+    </div>`;
+  const wrapper = document.createElement('div');
+  wrapper.className = 'flip-card';
+  wrapper.id = 'card-' + m.id;
+  wrapper.innerHTML = `<div class="flip-inner">${front}${back}</div>`;
+  wrapper.addEventListener('click', e => {
+    const skip = ['button','input','select','textarea','label'];
+    if (skip.includes(e.target.tagName.toLowerCase())) return;
+    wrapper.classList.toggle('flipped');
+  });
+  return wrapper;
+}
+
+// ══════════════════════════════════════════════
+//  CARD ACTIONS
+// ══════════════════════════════════════════════
+function switchTab(id, tab) {
+  ['scores','profile'].forEach(t => {
+    document.getElementById('tab-'+t+'-'+id)?.classList.toggle('active', t===tab);
+    document.getElementById('pane-'+t+'-'+id)?.classList.toggle('active', t===tab);
+  });
+}
+function pickColor(id, color) {
+  const member = members.find(m=>m.id===id);
+  if (!member || !canEdit(id)) return;
+  member.color = color;
+  const row = document.getElementById('swatch-row-'+id);
+  if (row) row.querySelectorAll('.color-swatch').forEach(s=>{
+    s.classList.toggle('selected', s.dataset.color===color);
+  });
+  const av = document.querySelector('#card-'+id+' .card-avatar');
+  if (av) av.style.background = color;
+}
+function toggleRsvp(id) {
+  if (!canEdit(id)) return;
+  const val = !getRsvp(id);
+  setRsvp(id, val);
+  const btn = document.getElementById('rsvp-btn-'+id);
+  if (btn) {
+    btn.className = 'rsvp-toggle ' + (val ? 'in' : 'out');
+    btn.textContent = val ? '✅ CONFIRMED — PLAYING SUNDAY' : '❌ NOT CONFIRMED — TAP TO CONFIRM';
+  }
+  // Update front badge
+  const card = document.getElementById('card-'+id);
+  if (card) {
+    const badge = card.querySelector('.rsvp-badge');
+    if (badge) {
+      badge.className = 'rsvp-badge ' + (val ? 'confirmed' : 'tbd');
+      badge.textContent = val ? '✅ IN' : '❓ TBD';
+    }
+  }
+  renderTeetimes();
+}
+function logRound(id) {
+  if (!canEdit(id)) return;
+  const courseEl = document.getElementById('course-'+id);
+  const dateEl = document.getElementById('date-'+id);
+  const grossEl = document.getElementById('gross-'+id);
+  if (!courseEl||!dateEl||!grossEl) return;
+  const [courseName, par] = courseEl.value.split('|');
+  const date = dateEl.value;
+  const gross = parseInt(grossEl.value);
+  if (!date || isNaN(gross) || gross < 50 || gross > 150) {
+    alert('Enter a valid gross score (50-150).'); return;
+  }
+  const scores = getScores(id);
+  scores.push({course:courseName, par:parseInt(par), date, gross});
+  saveScores(id, scores);
+  grossEl.value = '';
+  updateCardStats(id);
+}
+function removeLastRound(id) {
+  if (!canEdit(id)) return;
+  const scores = getScores(id);
+  if (!scores.length) return;
+  scores.pop();
+  saveScores(id, scores);
+  updateCardStats(id);
+}
+function updateCardStats(id) {
+  const stats = getStats(id);
+  const hcpStr = stats.hcp !== null ? stats.hcp.toFixed(1) : '--';
+  // Update hcp display on back
+  const hNum = document.getElementById('hcp-num-'+id);
+  if (hNum) hNum.textContent = hcpStr;
+  // Update rounds list
+  const list = document.getElementById('rounds-list-'+id);
+  if (list) {
+    const scores = getScores(id);
+    const last5 = scores.slice(-5).reverse();
+    list.innerHTML = last5.length
+      ? last5.map(s=>`<li class="round-item">
+          <div class="ri-left"><span class="ri-course">${s.course}</span><span class="ri-date">${s.date}</span></div>
+          <div style="text-align:right"><div class="ri-score">${s.gross}</div><div class="ri-diff">+${s.gross-s.par} diff</div></div>
+        </li>`).join('')
+      : '<li class="no-rounds">No rounds logged yet</li>';
+  }
+  // Update front stat grid
+  const card = document.getElementById('card-'+id);
+  if (card) {
+    const cells = card.querySelectorAll('.flip-front .stat-cell .stat-val');
+    if (cells[0]) cells[0].textContent = hcpStr;
+    if (cells[1]) cells[1].textContent = stats.avg !== null ? stats.avg.toFixed(1) : '--';
+    if (cells[2]) cells[2].textContent = stats.rounds;
+    // hcp bar
+    const bar = card.querySelector('.hcp-bar-fill');
+    if (bar) bar.style.width = (stats.hcp !== null ? Math.min(100,(stats.hcp/36)*100) : 0) + '%';
+  }
+  renderLeaderboard();
+}
+function saveProfile(id) {
+  if (!canEdit(id)) return;
+  const member = members.find(m=>m.id===id);
+  if (!member) return;
+  const name = document.getElementById('pf-name-'+id)?.value.trim();
+  const nick = document.getElementById('pf-nick-'+id)?.value.trim();
+  const role = document.getElementById('pf-role-'+id)?.value.trim();
+  if (name) member.name = name;
+  if (nick) member.nick = nick;
+  if (role) member.role = role;
+  saveMember(member);
+  // Refresh card front
+  const card = document.getElementById('card-'+id);
+  if (card) {
+    const nameEl = card.querySelector('.card-name');
+    const nickEl = card.querySelector('.card-nick');
+    const roleEl = card.querySelector('.card-role');
+    const av = card.querySelector('.card-avatar');
+    if (nameEl) nameEl.textContent = member.name;
+    if (nickEl) nickEl.textContent = member.nick;
+    if (roleEl) roleEl.textContent = member.role;
+    if (av) { av.style.background = member.color; av.textContent = initials(member.name); }
+  }
+  alert('Profile saved!');
+}
+
+// ══════════════════════════════════════════════
+//  LEADERBOARD
+// ══════════════════════════════════════════════
+let lbActiveTab = 'weekly';
+function renderLeaderboard() {
+  renderLbTab(lbActiveTab);
+}
+function switchLbTab(tab) {
+  lbActiveTab = tab;
+  document.getElementById('lb-tab-weekly')?.classList.toggle('active', tab==='weekly');
+  document.getElementById('lb-tab-season')?.classList.toggle('active', tab==='season');
+  renderLbTab(tab);
+}
+function renderLbTab(tab) {
+  const cont = document.getElementById('lb-content');
+  if (!cont) return;
+  if (tab === 'weekly') {
+    const rows = members.map(m => {
+      const scores = getScores(m.id);
+      const last = scores[scores.length-1];
+      const stats = getStats(m.id);
+      return {m, last, stats};
+    }).filter(x => x.last).sort((a,b)=>{
+      const na = a.last.gross - (a.stats.hcp||0);
+      const nb = b.last.gross - (b.stats.hcp||0);
+      return na - nb;
+    });
+    if (!rows.length) { cont.innerHTML = '<div class="empty-state">NO SCORES POSTED YET</div>'; return; }
+    cont.innerHTML = `<table class="lb-table"><thead><tr>
+      <th>RANK</th><th>PLAYER</th><th>COURSE</th><th>DATE</th>
+      <th>GROSS</th><th>HCP</th><th>NET</th></tr></thead><tbody>
+      ${rows.map((r,i)=>`<tr>
+        <td><span class="lb-rank">#${i+1}</span></td>
+        <td><strong style="color:var(--text)">${r.m.name}</strong><br><span style="font-size:11px;color:var(--text-dim);font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:0.08em">${r.m.nick}</span></td>
+        <td style="color:var(--text-dim);font-size:13px">${r.last.course}</td>
+        <td style="color:var(--text-dim);font-size:13px">${r.last.date}</td>
+        <td style="font-family:'Orbitron',sans-serif;color:var(--gold)">${r.last.gross}</td>
+        <td style="color:var(--text-dim)">${r.stats.hcp !== null ? r.stats.hcp.toFixed(1) : '--'}</td>
+        <td style="font-family:'Orbitron',sans-serif;font-weight:700;color:var(--text)">${r.stats.hcp !== null ? (r.last.gross - r.stats.hcp).toFixed(1) : r.last.gross}</td>
+      </tr>`).join('')}
+      </tbody></table>`;
+  } else {
+    const rows = members.map(m => {
+      const stats = getStats(m.id);
+      return {m, stats};
+    }).filter(x => x.stats.rounds > 0).sort((a,b) => (a.stats.avg||999)-(b.stats.avg||999));
+    if (!rows.length) { cont.innerHTML = '<div class="empty-state">NO SCORES POSTED YET</div>'; return; }
+    cont.innerHTML = `<table class="lb-table"><thead><tr>
+      <th>RANK</th><th>PLAYER</th><th>ROUNDS</th>
+      <th>AVG GROSS</th><th>HANDICAP</th><th>WINS</th></tr></thead><tbody>
+      ${rows.map((r,i)=>`<tr>
+        <td><span class="lb-rank">#${i+1}</span></td>
+        <td><strong style="color:var(--text)">${r.m.name}</strong><br><span style="font-size:11px;color:var(--text-dim);font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:0.08em">${r.m.nick}</span></td>
+        <td style="color:var(--text-dim)">${r.stats.rounds}</td>
+        <td style="font-family:'Orbitron',sans-serif;color:var(--gold)">${r.stats.avg !== null ? r.stats.avg.toFixed(1) : '--'}</td>
+        <td style="color:var(--text-dim)">${r.stats.hcp !== null ? r.stats.hcp.toFixed(1) : '--'}</td>
+        <td style="color:var(--text-dim)">${r.stats.wins}</td>
+      </tr>`).join('')}
+      </tbody></table>`;
+  }
+}
+
+// ══════════════════════════════════════════════
+//  TEE TIMES
+// ══════════════════════════════════════════════
+function renderTeetimes() {
+  const strip = document.getElementById('rsvp-strip');
+  if (!strip) return;
+  strip.innerHTML = members.map(m => {
+    const rsvp = getRsvp(m.id);
+    return `<div class="rsvp-cell">
+      <div class="rc-name">${m.name.split(' ')[0]}</div>
+      <div class="rc-status">${rsvp ? '✅' : '❓'}</div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+//  GALLERY
+// ══════════════════════════════════════════════
+function openUpload() {
+  document.getElementById('upload-modal').classList.add('show');
+  document.getElementById('upload-date').value = new Date().toISOString().split('T')[0];
+}
+function closeUpload() {
+  document.getElementById('upload-modal').classList.remove('show');
+  document.getElementById('upload-file').value = '';
+  document.getElementById('upload-caption').value = '';
+  document.getElementById('upload-tag').value = '';
+}
+function saveUpload() {
+  const file = document.getElementById('upload-file').files[0];
+  if (!file) { alert('Please select a photo.'); return; }
+  const caption = document.getElementById('upload-caption').value.trim();
+  const tag = document.getElementById('upload-tag').value;
+  const date = document.getElementById('upload-date').value;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const photos = getGallery();
+    photos.push({src:e.target.result, caption, tag, date, uploader:currentUser, id:Date.now()});
+    try {
+      saveGallery(photos);
+      closeUpload();
+      renderGallery();
+    } catch(err) {
+      alert('Photo too large for browser storage. Try a smaller image.');
+    }
+  };
+  reader.readAsDataURL(file);
+}
+function deletePhoto(id) {
+  if (!confirm('Delete this photo?')) return;
+  const photos = getGallery().filter(p => p.id !== id);
+  saveGallery(photos);
+  renderGallery();
+}
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('show');
+}
+function renderGallery() {
+  const grid = document.getElementById('gallery-grid');
+  if (!grid) return;
+  const photos = getGallery();
+  grid.innerHTML = '';
+  photos.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'gallery-item';
+    const tagName = p.tag ? (members.find(m=>m.id===p.tag)?.name || p.tag) : '';
+    div.innerHTML = `
+      <img src="${p.src}" alt="${p.caption||'Photo'}" loading="lazy" onclick="openLightbox('${p.src.replace(/'/g,"\\'")}')"/>
+      <div class="gallery-overlay">
+        <button class="gallery-del" onclick="event.stopPropagation();deletePhoto(${p.id})">DELETE</button>
+      </div>
+      ${(p.caption||tagName) ? `<div class="gallery-cap">${p.caption||''}${tagName?' · @'+tagName:''}</div>` : ''}`;
+    grid.appendChild(div);
+  });
+  // Add "+" card at end
+  const add = document.createElement('div');
+  add.className = 'gallery-add';
+  add.innerHTML = '<div class="gallery-add-icon">📷</div><div class="gallery-add-lbl">ADD PHOTO</div>';
+  add.onclick = openUpload;
+  grid.appendChild(add);
+}
+
+// ══════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  loadMembers();
+  // Check session
+  const saved = sessionStorage.getItem('ff_user');
+  if (saved) {
+    currentUser = saved;
+    document.getElementById('login-overlay').style.display = 'none';
+    document.getElementById('nav-user-name').textContent = members.find(m=>m.id===saved)?.name || saved;
+    renderRoster();
+    renderLeaderboard();
+    renderTeetimes();
+    renderGallery();
+  }
+  // PIN label update
+  document.getElementById('login-player').addEventListener('change', e => {
+    const id = e.target.value;
+    const hasPIN = id && localStorage.getItem('ff_pin_' + id);
+    document.getElementById('login-hint').textContent = hasPIN
+      ? 'Welcome back! Enter your 4-digit PIN.'
+      : 'First time? Your PIN will be set automatically.';
+  });
+  // Stop inputs from propagating into card flip
+  document.querySelectorAll('.mini-input,.mini-select,.pf-input').forEach(el => {
+    el.addEventListener('click', e => e.stopPropagation());
+  });
+});
+</script>
+</body>
+</html>

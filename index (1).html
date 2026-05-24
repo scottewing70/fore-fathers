@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<title>Fore! Fathers Golf Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Press+Start+2P&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        bg: '#140A0A',
+        surface: '#1E0F0F',
+        card: '#261414',
+        border: '#6B2020',
+        neon: '#C9A227',
+        gold: '#E8C84A',
+        danger: '#8B1010',
+        muted: '#7A4A4A',
+        txt: '#F5EDD8',
+        dim: '#C4A882',
+        green: '#2D5A27',
+        cream: '#FAF3E0',
+      },
+      fontFamily: {
+        orbitron: ['Orbitron', 'sans-serif'],
+        rajdhani: ['Rajdhani', 'sans-serif'],
+        pixel: ['"Press Start 2P"', 'monospace'],
+      },
+    },
+  },
+};
+</script>
+<style>
+:root {
+  --bg: #140A0A;
+  --surface: #1E0F0F;
+  --card: #261414;
+  --border: #6B2020;
+  --neon: #C9A227;
+  --gold: #E8C84A;
+  --red: #8B1010;
+  --red-bright: #B01515;
+  --muted: #7A4A4A;
+  --text: #F5EDD8;
+  --text-dim: #C4A882;
+  --green: #2D5A27;
+  --cream: #FAF3E0;
+  --shield-gold: #D4A820;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  background-image: radial-gradient(ellipse at center, #1E0F0F 0%, #140A0A 60%, #0A0505 100%);
+  background-attachment: fixed;
+}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #C9A227; border-radius: 3px; }
+scrollbar-color: #C9A227 var(--bg);
+
+.font-orbitron { font-family: 'Orbitron', sans-serif; }
+.font-rajdhani { font-family: 'Rajdhani', sans-serif; }
+.font-pixel { font-family: 'Press Start 2P', monospace; }
+
+.neon-glow { text-shadow: 0 0 10px rgba(201,162,39,0.5), 0 0 20px rgba(201,162,39,0.3); }
+.neon-glow-box { box-shadow: 0 0 12px rgba(201,162,39,0.25); }
+.gold-glow-box { box-shadow: 0 0 16px rgba(232,200,74,0.25); }
+.card-base {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+.card-base:hover {
+  box-shadow: 0 0 20px rgba(139,16,16,0.4), 0 0 40px rgba(201,162,39,0.15);
+  border-color: #C9A227;
+}
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.blink { animation: blink 1.5s ease-in-out infinite; }
+@keyframes blink-cursor { 0%,100%{opacity:1} 50%{opacity:0} }
+.blink-cursor { animation: blink-cursor 1s step-end infinite; }
+
+@keyframes achievementSlide {
+  0% { transform: translateY(-80px); opacity: 0; }
+  15% { transform: translateY(0); opacity: 1; }
+  85% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.achievement-animate { animation: achievementSlide 1.2s ease-out forwards; }
+
+@keyframes slideInLeft {
+  from { transform: translateX(-60px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.slide-in { animation: slideInLeft 0.5s ease-out forwards; opacity: 0; }
+
+@keyframes typewriterCursor { 0%,100%{border-color:var(--neon)} 50%{border-color:transparent} }
+.tw-cursor { border-right: 2px solid var(--neon); animation: typewriterCursor 0.8s step-end infinite; }
+
+#hero-canvas-a1b2 {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.section-header {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: var(--neon);
+  text-shadow: 0 0 8px rgba(201,162,39,0.4);
+}
+
+.nav-link { position: relative; transition: color 0.2s; }
+.nav-link.active { color: var(--neon); }
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 2px;
+  background: var(--neon);
+  box-shadow: 0 0 6px var(--neon);
+}
+
+.diff-block { width: 16px; height: 10px; border-radius: 2px; }
+
+.progress-fill { transition: width 1s ease-out; }
+
+#mobile-menu-x9k2 {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: translateY(-20px);
+  opacity: 0;
+}
+#mobile-menu-x9k2.open {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ===== CARD FLIP ===== */
+.flip-container {
+  perspective: 1200px;
+  width: 100%;
+  height: 480px;
+  cursor: pointer;
+}
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+.flip-inner.flipped {
+  transform: rotateY(180deg);
+}
+.flip-front, .flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 4px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.flip-front {
+  background: var(--card);
+  border: 1px solid var(--border);
+  transition: border-color 0.2s;
+}
+.flip-front:hover {
+  border-color: #C9A227;
+}
+.flip-back {
+  background: var(--surface);
+  border: 1px solid var(--neon);
+  transform: rotateY(180deg);
+  padding: 16px;
+}
+.flip-hint {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: var(--text-dim);
+  text-align: center;
+  padding: 4px 0 8px;
+  letter-spacing: 0.05em;
+}
+.tab-btn {
+  flex: 1;
+  padding: 8px 6px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+.tab-btn.active {
+  background: var(--neon);
+  color: #140A0A;
+  border-color: var(--neon);
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.back-input {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 9px 10px;
+  border-radius: 3px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  margin-bottom: 6px;
+  outline: none;
+}
+.back-input:focus { border-color: var(--neon); }
+.back-input option { background: var(--card); }
+.back-btn {
+  width: 100%;
+  padding: 10px;
+  background: var(--neon);
+  color: #140A0A;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  margin-top: 4px;
+  transition: background 0.2s;
+}
+.back-btn:hover { background: var(--gold); }
+.back-btn.danger {
+  background: var(--red);
+  color: var(--cream);
+  margin-top: 8px;
+  font-size: 11px;
+}
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 8px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+}
+.score-row:last-child { border-bottom: none; }
+.score-list {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  margin-bottom: 10px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+.handicap-display {
+  text-align: center;
+  padding: 8px;
+  background: var(--card);
+  border: 1px solid var(--neon);
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+.handicap-display .hcp-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--neon);
+}
+.handicap-display .hcp-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: var(--text-dim);
+}
+.confirm-msg {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  color: #4ade80;
+  text-align: center;
+  padding: 4px;
+  display: none;
+}
+
+/* ===== WEATHER SECTION ===== */
+#weather {
+  --bull-bg: #140A0A;
+  --bull-red: #B01515;
+  --bull-yellow: #C9A227;
+  --bull-white: #F5EDD8;
+  --bull-card: #1E0F0F;
+  --bull-border: #6B2020;
+}
+.bull-hour-card {
+  background: #1E0F0F;
+  border: 1px solid #6B2020;
+  padding: 12px 8px;
+  text-align: center;
+}
+.bull-hour-card.tee-active {
+  border-top: 3px solid #C9A227;
+  border-color: #C9A227;
+}
+.bull-stat-pill {
+  background: #1E0F0F;
+  border: 1px solid #6B2020;
+  padding: 8px 16px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  color: #F5EDD8;
+  flex: 1;
+  text-align: center;
+  min-width: 140px;
+}
+
+/* ===== LARGE FONT OVERRIDES ===== */
+body {
+  font-size: 18px !important;
+  line-height: 1.6 !important;
+}
+
+nav a, .nav-link {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+}
+
+.section-title, [class*="section"] h2, h2 {
+  font-size: 32px !important;
+  letter-spacing: 0.12em !important;
+}
+
+.font-orbitron, [style*="font-family:'Orbitron'"], [style*="Orbitron"] {
+  letter-spacing: 0.06em !important;
+}
+
+.font-rajdhani, [style*="Rajdhani"] {
+  font-size: 17px !important;
+}
+
+.font-pixel, [style*="Press Start 2P"] {
+  font-size: 9px !important;
+  line-height: 1.8 !important;
+}
+
+.flip-front [style*="font-size:18px"][style*="Orbitron"] {
+  font-size: 18px !important;
+}
+
+.flip-front [style*="font-size:9px"] {
+  font-size: 9px !important;
+}
+
+.flip-front [style*="font-size:26px"] {
+  font-size: 26px !important;
+}
+
+#leaderboard-tbody td, #season-tbody td {
+  font-size: 16px !important;
+  padding: 14px 12px !important;
+}
+
+table th {
+  font-size: 13px !important;
+  padding: 12px !important;
+  letter-spacing: 0.1em !important;
+}
+
+.back-input {
+  font-size: 16px !important;
+  padding: 9px 10px !important;
+}
+
+.back-btn {
+  font-size: 13px !important;
+  padding: 10px !important;
+}
+
+.tab-btn {
+  font-size: 11px !important;
+  padding: 8px 6px !important;
+}
+
+.weather-temp {
+  font-size: 34px !important;
+}
+
+.score-row {
+  font-size: 15px !important;
+  padding: 7px 8px !important;
+}
+
+footer, footer * {
+  font-size: 15px !important;
+}
+
+#rsvp-summary-strip div {
+  font-size: 11px !important;
+  padding: 7px 12px !important;
+}
+
+.hcp-num {
+  font-size: 36px !important;
+}
+
+.badge-title {
+  font-size: 13px !important;
+}
+</style>
+</head>
+<body data-id="0" class="min-h-screen">
+<app-icon data-id="1" hidden data-icon="flag" data-palette="Red"></app-icon>
+
+<!-- ===== STICKY NAV ===== -->
+<nav data-id="2" id="navbar-f4g0" class="fixed top-0 left-0 right-0 z-50 border-b" style="background:#1E0F0F;border-color:#6B2020;">
+  <div data-id="3" class="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-6 h-14 md:h-16">
+    <div data-id="4" class="flex items-center gap-2 shrink-0">
+      <svg data-id="5" width="32" height="32" viewBox="0 0 32 32" class="shrink-0">
+        <rect data-id="6" x="4" y="2" width="4" height="22" rx="1" fill="#C9A227" opacity="0.9" transform="rotate(-20 8 13)"/>
+        <rect data-id="7" x="24" y="2" width="4" height="22" rx="1" fill="#C9A227" opacity="0.9" transform="rotate(20 24 13)"/>
+        <circle data-id="8" cx="8" cy="3" r="3" fill="#C9A227"/>
+        <circle data-id="9" cx="24" cy="3" r="3" fill="#C9A227"/>
+        <rect data-id="10" x="10" y="26" width="12" height="4" rx="2" fill="#6B2020"/>
+      </svg>
+      <div data-id="11" class="flex flex-col leading-none">
+        <span data-id="12" class="font-orbitron text-base md:text-lg font-bold neon-glow tracking-wider" style="color:#C9A227;">FORE! FATHERS</span>
+        <span data-id="13" class="font-pixel text-[9px] mt-0.5" style="color:#C4A882;">EST. 2026</span>
+      </div>
+    </div>
+    <div data-id="14" class="hidden md:flex items-center gap-6">
+      <a data-id="15" href="#home" class="nav-link font-rajdhani text-sm font-semibold uppercase tracking-wider hover:text-neon cursor-pointer" style="color:#F5EDD8;" data-nav="home">HOME</a>
+      <a data-id="16" href="#weather" class="nav-link font-rajdhani text-sm font-semibold uppercase tracking-wider hover:text-neon cursor-pointer" style="color:#F5EDD8;" data-nav="weather">WEATHER</a>
+      <a data-id="17" href="#roster" class="nav-link font-rajdhani text-sm font-semibold uppercase tracking-wider hover:text-neon cursor-pointer" style="color:#F5EDD8;" data-nav="roster">ROSTER</a>
+      <a data-id="18" href="#leaderboard" class="nav-link font-rajdhani text-sm font-semibold uppercase tracking-wider hover:text-neon cursor-pointer" style="color:#F5EDD8;" data-nav="leaderboard">LEADERBOARD</a>
+      <a data-id="19" href="#teetimes" class="nav-link font-rajdhani text-sm font-semibold uppercase tracking-wider hover:text-neon cursor-pointer" style="color:#F5EDD8;" data-nav="teetimes">TEE TIMES</a>
+      <a data-id="20" href="#gallery" class="nav-link font-rajdhani text-sm font-semibold uppercase tracking-wider hover:text-neon cursor-pointer" style="color:#F5EDD8;" data-nav="gallery">GALLERY</a>
+    </div>
+    <div data-id="21" class="hidden md:flex items-center gap-2">
+      <span data-id="22" class="w-2 h-2 rounded-full blink" style="background:#C9A227;"></span>
+      <span data-id="23" class="font-rajdhani text-xs font-semibold uppercase tracking-widest" style="color:#C9A227;">SEASON ACTIVE</span>
+    </div>
+    <button data-id="24" id="mobile-btn-h8j3" class="md:hidden p-2 cursor-pointer" style="color:#C9A227;" aria-label="Open menu">
+      <i data-id="25" data-lucide="menu" class="w-6 h-6"></i>
+    </button>
+  </div>
+  <div data-id="26" id="mobile-menu-x9k2" class="hidden md:hidden flex-col px-4 pb-4 gap-2" style="background:#1E0F0F;">
+    <div data-id="27" class="flex justify-between items-center mb-2">
+      <div data-id="28" class="flex items-center gap-2">
+        <span data-id="29" class="w-2 h-2 rounded-full blink" style="background:#C9A227;"></span>
+        <span data-id="30" class="font-rajdhani text-xs font-semibold uppercase" style="color:#C9A227;">SEASON ACTIVE</span>
+      </div>
+      <button data-id="31" id="mobile-close-k2m4" class="p-2 cursor-pointer" style="color:#C9A227;" aria-label="Close menu">
+        <i data-id="32" data-lucide="x" class="w-6 h-6"></i>
+      </button>
+    </div>
+    <a data-id="33" href="#home" class="font-rajdhani text-base font-semibold uppercase tracking-wider hover:text-neon py-2 border-b cursor-pointer mobile-nav-link" style="color:#F5EDD8;border-color:#6B2020;">HOME</a>
+    <a data-id="34" href="#weather" class="font-rajdhani text-base font-semibold uppercase tracking-wider hover:text-neon py-2 border-b cursor-pointer mobile-nav-link" style="color:#F5EDD8;border-color:#6B2020;">WEATHER</a>
+    <a data-id="35" href="#roster" class="font-rajdhani text-base font-semibold uppercase tracking-wider hover:text-neon py-2 border-b cursor-pointer mobile-nav-link" style="color:#F5EDD8;border-color:#6B2020;">ROSTER</a>
+    <a data-id="36" href="#leaderboard" class="font-rajdhani text-base font-semibold uppercase tracking-wider hover:text-neon py-2 border-b cursor-pointer mobile-nav-link" style="color:#F5EDD8;border-color:#6B2020;">LEADERBOARD</a>
+    <a data-id="37" href="#teetimes" class="font-rajdhani text-base font-semibold uppercase tracking-wider hover:text-neon py-2 border-b cursor-pointer mobile-nav-link" style="color:#F5EDD8;border-color:#6B2020;">TEE TIMES</a>
+    <a data-id="38" href="#gallery" class="font-rajdhani text-base font-semibold uppercase tracking-wider hover:text-neon py-2 cursor-pointer mobile-nav-link" style="color:#F5EDD8;">GALLERY</a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section data-id="39" id="home" class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16" style="background: radial-gradient(ellipse at center, #261414 0%, #140A0A 70%);">
+  <canvas data-id="40" id="hero-canvas-a1b2"></canvas>
+  <div data-id="41" class="relative z-10 flex flex-col items-center px-4 text-center max-w-4xl mx-auto">
+    <div data-id="42" id="achievement-popup-c3d4" class="achievement-animate mb-6 md:mb-8 px-4 py-2 md:px-6 md:py-3 flex items-center gap-3" style="background:#8B1010;border:2px solid #C9A227;border-radius:4px;">
+      <span data-id="43" class="text-2xl">🏆</span>
+      <div data-id="44" class="text-left">
+        <div data-id="45" class="font-pixel text-[10px] md:text-[11px] tracking-wider" style="color:#E8C84A;">ACHIEVEMENT UNLOCKED</div>
+        <div data-id="46" class="font-rajdhani text-sm md:text-base font-semibold" style="color:#F5EDD8;">Sunday Golf Crew Established</div>
+      </div>
+    </div>
+    <h1 data-id="47" class="font-orbitron font-black neon-glow leading-none mb-4" style="color:#C9A227;font-size: clamp(3.5rem, 10vw, 7.5rem);">FORE! FATHERS</h1>
+    <p data-id="48" class="font-rajdhani text-lg md:text-xl mb-6 md:mb-8 font-semibold tracking-wide italic" style="font-size:22px;color:#C4A882;">The Only Thing Consistent About Your Game is the Disappointment.</p>
+    <div data-id="49" class="flex flex-wrap justify-center gap-3 md:gap-4 mb-6 md:mb-8">
+      <div data-id="50" class="px-4 py-2 rounded font-rajdhani text-sm md:text-base font-semibold flex items-center gap-2" style="border:1px solid #C9A227;background:rgba(20,10,10,0.6);color:#C9A227;">
+        <span data-id="51">👥</span> <span data-id="52">9 MEMBERS</span>
+      </div>
+      <div data-id="53" class="px-4 py-2 rounded font-rajdhani text-sm md:text-base font-semibold flex items-center gap-2" style="border:1px solid #C9A227;background:rgba(20,10,10,0.6);color:#C9A227;">
+        <span data-id="54">📅</span> <span data-id="55">SEASON 1 — 2026</span>
+      </div>
+    </div>
+    <a data-id="56" href="#leaderboard" id="cta-leaderboard-e5f6" class="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 border-2 rounded font-orbitron text-sm md:text-base font-bold hover:text-bg transition-all duration-200 cursor-pointer neon-glow-box" style="border-color:#C9A227;color:#C9A227;" onmouseenter="" onmouseleave="">
+      VIEW LEADERBOARD <i data-id="57" data-lucide="arrow-right" class="w-5 h-5"></i>
+    </a>
+  </div>
+</section>
+
+<!-- ===== WEATHER SECTION ===== -->
+<section data-id="58" id="weather" class="py-16 md:py-24 px-4 md:px-6" style="background:#140A0A;">
+  <div data-id="59" class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <h2 data-id="60" style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:24px;color:#B01515;letter-spacing:0.12em;margin-bottom:6px;">// SUNDAY MORNING FORECAST</h2>
+    <p data-id="61" style="font-family:'Press Start 2P',monospace;font-size:9px;color:#C9A227;margin-bottom:16px;line-height:1.8;">SAGINAW · FORT WORTH, TX · MAY 24, 2026 · SOURCE: WEATHER UNDERGROUND</p>
+    <div data-id="62" style="width:100%;height:2px;background:#6B2020;margin-bottom:24px;"></div>
+
+    <!-- Tee Time Alert Banner -->
+    <div data-id="63" style="background:#8B1010;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
+      <span data-id="64" style="font-size:28px;">⛳</span>
+      <span data-id="65" style="font-family:'Orbitron',sans-serif;font-weight:700;font-size:17px;color:#F5EDD8;flex:1;text-align:center;letter-spacing:0.05em;">TEE TIME WEATHER WINDOW: 7:00 AM – 12:00 PM</span>
+      <span data-id="66" style="font-family:'Orbitron',sans-serif;font-weight:700;font-size:17px;color:#E8C84A;">✅ CLEAR TO PLAY</span>
+    </div>
+
+    <!-- Hourly Grid -->
+    <div data-id="67" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-bottom:24px;" id="weather-hourly-grid"></div>
+
+    <!-- Summary Stats Bar -->
+    <div data-id="68" style="background:#1E0F0F;border:1px solid #6B2020;padding:16px;margin-bottom:16px;">
+      <div data-id="69" style="display:flex;flex-wrap:wrap;gap:8px;">
+        <div data-id="70" class="bull-stat-pill">🌡️ HIGH: <span data-id="71" style="color:#C9A227;font-weight:700;">82°F</span></div>
+        <div data-id="72" class="bull-stat-pill">💧 HUMIDITY: <span data-id="73" style="color:#C9A227;font-weight:700;">59–93%</span> (dropping)</div>
+        <div data-id="74" class="bull-stat-pill">🌬️ WIND: <span data-id="75" style="color:#C9A227;font-weight:700;">1–6 mph</span> NE/ENE</div>
+        <div data-id="76" class="bull-stat-pill">⛅ CONDITIONS: <span data-id="77" style="color:#C9A227;font-weight:700;">Partly Cloudy → Sunny</span></div>
+      </div>
+    </div>
+
+    <!-- Attribution -->
+    <p data-id="78" style="font-family:'Rajdhani',sans-serif;font-size:14px;color:#7A4A4A;text-align:right;font-style:italic;">Data source: Weather Underground · Saginaw, TX (76131) · Updated: May 24, 2026</p>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section data-id="79" id="about" class="py-16 md:py-24 px-4 md:px-6">
+  <div data-id="80" class="max-w-6xl mx-auto">
+    <h2 data-id="81" class="section-header text-2xl md:text-3xl mb-2">// ABOUT THE CREW</h2>
+    <div data-id="82" class="w-16 h-0.5 mb-8 md:mb-12" style="background:#C9A227;box-shadow:0 0 8px #C9A227;"></div>
+    <div data-id="83" class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+      <div data-id="84" class="card-base p-4 md:p-6 font-mono text-sm md:text-base" style="min-height:300px;">
+        <div data-id="85" class="flex items-center gap-2 mb-4">
+          <span data-id="86" class="w-3 h-3 rounded-full" style="background:#8B1010;"></span>
+          <span data-id="87" class="w-3 h-3 rounded-full" style="background:#E8C84A;"></span>
+          <span data-id="88" class="w-3 h-3 rounded-full" style="background:#C9A227;"></span>
+          <span data-id="89" class="font-rajdhani text-xs ml-2" style="color:#C4A882;">terminal@forefathers</span>
+        </div>
+        <div data-id="90" id="terminal-output-g7h8" class="leading-relaxed whitespace-pre-wrap" style="color:#C9A227;min-height:200px;"></div>
+      </div>
+      <div data-id="91" class="flex flex-col gap-4">
+        <div data-id="92" class="card-base p-4 md:p-5 flex items-start gap-4">
+          <div data-id="93" class="text-3xl">🕐</div>
+          <div data-id="94">
+            <div data-id="95" class="font-orbitron text-base md:text-lg font-bold mb-1" style="color:#C9A227;">TEE TIME</div>
+            <div data-id="96" class="font-rajdhani text-sm md:text-base" style="color:#F5EDD8;">Every Sunday AM — Fort Worth area courses</div>
+            <div data-id="97" class="font-rajdhani text-xs mt-1" style="color:#C4A882;">Rotating course selection voted on by crew</div>
+          </div>
+        </div>
+        <div data-id="98" class="card-base p-4 md:p-5 flex items-start gap-4">
+          <div data-id="99" class="text-3xl">🏌️</div>
+          <div data-id="100">
+            <div data-id="101" class="font-orbitron text-base md:text-lg font-bold mb-1" style="color:#C9A227;">FORMAT</div>
+            <div data-id="102" class="font-rajdhani text-sm md:text-base" style="color:#F5EDD8;">Stroke play + weekly skins game</div>
+            <div data-id="103" class="font-rajdhani text-xs mt-1" style="color:#C4A882;">$5 per skin · Ties carry over · No mercy</div>
+          </div>
+        </div>
+        <div data-id="104" class="card-base p-4 md:p-5 flex items-start gap-4">
+          <div data-id="105" class="text-3xl">🍺</div>
+          <div data-id="106">
+            <div data-id="107" class="font-orbitron text-base md:text-lg font-bold mb-1" style="color:#C9A227;">POST-ROUND</div>
+            <div data-id="108" class="font-rajdhani text-sm md:text-base" style="color:#F5EDD8;">19th hole debrief — mandatory attendance</div>
+            <div data-id="109" class="font-rajdhani text-xs mt-1" style="color:#C4A882;">Scorecards reviewed · Trash talked · Beers consumed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ROSTER ===== -->
+<section data-id="110" id="roster" class="py-16 md:py-24 px-4 md:px-6" style="background:#1E0F0F;">
+  <div data-id="111" class="max-w-7xl mx-auto">
+    <h2 data-id="112" class="section-header text-2xl md:text-3xl mb-1">// SELECT YOUR PLAYER</h2>
+    <p data-id="113" class="font-rajdhani text-sm uppercase tracking-widest mb-8 md:mb-12" style="color:#C4A882;">SEASON 1 ROSTER</p>
+    <div data-id="114" id="roster-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;padding:0 0 40px"></div>
+  </div>
+</section>
+
+<!-- ===== LEADERBOARD ===== -->
+<section data-id="115" id="leaderboard" class="py-16 md:py-24 px-4 md:px-6">
+  <div data-id="116" class="max-w-6xl mx-auto">
+    <h2 data-id="117" class="section-header text-2xl md:text-3xl mb-1">// WEEKLY LEADERBOARD</h2>
+    <p data-id="118" class="font-rajdhani text-xs md:text-sm uppercase tracking-widest mb-8 md:mb-10" style="color:#C4A882;">LATEST ROUND RESULTS — BASED ON POSTED SCORES</p>
+
+    <div data-id="119" class="overflow-x-auto mb-10">
+      <table data-id="120" class="w-full text-left min-w-[640px]">
+        <thead data-id="121">
+          <tr data-id="122" class="border-b-2" style="border-color:#C9A227;background:#8B1010;">
+            <th data-id="123" class="font-orbitron text-xs font-bold px-3 py-3 uppercase tracking-wider" style="color:#E8C84A;">Rank</th>
+            <th data-id="124" class="font-orbitron text-xs font-bold px-3 py-3 uppercase tracking-wider" style="color:#E8C84A;">Player</th>
+            <th data-id="125" class="font-orbitron text-xs font-bold px-3 py-3 uppercase tracking-wider text-center" style="color:#E8C84A;">Gross</th>
+            <th data-id="126" class="font-orbitron text-xs font-bold px-3 py-3 uppercase tracking-wider text-center" style="color:#E8C84A;">Net</th>
+            <th data-id="127" class="font-orbitron text-xs font-bold px-3 py-3 uppercase tracking-wider text-center" style="color:#E8C84A;">vs Par</th>
+            <th data-id="128" class="font-orbitron text-xs font-bold px-3 py-3 uppercase tracking-wider text-center" style="color:#E8C84A;">Skins</th>
+            <th data-id="129" class="font-orbitron text-xs font-bold px-3 py-3 uppercase tracking-wider text-center" style="color:#E8C84A;">Points</th>
+            <th data-id="130" class="font-orbitron text-xs font-bold px-3 py-3 uppercase tracking-wider text-center" style="color:#E8C84A;">Status</th>
+          </tr>
+        </thead>
+        <tbody data-id="131" id="leaderboard-tbody" class="font-rajdhani text-sm md:text-base"></tbody>
+      </table>
+    </div>
+
+    <!-- Season Standings -->
+    <div data-id="132" class="card-base p-4 md:p-6 mb-10">
+      <h3 data-id="133" class="font-orbitron text-base md:text-lg font-bold mb-4" style="color:#C9A227;">SEASON 1 STANDINGS</h3>
+      <div data-id="134" class="overflow-x-auto">
+        <table data-id="135" class="w-full text-left min-w-[500px]">
+          <thead data-id="136">
+            <tr data-id="137" class="border-b" style="border-color:#6B2020;">
+              <th data-id="138" class="font-rajdhani text-xs font-semibold px-3 py-2 uppercase" style="color:#C4A882;">Rank</th>
+              <th data-id="139" class="font-rajdhani text-xs font-semibold px-3 py-2 uppercase" style="color:#C4A882;">Player</th>
+              <th data-id="140" class="font-rajdhani text-xs font-semibold px-3 py-2 uppercase text-center" style="color:#C4A882;">Total Pts</th>
+              <th data-id="141" class="font-rajdhani text-xs font-semibold px-3 py-2 uppercase text-center" style="color:#C4A882;">Rounds</th>
+              <th data-id="142" class="font-rajdhani text-xs font-semibold px-3 py-2 uppercase text-center" style="color:#C4A882;">Best</th>
+            </tr>
+          </thead>
+          <tbody data-id="143" id="season-tbody" class="font-rajdhani"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Achievement Badges -->
+    <div data-id="144">
+      <h3 data-id="145" class="font-orbitron text-base md:text-lg font-bold mb-6" style="color:#C9A227;">ACHIEVEMENTS UNLOCKED THIS SEASON</h3>
+      <div data-id="146" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div data-id="147" class="card-base p-4 hover:border-gold/60 transition-colors" style="border-color:rgba(232,200,74,0.3);">
+          <div data-id="148" class="text-3xl mb-2">🏌️</div>
+          <div data-id="149" class="font-pixel text-[11px] mb-1" style="color:#E8C84A;">LONG BOMB</div>
+          <div data-id="150" class="font-rajdhani text-sm" style="color:#F5EDD8;">Drive 300+ yards</div>
+          <div data-id="151" class="font-rajdhani text-xs" style="color:#C4A882;">Earned by <span data-id="152" class="font-semibold" style="color:#C9A227;">Brady Allan</span></div>
+        </div>
+        <div data-id="153" class="card-base p-4 hover:border-gold/60 transition-colors" style="border-color:rgba(232,200,74,0.3);">
+          <div data-id="154" class="text-3xl mb-2">🐦</div>
+          <div data-id="155" class="font-pixel text-[11px] mb-1" style="color:#E8C84A;">BIRDIE MACHINE</div>
+          <div data-id="156" class="font-rajdhani text-sm" style="color:#F5EDD8;">3 birdies in one round</div>
+          <div data-id="157" class="font-rajdhani text-xs" style="color:#C4A882;">Earned by <span data-id="158" class="font-semibold" style="color:#C9A227;">Brady Allan</span></div>
+        </div>
+        <div data-id="159" class="card-base p-4 hover:border-gold/60 transition-colors" style="border-color:rgba(232,200,74,0.3);">
+          <div data-id="160" class="text-3xl mb-2">⛳</div>
+          <div data-id="161" class="font-pixel text-[11px] mb-1" style="color:#E8C84A;">IRON WILL</div>
+          <div data-id="162" class="font-rajdhani text-sm" style="color:#F5EDD8;">Most consistent scorer — 3 weeks running</div>
+          <div data-id="163" class="font-rajdhani text-xs" style="color:#C4A882;">Earned by <span data-id="164" class="font-semibold" style="color:#C9A227;">Greg Hennessey</span></div>
+        </div>
+        <div data-id="165" class="card-base p-4 hover:border-gold/60 transition-colors" style="border-color:rgba(232,200,74,0.3);">
+          <div data-id="166" class="text-3xl mb-2">🎯</div>
+          <div data-id="167" class="font-pixel text-[11px] mb-1" style="color:#E8C84A;">PRECISION STRIKES</div>
+          <div data-id="168" class="font-rajdhani text-sm" style="color:#F5EDD8;">Hit 10+ fairways in a round</div>
+          <div data-id="169" class="font-rajdhani text-xs" style="color:#C4A882;">Earned by <span data-id="170" class="font-semibold" style="color:#C9A227;">Walt Stevens</span></div>
+        </div>
+        <div data-id="171" class="card-base p-4 hover:border-gold/60 transition-colors" style="border-color:rgba(232,200,74,0.3);">
+          <div data-id="172" class="text-3xl mb-2">🏖️</div>
+          <div data-id="173" class="font-pixel text-[11px] mb-1" style="color:#E8C84A;">BEACH BALLER</div>
+          <div data-id="174" class="font-rajdhani text-sm" style="color:#F5EDD8;">Made par from a bunker</div>
+          <div data-id="175" class="font-rajdhani text-xs" style="color:#C4A882;">Earned by <span data-id="176" class="font-semibold" style="color:#C9A227;">Scott Ewing</span></div>
+        </div>
+        <div data-id="177" class="card-base p-4 hover:border-gold/60 transition-colors" style="border-color:rgba(232,200,74,0.3);">
+          <div data-id="178" class="text-3xl mb-2">🔥</div>
+          <div data-id="179" class="font-pixel text-[11px] mb-1" style="color:#E8C84A;">HEISENBERG RISING</div>
+          <div data-id="180" class="font-rajdhani text-sm" style="color:#F5EDD8;">Most improved over 5 rounds</div>
+          <div data-id="181" class="font-rajdhani text-xs" style="color:#C4A882;">Earned by <span data-id="182" class="font-semibold" style="color:#C9A227;">Cody Sears</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEE TIMES / MISSION BOARD ===== -->
+<section data-id="183" id="teetimes" class="py-16 md:py-24 px-4 md:px-6" style="background:#1E0F0F;">
+  <div data-id="184" class="max-w-5xl mx-auto">
+    <h2 data-id="185" class="section-header text-2xl md:text-3xl mb-1">// MISSION BOARD</h2>
+    <p data-id="186" class="font-rajdhani text-xs md:text-sm uppercase tracking-widest mb-8 md:mb-10" style="color:#C4A882;">UPCOMING ROUNDS — ACCEPT YOUR MISSION</p>
+
+    <!-- RSVP Summary Strip -->
+    <div data-id="187" style="font-family:'Orbitron',sans-serif;font-size:15px;color:#C9A227;font-weight:700;margin-bottom:8px;letter-spacing:0.08em;">SUNDAY CREW STATUS</div>
+    <div data-id="188" id="rsvp-summary-strip" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px;"></div>
+
+    <div data-id="189" class="space-y-6">
+      <!-- Mission 1: ACTIVE -->
+      <div data-id="190" class="card-base p-5 md:p-6 relative overflow-hidden" style="border:2px solid #C9A227;box-shadow:0 0 16px rgba(201,162,39,0.3);">
+        <div data-id="191" class="absolute top-0 right-0 px-3 py-1 font-pixel text-[10px] rounded-bl" style="color:#140A0A;background:#C9A227;">MISSION: ACTIVE</div>
+        <div data-id="192" class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
+          <div data-id="193" class="flex-1">
+            <div data-id="194" class="font-orbitron text-lg md:text-xl font-bold mb-1" style="color:#C9A227;">Pecan Valley Hills Golf Course</div>
+            <div data-id="195" class="font-rajdhani text-sm mb-3" style="color:#C4A882;">Benbrook, TX</div>
+            <div data-id="196" class="grid grid-cols-2 gap-x-6 gap-y-2 font-rajdhani text-sm mb-4">
+              <div data-id="197"><span data-id="198" style="color:#C4A882;">DATE:</span> <span data-id="199" class="font-semibold" style="color:#F5EDD8;">Sunday, June 1, 2026</span></div>
+              <div data-id="200"><span data-id="201" style="color:#C4A882;">TEE TIME:</span> <span data-id="202" class="font-semibold" style="color:#F5EDD8;">7:30 AM</span></div>
+              <div data-id="203"><span data-id="204" style="color:#C4A882;">FORMAT:</span> <span data-id="205" class="font-semibold" style="color:#F5EDD8;">Stroke Play + Skins ($5/skin)</span></div>
+              <div data-id="206"><span data-id="207" style="color:#C4A882;">PAR / YDS:</span> <span data-id="208" class="font-semibold" style="color:#F5EDD8;">72 / 6,600</span></div>
+            </div>
+            <div data-id="209" class="flex items-center gap-1 mb-3">
+              <span data-id="210" class="font-rajdhani text-xs mr-2" style="color:#C4A882;">DIFFICULTY:</span>
+              <span data-id="211" class="diff-block" style="background:#C9A227;"></span>
+              <span data-id="212" class="diff-block" style="background:#C9A227;"></span>
+              <span data-id="213" class="diff-block" style="background:#C9A227;"></span>
+              <span data-id="214" class="diff-block" style="background:#6B2020;"></span>
+              <span data-id="215" class="diff-block" style="background:#6B2020;"></span>
+              <span data-id="216" class="font-pixel text-[10px] ml-2" style="color:#E8C84A;">MEDIUM</span>
+            </div>
+            <div data-id="217" class="font-rajdhani text-xs italic mb-4" style="color:#E8C84A;">⚠️ Special Rule: "No mulligans on par 3s"</div>
+            <div data-id="218" class="flex flex-wrap items-center gap-2 font-rajdhani text-sm" id="rsvp-mission1">
+              <span data-id="219" style="color:#C4A882;">RSVP:</span>
+            </div>
+          </div>
+          <div data-id="220" class="shrink-0">
+            <button data-id="221" class="confirm-mission-btn font-orbitron text-xs font-bold px-4 py-3 border-2 rounded transition-all cursor-pointer flex items-center gap-2" style="border-color:#C9A227;color:#C9A227;" data-mission="m1">
+              <i data-id="222" data-lucide="check-circle" class="w-4 h-4"></i> CONFIRM ATTENDANCE
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mission 2: QUEUED -->
+      <div data-id="223" class="card-base p-5 md:p-6 relative overflow-hidden" style="border:1px solid #6B2020;">
+        <div data-id="224" class="absolute top-0 right-0 px-3 py-1 font-pixel text-[10px] rounded-bl" style="color:#140A0A;background:#7A4A4A;">MISSION: QUEUED</div>
+        <div data-id="225" class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
+          <div data-id="226" class="flex-1">
+            <div data-id="227" class="font-orbitron text-lg md:text-xl font-bold mb-1" style="color:#F5EDD8;">Meadowbrook Golf Course</div>
+            <div data-id="228" class="font-rajdhani text-sm mb-3" style="color:#C4A882;">Fort Worth, TX</div>
+            <div data-id="229" class="grid grid-cols-2 gap-x-6 gap-y-2 font-rajdhani text-sm mb-4">
+              <div data-id="230"><span data-id="231" style="color:#C4A882;">DATE:</span> <span data-id="232" class="font-semibold" style="color:#F5EDD8;">June 8, 2026</span></div>
+              <div data-id="233"><span data-id="234" style="color:#C4A882;">TEE TIME:</span> <span data-id="235" class="font-semibold" style="color:#F5EDD8;">8:00 AM</span></div>
+              <div data-id="236"><span data-id="237" style="color:#C4A882;">FORMAT:</span> <span data-id="238" class="font-semibold" style="color:#F5EDD8;">Match Play</span></div>
+              <div data-id="239"><span data-id="240" style="color:#C4A882;">PAR / YDS:</span> <span data-id="241" class="font-semibold" style="color:#F5EDD8;">71 / 6,100</span></div>
+            </div>
+            <div data-id="242" class="flex items-center gap-1 mb-3">
+              <span data-id="243" class="font-rajdhani text-xs mr-2" style="color:#C4A882;">DIFFICULTY:</span>
+              <span data-id="244" class="diff-block" style="background:#C9A227;"></span>
+              <span data-id="245" class="diff-block" style="background:#C9A227;"></span>
+              <span data-id="246" class="diff-block" style="background:#6B2020;"></span>
+              <span data-id="247" class="diff-block" style="background:#6B2020;"></span>
+              <span data-id="248" class="diff-block" style="background:#6B2020;"></span>
+              <span data-id="249" class="font-pixel text-[10px] ml-2" style="color:#E8C84A;">EASY-MEDIUM</span>
+            </div>
+            <div data-id="250" class="flex flex-wrap items-center gap-3 font-rajdhani text-sm">
+              <span data-id="251" style="color:#C4A882;">RSVP:</span>
+              <span data-id="252" style="color:#E8C84A;">All ❓</span>
+            </div>
+          </div>
+          <div data-id="253" class="shrink-0">
+            <button data-id="254" class="confirm-mission-btn font-orbitron text-xs font-bold px-4 py-3 border-2 rounded transition-all cursor-pointer flex items-center gap-2" style="border-color:#7A4A4A;color:#7A4A4A;" data-mission="m2">
+              <i data-id="255" data-lucide="check-circle" class="w-4 h-4"></i> CONFIRM ATTENDANCE
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mission 3: QUEUED -->
+      <div data-id="256" class="card-base p-5 md:p-6 relative overflow-hidden" style="border:1px solid #6B2020;">
+        <div data-id="257" class="absolute top-0 right-0 px-3 py-1 font-pixel text-[10px] rounded-bl" style="color:#140A0A;background:#7A4A4A;">MISSION: QUEUED</div>
+        <div data-id="258" class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
+          <div data-id="259" class="flex-1">
+            <div data-id="260" class="font-orbitron text-lg md:text-xl font-bold mb-1" style="color:#F5EDD8;">Rockwood Golf Course</div>
+            <div data-id="261" class="font-rajdhani text-sm mb-3" style="color:#C4A882;">Fort Worth, TX</div>
+            <div data-id="262" class="grid grid-cols-2 gap-x-6 gap-y-2 font-rajdhani text-sm mb-4">
+              <div data-id="263"><span data-id="264" style="color:#C4A882;">DATE:</span> <span data-id="265" class="font-semibold" style="color:#F5EDD8;">June 15, 2026</span></div>
+              <div data-id="266"><span data-id="267" style="color:#C4A882;">TEE TIME:</span> <span data-id="268" class="font-semibold" style="color:#F5EDD8;">7:45 AM</span></div>
+              <div data-id="269"><span data-id="270" style="color:#C4A882;">FORMAT:</span> <span data-id="271" class="font-semibold" style="color:#F5EDD8;">Scramble</span></div>
+              <div data-id="272"><span data-id="273" style="color:#C4A882;">PAR / YDS:</span> <span data-id="274" class="font-semibold" style="color:#F5EDD8;">71 / 6,200</span></div>
+            </div>
+            <div data-id="275" class="flex items-center gap-1 mb-3">
+              <span data-id="276" class="font-rajdhani text-xs mr-2" style="color:#C4A882;">DIFFICULTY:</span>
+              <span data-id="277" class="diff-block" style="background:#C9A227;"></span>
+              <span data-id="278" class="diff-block" style="background:#C9A227;"></span>
+              <span data-id="279" class="diff-block" style="background:#C9A227;"></span>
+              <span data-id="280" class="diff-block" style="background:#6B2020;"></span>
+              <span data-id="281" class="diff-block" style="background:#6B2020;"></span>
+              <span data-id="282" class="font-pixel text-[10px] ml-2" style="color:#E8C84A;">MEDIUM</span>
+            </div>
+            <div data-id="283" class="flex flex-wrap items-center gap-3 font-rajdhani text-sm">
+              <span data-id="284" style="color:#C4A882;">RSVP:</span>
+              <span data-id="285" style="color:#E8C84A;">All ❓</span>
+            </div>
+          </div>
+          <div data-id="286" class="shrink-0">
+            <button data-id="287" class="confirm-mission-btn font-orbitron text-xs font-bold px-4 py-3 border-2 rounded transition-all cursor-pointer flex items-center gap-2" style="border-color:#7A4A4A;color:#7A4A4A;" data-mission="m3">
+              <i data-id="288" data-lucide="check-circle" class="w-4 h-4"></i> CONFIRM ATTENDANCE
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GALLERY ===== -->
+<section data-id="289" id="gallery" class="py-16 md:py-24 px-4 md:px-6">
+  <div data-id="290" class="max-w-6xl mx-auto">
+    <h2 data-id="291" class="section-header text-2xl md:text-3xl mb-1">// SCREENSHOT GALLERY</h2>
+    <p data-id="292" class="font-rajdhani text-xs md:text-sm uppercase tracking-widest mb-8 md:mb-10" style="color:#C4A882;">FIELD RECORDINGS — SEASON 1</p>
+    <div data-id="293" id="gallery-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;padding:0 0 40px"></div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer data-id="294" class="py-12 md:py-16 px-4 md:px-6 text-center" style="background:#0A0505;border-top:2px solid #6B2020;">
+  <div data-id="295" class="max-w-4xl mx-auto">
+    <div data-id="296" class="flex justify-center mb-4">
+      <svg data-id="297" width="40" height="40" viewBox="0 0 32 32">
+        <rect data-id="298" x="4" y="2" width="4" height="22" rx="1" fill="#C9A227" opacity="0.9" transform="rotate(-20 8 13)"/>
+        <rect data-id="299" x="24" y="2" width="4" height="22" rx="1" fill="#C9A227" opacity="0.9" transform="rotate(20 24 13)"/>
+        <circle data-id="300" cx="8" cy="3" r="3" fill="#C9A227"/>
+        <circle data-id="301" cx="24" cy="3" r="3" fill="#C9A227"/>
+        <rect data-id="302" x="10" y="26" width="12" height="4" rx="2" fill="#6B2020"/>
+      </svg>
+    </div>
+    <div data-id="303" class="font-orbitron text-lg font-bold neon-glow mb-3" style="color:#C9A227;">FORE! FATHERS</div>
+    <div data-id="304" class="font-rajdhani text-sm mb-2" style="color:#C4A882;">FORT WORTH, TX · EST. MAY 2026 · SEASON 1 ACTIVE</div>
+    <div data-id="305" class="font-rajdhani text-xs mb-4" style="color:#C4A882;">Made by Copilot · Designed for the Crew · Played on Sundays</div>
+    <div data-id="306" class="font-rajdhani text-xs mb-2" style="color:#7A4A4A;">© 2026 Fore! Fathers Golf Club · All Rights Reserved · No Sandbagging</div>
+    <div data-id="307" class="blink-cursor inline-block text-lg leading-none mt-2" style="color:#C9A227;">▋</div>
+  </div>
+</footer>
+
+<!-- Gallery Upload Modal -->
+<div data-id="308" id="gallery-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9998;align-items:center;justify-content:center">
+  <div data-id="309" style="background:#261414;border:1px solid #C9A227;border-radius:6px;padding:24px;width:340px;max-width:95vw">
+    <div data-id="310" style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:17px;color:#C9A227;margin-bottom:16px">📷 ADD PHOTO</div>
+    <input data-id="311" type="file" accept="image/*" id="gallery-file" class="back-input" />
+    <input data-id="312" type="text" id="gallery-caption" class="back-input" placeholder="Caption (e.g. Big Mike's eagle attempt)" />
+    <select data-id="313" id="gallery-member" class="back-input">
+      <option data-id="314" value="">Who's in the photo?</option>
+      <option data-id="315">Scott Ewing</option><option data-id="316">Greg Hennessey</option><option data-id="317">Wayne Roberson</option>
+      <option data-id="318">Brady Allan</option><option data-id="319">Juan Hernandez</option><option data-id="320">Sam Coleridge</option>
+      <option data-id="321">Cody Sears</option><option data-id="322">Chad Kirkland</option><option data-id="323">Walt Stevens</option>
+      <option data-id="324">The Crew</option>
+    </select>
+    <input data-id="325" type="date" id="gallery-date" class="back-input" />
+    <button data-id="326" class="back-btn" id="gallery-submit-btn">UPLOAD PHOTO ✓</button>
+    <button data-id="327" class="back-btn danger" id="gallery-cancel-btn">CANCEL</button>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div data-id="328" id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;align-items:center;justify-content:center"></div>
+
+<script>
+// ===== LUCIDE ICONS =====
+lucide.createIcons();
+
+// ===== MOBILE MENU =====
+const mobileBtn = document.getElementById('mobile-btn-h8j3');
+const mobileMenu = document.getElementById('mobile-menu-x9k2');
+const mobileClose = document.getElementById('mobile-close-k2m4');
+
+mobileBtn.addEventListener('click', () => {
+  mobileMenu.classList.remove('hidden');
+  mobileMenu.classList.add('flex');
+  requestAnimationFrame(() => mobileMenu.classList.add('open'));
+});
+mobileClose.addEventListener('click', () => {
+  mobileMenu.classList.remove('open');
+  setTimeout(() => { mobileMenu.classList.add('hidden'); mobileMenu.classList.remove('flex'); }, 300);
+});
+document.querySelectorAll('.mobile-nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    setTimeout(() => { mobileMenu.classList.add('hidden'); mobileMenu.classList.remove('flex'); }, 300);
+  });
+});
+
+// ===== CTA BUTTON HOVER =====
+(function() {
+  var ctaBtn = document.getElementById('cta-leaderboard-e5f6');
+  if (ctaBtn) {
+    ctaBtn.addEventListener('mouseenter', function() {
+      this.style.background = '#C9A227';
+      this.style.color = '#140A0A';
+    });
+    ctaBtn.addEventListener('mouseleave', function() {
+      this.style.background = 'transparent';
+      this.style.color = '#C9A227';
+    });
+  }
+})();
+
+// ===== HERO PARTICLES =====
+(function() {
+  const canvas = document.getElementById('hero-canvas-a1b2');
+  const ctx = canvas.getContext('2d');
+  let w, h;
+  const particles = [];
+  const COUNT = 60;
+
+  function resize() {
+    const section = canvas.parentElement;
+    w = canvas.width = section.offsetWidth;
+    h = canvas.height = section.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < COUNT; i++) {
+    particles.push({
+      x: Math.random() * 2000,
+      y: Math.random() * 1200,
+      r: Math.random() * 1.5 + 1,
+      speed: Math.random() * 0.3 + 0.1,
+      alpha: Math.random() * 0.3 + 0.15,
+      drift: (Math.random() - 0.5) * 0.2
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (const p of particles) {
+      p.y -= p.speed;
+      p.x += p.drift;
+      if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
+      if (p.x < -10) p.x = w + 10;
+      if (p.x > w + 10) p.x = -10;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201, 162, 39, ${p.alpha})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ===== NAV ACTIVE STATE =====
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link[data-nav]');
+
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(l => {
+        l.classList.toggle('active', l.dataset.nav === id);
+      });
+    }
+  });
+}, { threshold: 0.3, rootMargin: '-80px 0px 0px 0px' });
+
+sections.forEach(s => navObserver.observe(s));
+
+// ===== TYPEWRITER EFFECT =====
+const terminalLines = [
+  '> INITIALIZING FORE! FATHERS...',
+  '> CREW TYPE: Sunday Golf Syndicate',
+  '> BASE: Fort Worth, TX',
+  '> FOUNDED: May 2026',
+  '> MEMBERS: 9 ACTIVE',
+  '> MISSION: Show up every Sunday.',
+  '          Hit far. Putt clean.',
+  '          Talk trash respectfully.',
+  '> FOUNDER: Greg Hennessey',
+  '> CO-FOUNDER: Scott Ewing',
+  '> STATUS: ACTIVE ✓',
+  '> COURSES: Pecan Valley Hills',
+  '           Meadowbrook GC',
+  '           Rockwood GC',
+  '> MOTTO: "Charge the fairway."'
+];
+
+let terminalStarted = false;
+const terminalEl = document.getElementById('terminal-output-g7h8');
+
+function typeWriter() {
+  if (terminalStarted) return;
+  terminalStarted = true;
+  let lineIdx = 0, charIdx = 0, output = '';
+  function type() {
+    if (lineIdx >= terminalLines.length) {
+      terminalEl.innerHTML = output + '<span class="tw-cursor">&nbsp;</span>';
+      return;
+    }
+    const line = terminalLines[lineIdx];
+    if (charIdx < line.length) {
+      output += line[charIdx];
+      charIdx++;
+      terminalEl.innerHTML = output + '<span class="tw-cursor">&nbsp;</span>';
+      setTimeout(type, 20 + Math.random() * 30);
+    } else {
+      output += '\n';
+      lineIdx++;
+      charIdx = 0;
+      setTimeout(type, 150);
+    }
+  }
+  type();
+}
+
+const aboutSection = document.getElementById('about');
+const terminalObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) typeWriter();
+}, { threshold: 0.2 });
+terminalObserver.observe(aboutSection);
+
+// ===================== WEATHER DATA =====================
+var WEATHER_DATA = [
+  { time: '3:00 AM', condition: 'Mostly Clear', icon: '🌙', temp: 68, feels: 68, precip: '3%', humidity: '92%', wind: '2mph NE', tee: false },
+  { time: '4:00 AM', condition: 'Mostly Clear', icon: '🌙', temp: 67, feels: 67, precip: '4%', humidity: '92%', wind: '1mph NE', tee: false },
+  { time: '5:00 AM', condition: 'Partly Cloudy', icon: '⛅', temp: 67, feels: 67, precip: '4%', humidity: '93%', wind: '2mph NNE', tee: false },
+  { time: '6:00 AM', condition: 'Partly Cloudy', icon: '⛅', temp: 67, feels: 67, precip: '4%', humidity: '89%', wind: '4mph NNE', tee: false },
+  { time: '7:00 AM', condition: 'Partly Cloudy', icon: '⛅', temp: 67, feels: 67, precip: '4%', humidity: '90%', wind: '4mph NE', tee: true },
+  { time: '8:00 AM', condition: 'Partly Cloudy', icon: '⛅', temp: 69, feels: 69, precip: '3%', humidity: '88%', wind: '5mph NNE', tee: true },
+  { time: '9:00 AM', condition: 'Partly Cloudy', icon: '⛅', temp: 73, feels: 73, precip: '3%', humidity: '80%', wind: '4mph NE', tee: true },
+  { time: '10:00 AM', condition: 'Partly Cloudy', icon: '⛅', temp: 76, feels: 80, precip: '4%', humidity: '71%', wind: '5mph NE', tee: true },
+  { time: '11:00 AM', condition: 'Mostly Sunny', icon: '☀️', temp: 80, feels: 83, precip: '2%', humidity: '64%', wind: '6mph ENE', tee: true },
+  { time: '12:00 PM', condition: 'Partly Cloudy', icon: '⛅', temp: 82, feels: 85, precip: '4%', humidity: '59%', wind: '6mph ENE', tee: true }
+];
+
+function renderWeatherGrid() {
+  var grid = document.getElementById('weather-hourly-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  WEATHER_DATA.forEach(function(h) {
+    var card = document.createElement('div');
+    card.className = 'bull-hour-card' + (h.tee ? ' tee-active' : '');
+    card.innerHTML =
+      '<div style="font-family:\'Orbitron\',sans-serif;font-weight:700;font-size:16px;color:#F5EDD8;margin-bottom:6px">' + h.time + '</div>' +
+      '<div style="font-size:32px;margin-bottom:4px">' + h.icon + '</div>' +
+      '<div style="display:flex;align-items:baseline;justify-content:center;gap:2px;margin-bottom:4px">' +
+        '<span style="font-family:\'Orbitron\',sans-serif;font-weight:900;font-size:34px;color:#C9A227">' + h.temp + '</span>' +
+        '<span style="font-family:\'Orbitron\',sans-serif;font-size:17px;color:#B01515">°F</span>' +
+      '</div>' +
+      '<div style="font-family:\'Rajdhani\',sans-serif;font-size:15px;color:#F5EDD8;margin-bottom:8px">' + h.condition + '</div>' +
+      '<div style="font-family:\'Rajdhani\',sans-serif;font-size:14px;color:#7A4A4A;line-height:1.6">' +
+        '💧 ' + h.humidity + '<br>' +
+        '🌬️ ' + h.wind + '<br>' +
+        '☔ ' + h.precip +
+      '</div>';
+    grid.appendChild(card);
+  });
+}
+
+// ===================== MEMBER DATA =====================
+const COURSES = {
+  'Pecan Valley Hills': { par: 72, location: 'Benbrook, TX' },
+  'Meadowbrook': { par: 71, location: 'Fort Worth, TX' },
+  'Rockwood': { par: 71, location: 'Fort Worth, TX' }
+};
+
+const DEFAULT_MEMBERS = [
+  { id: 'scott',   name: 'Scott Ewing',     nickname: 'THE ARCHITECT',  role: 'CO-FOUNDER · WEB DESIGN', roleIcon: '🖥️', avatarColor: '#2A5A8A', scores: [], pinned: true },
+  { id: 'greg',    name: 'Greg Hennessey',  nickname: 'THE ORIGINAL',   role: 'ORIGINAL FOUNDER',         roleIcon: '⭐', avatarColor: '#2D5A27', scores: [] },
+  { id: 'wayne',   name: 'Wayne Roberson',  nickname: 'STEADY HAND',    role: 'MEMBER',                   roleIcon: '🏌️', avatarColor: '#5A4A2A', scores: [] },
+  { id: 'brady',   name: 'Brady Allan',     nickname: 'THE CLOSER',     role: 'MEMBER',                   roleIcon: '🏌️', avatarColor: '#8A6A2A', scores: [] },
+  { id: 'juan',    name: 'Juan Hernandez',  nickname: 'EL JEFE',        role: 'MEMBER',                   roleIcon: '🏌️', avatarColor: '#7A4A1A', scores: [] },
+  { id: 'sam',     name: 'Sam Coleridge',   nickname: 'DOC',            role: 'THE DOC',                  roleIcon: '🩺', avatarColor: '#5A2A2A', scores: [] },
+  { id: 'cody',    name: 'Cody Sears',      nickname: 'HEISENBERG',     role: 'MEMBER',                   roleIcon: '🏌️', avatarColor: '#7A5A1A', scores: [] },
+  { id: 'chad',    name: 'Chad Kirkland',   nickname: 'IRONMAN',        role: 'MEMBER',                   roleIcon: '🏌️', avatarColor: '#3A3A5A', scores: [] },
+  { id: 'walt',    name: 'Walt Stevens',    nickname: 'THE VETERAN',    role: 'SENIOR STATESMAN',         roleIcon: '🎖️', avatarColor: '#4A4A6A', scores: [] }
+];
+
+const MEMBER_NAMES_FOR_RSVP = DEFAULT_MEMBERS.map(m => m.name.split(' ')[0]);
+
+function loadMembers() {
+  const saved = localStorage.getItem('ff_members');
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    return DEFAULT_MEMBERS.map(def => {
+      const found = parsed.find(p => p.id === def.id);
+      return found ? { ...def, ...found } : def;
+    });
+  }
+  return JSON.parse(JSON.stringify(DEFAULT_MEMBERS));
+}
+
+function saveMembers(members) {
+  localStorage.setItem('ff_members', JSON.stringify(members));
+}
+
+// ===================== RSVP FUNCTIONS =====================
+function getRsvp(memberId) {
+  return localStorage.getItem('ff_rsvp_' + memberId) === 'true';
+}
+
+function setRsvp(memberId, val) {
+  localStorage.setItem('ff_rsvp_' + memberId, val.toString());
+}
+
+function toggleRsvp(memberId) {
+  var current = getRsvp(memberId);
+  setRsvp(memberId, !current);
+  renderRoster();
+  renderRsvpSummary();
+}
+
+function renderRsvpSummary() {
+  var strip = document.getElementById('rsvp-summary-strip');
+  if (!strip) return;
+  var members = loadMembers();
+  strip.innerHTML = '';
+  members.forEach(function(m) {
+    var confirmed = getRsvp(m.id);
+    var firstName = m.name.split(' ')[0];
+    var pill = document.createElement('div');
+    pill.style.cssText = 'display:inline-flex;align-items:center;gap:4px;padding:7px 12px;background:' + (confirmed ? '#8B1010' : '#1E0F0F') + ';border:1px solid ' + (confirmed ? '#C9A227' : '#6B2020') + ';border-radius:0;font-family:\'Orbitron\',sans-serif;font-size:10px;font-weight:700;color:' + (confirmed ? '#E8C84A' : '#7A4A4A') + ';cursor:pointer;';
+    pill.textContent = (confirmed ? '✅' : '❓') + ' ' + firstName;
+    pill.dataset.rsvpMember = m.id;
+    strip.appendChild(pill);
+  });
+  strip.querySelectorAll('[data-rsvp-member]').forEach(function(el) {
+    el.addEventListener('click', function() {
+      toggleRsvp(this.dataset.rsvpMember);
+    });
+  });
+}
+
+// ===================== HANDICAP CALC =====================
+function calcHandicap(scores) {
+  if (!scores || scores.length === 0) return null;
+  const diffs = scores.map(s => s.gross - (COURSES[s.course] ? COURSES[s.course].par : 72));
+  const sorted = [...diffs].sort((a, b) => a - b);
+  const take = scores.length >= 5 ? Math.min(5, Math.floor(scores.length * 0.4) + 1) : sorted.length;
+  const best = sorted.slice(0, take);
+  const avg = best.reduce((a, b) => a + b, 0) / best.length;
+  return Math.max(0, parseFloat(avg.toFixed(1)));
+}
+
+function calcAvgScore(scores) {
+  if (!scores || scores.length === 0) return null;
+  const avg = scores.reduce((a, s) => a + s.gross, 0) / scores.length;
+  return Math.round(avg);
+}
+
+// ===================== AVATAR SVG =====================
+function memberAvatar(member, size) {
+  size = size || 64;
+  const c = member.avatarColor || '#2D5A27';
+  const initials = member.name.split(' ').map(function(w) { return w[0]; }).join('').slice(0, 2).toUpperCase();
+  return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+    '<circle cx="32" cy="32" r="32" fill="' + c + '" opacity="0.25"/>' +
+    '<circle cx="32" cy="26" r="13" fill="' + c + '" opacity="0.8"/>' +
+    '<ellipse cx="32" cy="55" rx="18" ry="10" fill="' + c + '" opacity="0.6"/>' +
+    '<text x="32" y="30" text-anchor="middle" dominant-baseline="middle" fill="#FAF3E0" font-family="Orbitron,sans-serif" font-weight="900" font-size="14">' + initials + '</text>' +
+    '</svg>';
+}
+
+// ===================== RENDER ROSTER =====================
+function renderRoster() {
+  const members = loadMembers();
+  const grid = document.getElementById('roster-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  members.forEach(function(member) {
+    const hcp = calcHandicap(member.scores);
+    const avg = calcAvgScore(member.scores);
+    const wins = member.scores ? member.scores.filter(function(s) { return s.won; }).length : 0;
+    const rounds = member.scores ? member.scores.length : 0;
+    const hcpDisplay = hcp !== null ? hcp : '—';
+    const avgDisplay = avg !== null ? avg : '—';
+    const hcpPct = hcp !== null ? Math.min(100, (hcp / 36) * 100) : 0;
+
+    var rsvpConfirmed = getRsvp(member.id);
+    var rsvpBadge = rsvpConfirmed
+      ? '<div style="background:#8B1010;border:1px solid #C9A227;padding:3px 7px;font-family:\'Orbitron\',sans-serif;font-size:10px;font-weight:700;color:#E8C84A;border-radius:0">✅ IN</div>'
+      : '<div style="background:#1E0F0F;border:1px solid #6B2020;padding:3px 7px;font-family:\'Orbitron\',sans-serif;font-size:10px;font-weight:700;color:#7A4A4A;border-radius:0">❓ TBD</div>';
+
+    var lastScoresHTML = '';
+    if (member.scores && member.scores.length > 0) {
+      var recent = member.scores.slice(-5);
+      for (var si = 0; si < recent.length; si++) {
+        var sc = recent[si];
+        lastScoresHTML += '<div class="score-row"><span style="color:#C4A882;font-size:15px">' + sc.date + ' · ' + sc.course + '</span><span style="color:#C9A227;font-weight:700">' + sc.gross + '</span></div>';
+      }
+    } else {
+      lastScoresHTML = '<div class="score-row" style="color:#C4A882;font-size:15px;justify-content:center">No scores yet</div>';
+    }
+
+    var pinnedBanner = '';
+    if (member.pinned) {
+      pinnedBanner = '<div style="background:#C9A227;color:#140A0A;font-family:\'Press Start 2P\',monospace;font-size:8px;text-align:center;padding:3px;letter-spacing:0.08em">★ FOUNDER & WEB DESIGNER</div>';
+    }
+
+    var rsvpBtnBg = rsvpConfirmed ? '#8B1010' : '#1E0F0F';
+    var rsvpBtnBorder = rsvpConfirmed ? '#C9A227' : '#B01515';
+    var rsvpBtnColor = rsvpConfirmed ? '#E8C84A' : '#B01515';
+    var rsvpBtnText = rsvpConfirmed ? '✅ CONFIRMED — I\'M PLAYING SUNDAY' : '❌ NOT CONFIRMED — TAP TO CONFIRM';
+
+    var card = document.createElement('div');
+    card.className = 'flip-container';
+    card.innerHTML =
+      '<div class="flip-inner" id="flip-' + member.id + '">' +
+        '<div class="flip-front">' +
+          pinnedBanner +
+          '<div style="padding:16px">' +
+            '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">' +
+              '<div>' + memberAvatar(member, 56) + '</div>' +
+              '<div style="flex:1">' +
+                '<div style="font-family:\'Orbitron\',sans-serif;font-weight:900;font-size:18px;color:#FAF3E0;line-height:1.2">' + member.name + '</div>' +
+                '<div style="font-family:\'Press Start 2P\',monospace;font-size:9px;color:#C9A227;margin-top:4px">' + member.nickname + '</div>' +
+              '</div>' +
+              '<div style="display:flex;flex-direction:column;align-items:center;gap:4px">' +
+                rsvpBadge +
+              '</div>' +
+            '</div>' +
+            '<div style="display:inline-flex;align-items:center;gap:5px;background:#1E0F0F;border:1px solid #6B2020;border-radius:3px;padding:3px 8px;margin-bottom:12px">' +
+              '<span style="font-size:15px">' + member.roleIcon + '</span>' +
+              '<span style="font-family:\'Orbitron\',sans-serif;font-size:10px;color:#E8C84A;letter-spacing:0.08em">' + member.role + '</span>' +
+            '</div>' +
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">' +
+              '<div style="background:#1E0F0F;border:1px solid #6B2020;border-radius:3px;padding:8px;text-align:center">' +
+                '<div style="font-family:\'Orbitron\',sans-serif;font-size:26px;font-weight:900;color:#C9A227">' + hcpDisplay + '</div>' +
+                '<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:#C4A882">HCP</div>' +
+              '</div>' +
+              '<div style="background:#1E0F0F;border:1px solid #6B2020;border-radius:3px;padding:8px;text-align:center">' +
+                '<div style="font-family:\'Orbitron\',sans-serif;font-size:26px;font-weight:900;color:#F5EDD8">' + avgDisplay + '</div>' +
+                '<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:#C4A882">AVG</div>' +
+              '</div>' +
+              '<div style="background:#1E0F0F;border:1px solid #6B2020;border-radius:3px;padding:8px;text-align:center">' +
+                '<div style="font-family:\'Orbitron\',sans-serif;font-size:26px;font-weight:900;color:#E8C84A">' + rounds + '</div>' +
+                '<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:#C4A882">ROUNDS</div>' +
+              '</div>' +
+              '<div style="background:#1E0F0F;border:1px solid #6B2020;border-radius:3px;padding:8px;text-align:center">' +
+                '<div style="font-family:\'Orbitron\',sans-serif;font-size:26px;font-weight:900;color:#E8C84A">' + wins + '</div>' +
+                '<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:#C4A882">WINS</div>' +
+              '</div>' +
+            '</div>' +
+            '<div style="margin-bottom:4px">' +
+              '<div style="display:flex;justify-content:space-between;margin-bottom:3px">' +
+                '<span style="font-family:\'Orbitron\',sans-serif;font-size:10px;color:#C4A882">HANDICAP INDEX</span>' +
+                '<span style="font-family:\'Orbitron\',sans-serif;font-size:10px;color:#C9A227">' + hcpDisplay + '</span>' +
+              '</div>' +
+              '<div style="height:5px;background:#6B2020;border-radius:2px">' +
+                '<div style="height:100%;width:' + hcpPct + '%;background:#C9A227;border-radius:2px;transition:width 0.5s"></div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="flip-hint">TAP TO FLIP FOR SCORES & PROFILE</div>' +
+        '</div>' +
+        '<div class="flip-back">' +
+          '<div style="display:flex;gap:6px;margin-bottom:12px">' +
+            '<button class="tab-btn active" data-tab-target="scores" data-member-id="' + member.id + '">⛳ SCORES</button>' +
+            '<button class="tab-btn" data-tab-target="profile" data-member-id="' + member.id + '">✏️ PROFILE</button>' +
+          '</div>' +
+          '<div class="tab-content active" id="tab-scores-' + member.id + '">' +
+            '<div class="handicap-display">' +
+              '<div class="hcp-num">' + hcpDisplay + '</div>' +
+              '<div class="hcp-label">HANDICAP INDEX</div>' +
+              '<div style="font-family:\'Rajdhani\',sans-serif;font-size:14px;color:#C4A882;margin-top:2px">' + (rounds === 0 ? 'Enter scores to calculate' : 'Based on ' + rounds + ' round' + (rounds !== 1 ? 's' : '')) + '</div>' +
+            '</div>' +
+            '<div style="font-family:\'Press Start 2P\',monospace;font-size:9px;color:#C4A882;margin-bottom:5px">RECENT ROUNDS</div>' +
+            '<div class="score-list" id="score-list-' + member.id + '">' + lastScoresHTML + '</div>' +
+            '<div style="font-family:\'Press Start 2P\',monospace;font-size:9px;color:#C9A227;margin-bottom:6px">LOG A ROUND</div>' +
+            '<select class="back-input" id="score-course-' + member.id + '">' +
+              '<option value="">Select Course</option>' +
+              '<option>Pecan Valley Hills</option>' +
+              '<option>Meadowbrook</option>' +
+              '<option>Rockwood</option>' +
+            '</select>' +
+            '<input class="back-input" type="date" id="score-date-' + member.id + '" />' +
+            '<input class="back-input" type="number" id="score-gross-' + member.id + '" placeholder="Gross Score" min="55" max="150" />' +
+            '<button class="back-btn post-score-btn" data-member-post="' + member.id + '">POST SCORE ✓</button>' +
+            '<div class="confirm-msg" id="score-confirm-' + member.id + '">✅ Score posted! Handicap updated.</div>' +
+            '<button class="back-btn danger delete-score-btn" data-member-delete="' + member.id + '">✕ REMOVE LAST SCORE</button>' +
+          '</div>' +
+          '<div class="tab-content" id="tab-profile-' + member.id + '">' +
+            '<div style="margin-bottom:12px">' +
+              '<div style="font-family:\'Press Start 2P\',monospace;font-size:9px;color:#E8C84A;margin-bottom:6px">SUNDAY RSVP</div>' +
+              '<button class="rsvp-toggle-btn" data-rsvp-toggle="' + member.id + '" style="width:100%;padding:10px 8px;background:' + rsvpBtnBg + ';border:2px solid ' + rsvpBtnBorder + ';border-radius:0;font-family:\'Orbitron\',sans-serif;font-size:11px;font-weight:700;color:' + rsvpBtnColor + ';cursor:pointer;letter-spacing:0.05em;">' + rsvpBtnText + '</button>' +
+            '</div>' +
+            '<div style="font-family:\'Press Start 2P\',monospace;font-size:9px;color:#C9A227;margin-bottom:8px">EDIT PROFILE</div>' +
+            '<label style="font-family:\'Rajdhani\',sans-serif;font-size:15px;color:#C4A882">NAME</label>' +
+            '<input class="back-input" id="edit-name-' + member.id + '" value="' + member.name + '" placeholder="Full Name" />' +
+            '<label style="font-family:\'Rajdhani\',sans-serif;font-size:15px;color:#C4A882">NICKNAME</label>' +
+            '<input class="back-input" id="edit-nick-' + member.id + '" value="' + member.nickname + '" placeholder="Nickname" />' +
+            '<label style="font-family:\'Rajdhani\',sans-serif;font-size:15px;color:#C4A882">ROLE</label>' +
+            '<input class="back-input" id="edit-role-' + member.id + '" value="' + member.role + '" placeholder="Role" />' +
+            '<label style="font-family:\'Rajdhani\',sans-serif;font-size:15px;color:#C4A882">AVATAR COLOR</label>' +
+            '<input type="color" class="back-input" id="edit-color-' + member.id + '" value="' + member.avatarColor + '" style="height:38px;padding:2px 6px;cursor:pointer" />' +
+            '<button class="back-btn save-profile-btn" data-member-save="' + member.id + '">SAVE PROFILE ✓</button>' +
+            '<div class="confirm-msg" id="profile-confirm-' + member.id + '">✅ Profile saved!</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    grid.appendChild(card);
+  });
+
+  // Attach flip click listeners
+  document.querySelectorAll('.flip-container').forEach(function(container) {
+    container.addEventListener('click', function(e) {
+      if (e.target.closest('button') || e.target.closest('input') || e.target.closest('select') || e.target.closest('label')) return;
+      this.querySelector('.flip-inner').classList.toggle('flipped');
+    });
+  });
+
+  // Tab buttons
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var memberId = this.dataset.memberId;
+      var tab = this.dataset.tabTarget;
+      var allTabs = document.querySelectorAll('[id^="tab-"][id$="-' + memberId + '"]');
+      allTabs.forEach(function(t) { t.classList.remove('active'); });
+      var target = document.getElementById('tab-' + tab + '-' + memberId);
+      if (target) target.classList.add('active');
+      var backEl = this.closest('.flip-back');
+      if (backEl) {
+        backEl.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      }
+      this.classList.add('active');
+    });
+  });
+
+  // Post score buttons
+  document.querySelectorAll('.post-score-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var memberId = this.dataset.memberPost;
+      logScore(memberId);
+    });
+  });
+
+  // Delete score buttons
+  document.querySelectorAll('.delete-score-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var memberId = this.dataset.memberDelete;
+      deleteLastScore(memberId);
+    });
+  });
+
+  // Save profile buttons
+  document.querySelectorAll('.save-profile-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var memberId = this.dataset.memberSave;
+      saveProfile(memberId);
+    });
+  });
+
+  // RSVP toggle buttons
+  document.querySelectorAll('.rsvp-toggle-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var memberId = this.dataset.rsvpToggle;
+      toggleRsvp(memberId);
+    });
+  });
+}
+
+// ===================== LOG SCORE =====================
+function logScore(memberId) {
+  var courseEl = document.getElementById('score-course-' + memberId);
+  var dateEl = document.getElementById('score-date-' + memberId);
+  var grossEl = document.getElementById('score-gross-' + memberId);
+  var course = courseEl ? courseEl.value : '';
+  var date = dateEl ? dateEl.value : '';
+  var gross = grossEl ? parseInt(grossEl.value) : NaN;
+
+  if (!course) { alert('Please select a course.'); return; }
+  if (!date) { alert('Please enter a date.'); return; }
+  if (isNaN(gross) || gross < 55 || gross > 150) { alert('Please enter a valid gross score (55–150).'); return; }
+
+  var members = loadMembers();
+  var m = members.find(function(mm) { return mm.id === memberId; });
+  if (!m.scores) m.scores = [];
+  m.scores.push({ course: course, date: date, gross: gross, won: false });
+  saveMembers(members);
+
+  var msg = document.getElementById('score-confirm-' + memberId);
+  if (msg) {
+    msg.style.display = 'block';
+    setTimeout(function() { msg.style.display = 'none'; }, 3000);
+  }
+
+  if (courseEl) courseEl.value = '';
+  if (dateEl) dateEl.value = '';
+  if (grossEl) grossEl.value = '';
+
+  renderRoster();
+  renderLeaderboard();
+}
+
+// ===================== DELETE LAST SCORE =====================
+function deleteLastScore(memberId) {
+  var members = loadMembers();
+  var m = members.find(function(mm) { return mm.id === memberId; });
+  if (!m.scores || m.scores.length === 0) { alert('No scores to remove.'); return; }
+  m.scores.pop();
+  saveMembers(members);
+  renderRoster();
+  renderLeaderboard();
+}
+
+// ===================== SAVE PROFILE =====================
+function saveProfile(memberId) {
+  var members = loadMembers();
+  var m = members.find(function(mm) { return mm.id === memberId; });
+  var nameEl = document.getElementById('edit-name-' + memberId);
+  var nickEl = document.getElementById('edit-nick-' + memberId);
+  var roleEl = document.getElementById('edit-role-' + memberId);
+  var colorEl = document.getElementById('edit-color-' + memberId);
+  m.name = (nameEl && nameEl.value.trim()) || m.name;
+  m.nickname = (nickEl && nickEl.value.trim()) || m.nickname;
+  m.role = (roleEl && roleEl.value.trim()) || m.role;
+  m.avatarColor = colorEl ? colorEl.value : m.avatarColor;
+  saveMembers(members);
+
+  var msg = document.getElementById('profile-confirm-' + memberId);
+  if (msg) {
+    msg.style.display = 'block';
+    setTimeout(function() { msg.style.display = 'none'; renderRoster(); }, 1500);
+  }
+}
+
+// ===================== LEADERBOARD =====================
+function renderLeaderboard() {
+  var tbody = document.getElementById('leaderboard-tbody');
+  var season = document.getElementById('season-tbody');
+  if (!tbody) return;
+  var members = loadMembers();
+
+  var withScores = members.map(function(m) {
+    var hcp = calcHandicap(m.scores);
+    var last = m.scores && m.scores.length > 0 ? m.scores[m.scores.length - 1] : null;
+    return { id: m.id, name: m.name, nickname: m.nickname, scores: m.scores, hcp: hcp, last: last };
+  });
+
+  var hasAnyScores = withScores.some(function(m) { return m.last; });
+
+  tbody.innerHTML = '';
+  var rankIcons = ['👑', '⚔️', '🛡️'];
+
+  if (!hasAnyScores) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:#C4A882;font-family:\'Press Start 2P\',monospace;font-size:11px">NO SCORES POSTED YET<br><br>Log a round from your player card!</td></tr>';
+  } else {
+    var sorted = withScores
+      .filter(function(m) { return m.last; })
+      .map(function(m) {
+        var coursePar = COURSES[m.last.course] ? COURSES[m.last.course].par : 72;
+        return { name: m.name, last: m.last, hcp: m.hcp, net: m.last.gross - (m.hcp || 0), vsPar: m.last.gross - coursePar };
+      })
+      .sort(function(a, b) { return a.net - b.net; });
+
+    sorted.forEach(function(m, i) {
+      var icon = rankIcons[i] || '';
+      var vsPar = m.vsPar > 0 ? '+' + m.vsPar : m.vsPar === 0 ? 'E' : '' + m.vsPar;
+      var vsParColor = m.vsPar < 0 ? '#4ade80' : m.vsPar === 0 ? '#F5EDD8' : '#8B1010';
+      var pointsStr = i === 0 ? '+150' : i === 1 ? '+80' : i === 2 ? '+40' : '+10';
+      var statusStr = i === 0 ? '👑 WINNER' : i === sorted.length - 1 ? '💀' : '';
+      var tr = document.createElement('tr');
+      tr.className = 'slide-in';
+      tr.style.cssText = 'animation-delay:' + (i * 0.08) + 's;border-bottom:1px solid #6B2020;';
+      tr.innerHTML =
+        '<td style="padding:14px 12px;font-family:\'Orbitron\',sans-serif;font-weight:700;color:#E8C84A">' + icon + ' ' + (i + 1) + '</td>' +
+        '<td style="padding:14px 12px;color:#FAF3E0;font-weight:600">' + m.name + '<br><span style="font-size:14px;color:#C4A882">' + m.last.course + ' · ' + m.last.date + '</span></td>' +
+        '<td style="padding:14px 12px;text-align:center;color:#F5EDD8">' + m.last.gross + '</td>' +
+        '<td style="padding:14px 12px;text-align:center;color:#C9A227;font-weight:700">' + Math.round(m.net) + '</td>' +
+        '<td style="padding:14px 12px;text-align:center;color:' + vsParColor + '">' + vsPar + '</td>' +
+        '<td style="padding:14px 12px;text-align:center;color:#C4A882">—</td>' +
+        '<td style="padding:14px 12px;text-align:center;color:#E8C84A">' + pointsStr + '</td>' +
+        '<td style="padding:14px 12px;text-align:center">' + statusStr + '</td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Season standings
+  if (season) {
+    season.innerHTML = '';
+    var seasonData = members.map(function(m) {
+      var rounds = m.scores ? m.scores.length : 0;
+      var best = rounds > 0 ? Math.min.apply(null, m.scores.map(function(s) { return s.gross; })) : null;
+      var pts = rounds * 10;
+      return { name: m.name, rounds: rounds, best: best, pts: pts };
+    }).sort(function(a, b) { return b.pts - a.pts || a.rounds - b.rounds; });
+
+    seasonData.forEach(function(m, i) {
+      var tr = document.createElement('tr');
+      tr.style.cssText = 'border-bottom:1px solid #6B2020';
+      tr.innerHTML =
+        '<td style="padding:8px 12px;font-family:\'Orbitron\',sans-serif;color:#E8C84A">' + (i + 1) + '</td>' +
+        '<td style="padding:8px 12px;color:#FAF3E0">' + m.name + '</td>' +
+        '<td style="padding:8px 12px;text-align:center;color:#C9A227;font-weight:700">' + m.pts + '</td>' +
+        '<td style="padding:8px 12px;text-align:center;color:#C4A882">' + m.rounds + '</td>' +
+        '<td style="padding:8px 12px;text-align:center;color:#F5EDD8">' + (m.best || '—') + '</td>';
+      season.appendChild(tr);
+    });
+  }
+}
+
+// ===================== GALLERY =====================
+function loadGallery() {
+  var saved = localStorage.getItem('ff_gallery');
+  return saved ? JSON.parse(saved) : [];
+}
+function saveGallery(photos) {
+  localStorage.setItem('ff_gallery', JSON.stringify(photos));
+}
+
+function renderGallery() {
+  var grid = document.getElementById('gallery-grid');
+  if (!grid) return;
+  var photos = loadGallery();
+
+  grid.innerHTML = '';
+
+  photos.forEach(function(photo, i) {
+    var div = document.createElement('div');
+    div.className = 'card-base';
+    div.style.cssText = 'overflow:hidden;position:relative;';
+
+    var img = document.createElement('img');
+    img.src = photo.dataUrl;
+    img.alt = photo.caption;
+    img.style.cssText = 'width:100%;height:180px;object-fit:cover;display:block;cursor:pointer';
+    img.dataset.galleryIdx = i;
+
+    var infoDiv = document.createElement('div');
+    infoDiv.style.cssText = 'padding:8px 10px';
+    infoDiv.innerHTML = '<div style="font-family:\'Press Start 2P\',monospace;font-size:10px;color:#C9A227;margin-bottom:3px">' + photo.caption + '</div>' +
+      '<div style="font-family:\'Rajdhani\',sans-serif;font-size:15px;color:#C4A882">' + (photo.member || 'The Crew') + ' · ' + photo.date + '</div>';
+
+    var delBtn = document.createElement('button');
+    delBtn.dataset.deleteIdx = i;
+    delBtn.style.cssText = 'position:absolute;top:6px;right:6px;background:rgba(139,16,16,0.85);border:none;color:white;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:12px;line-height:1';
+    delBtn.textContent = '✕';
+
+    div.appendChild(img);
+    div.appendChild(infoDiv);
+    div.appendChild(delBtn);
+    grid.appendChild(div);
+  });
+
+  grid.querySelectorAll('[data-gallery-idx]').forEach(function(img) {
+    img.addEventListener('click', function(e) {
+      e.stopPropagation();
+      openLightbox(parseInt(this.dataset.galleryIdx));
+    });
+  });
+
+  grid.querySelectorAll('[data-delete-idx]').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      deletePhoto(parseInt(this.dataset.deleteIdx));
+    });
+  });
+
+  var addCard = document.createElement('div');
+  addCard.className = 'card-base';
+  addCard.id = 'gallery-add-card';
+  addCard.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:center;height:240px;cursor:pointer;border-style:dashed;border-color:#C9A227;';
+  addCard.innerHTML = '<div style="font-size:36px;margin-bottom:8px">📷</div>' +
+    '<div style="font-family:\'Orbitron\',sans-serif;font-size:13px;color:#C9A227;font-weight:700">ADD PHOTO</div>' +
+    '<div style="font-family:\'Rajdhani\',sans-serif;font-size:15px;color:#C4A882;margin-top:4px">Upload from your device</div>';
+  grid.appendChild(addCard);
+
+  addCard.addEventListener('click', function() {
+    document.getElementById('gallery-modal').style.display = 'flex';
+  });
+}
+
+function deletePhoto(index) {
+  if (!confirm('Delete this photo?')) return;
+  var photos = loadGallery();
+  photos.splice(index, 1);
+  saveGallery(photos);
+  renderGallery();
+  document.getElementById('lightbox').style.display = 'none';
+}
+
+function openLightbox(index) {
+  var photos = loadGallery();
+  var p = photos[index];
+  if (!p) return;
+  var lb = document.getElementById('lightbox');
+  lb.style.display = 'flex';
+  lb.innerHTML = '<div style="position:relative;max-width:90vw;max-height:90vh">' +
+    '<img src="' + p.dataUrl + '" style="max-width:90vw;max-height:80vh;border-radius:4px;object-fit:contain;display:block" alt="' + p.caption + '">' +
+    '<div style="padding:10px 0;text-align:center">' +
+      '<div style="font-family:\'Press Start 2P\',monospace;font-size:11px;color:#C9A227">' + p.caption + '</div>' +
+      '<div style="font-family:\'Rajdhani\',sans-serif;font-size:16px;color:#C4A882">' + (p.member || 'The Crew') + ' · ' + p.date + '</div>' +
+    '</div>' +
+    '<button id="lb-close-btn" style="position:absolute;top:-12px;right:-12px;background:#8B1010;border:none;color:white;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:16px;font-weight:bold">✕</button>' +
+    '<button id="lb-delete-btn" data-lb-del="' + index + '" style="display:block;margin:0 auto;background:#8B1010;border:none;color:white;padding:6px 16px;border-radius:3px;font-family:\'Rajdhani\',sans-serif;font-size:16px;cursor:pointer">🗑 DELETE PHOTO</button>' +
+  '</div>';
+
+  var closeBtn = document.getElementById('lb-close-btn');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() { lb.style.display = 'none'; });
+  }
+  var delBtn = document.getElementById('lb-delete-btn');
+  if (delBtn) {
+    delBtn.addEventListener('click', function() { deletePhoto(parseInt(this.dataset.lbDel)); });
+  }
+  lb.addEventListener('click', function(e) {
+    if (e.target === lb) lb.style.display = 'none';
+  });
+}
+
+function submitGalleryPhoto() {
+  var fileInput = document.getElementById('gallery-file');
+  var caption = document.getElementById('gallery-caption').value.trim();
+  var member = document.getElementById('gallery-member').value;
+  var date = document.getElementById('gallery-date').value;
+
+  if (!fileInput.files[0]) { alert('Please select a photo.'); return; }
+  if (!caption) { alert('Please add a caption.'); return; }
+  if (!date) { alert('Please enter a date.'); return; }
+
+  var reader = new FileReader();
+  reader.addEventListener('load', function(e) {
+    var photos = loadGallery();
+    photos.unshift({ dataUrl: e.target.result, caption: caption, member: member || 'The Crew', date: date });
+    saveGallery(photos);
+    renderGallery();
+    document.getElementById('gallery-modal').style.display = 'none';
+    fileInput.value = '';
+    document.getElementById('gallery-caption').value = '';
+    document.getElementById('gallery-date').value = '';
+  });
+  reader.readAsDataURL(fileInput.files[0]);
+}
+
+// ===== RSVP TOGGLES =====
+var rsvpContainer = document.getElementById('rsvp-mission1');
+if (rsvpContainer) {
+  MEMBER_NAMES_FOR_RSVP.forEach(function(firstName) {
+    var span = document.createElement('span');
+    span.className = 'cursor-pointer transition-colors';
+    span.style.color = '#E8C84A';
+    span.textContent = firstName + ' ❓';
+    span.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (this.dataset.confirmed === 'true') {
+        this.dataset.confirmed = 'false';
+        this.textContent = firstName + ' ❓';
+        this.style.color = '#E8C84A';
+      } else {
+        this.dataset.confirmed = 'true';
+        this.textContent = firstName + ' ✅';
+        this.style.color = '#C9A227';
+      }
+    });
+    rsvpContainer.appendChild(span);
+  });
+}
+
+// ===== CONFIRM ATTENDANCE BUTTONS =====
+document.querySelectorAll('.confirm-mission-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var confirmed = this.dataset.confirmed === 'true';
+    if (confirmed) {
+      this.dataset.confirmed = 'false';
+      this.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4"></i> CONFIRM ATTENDANCE';
+      this.style.background = 'transparent';
+      this.style.color = '#C9A227';
+      this.style.borderColor = '#C9A227';
+    } else {
+      this.dataset.confirmed = 'true';
+      this.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> CONFIRMED ✅';
+      this.style.background = '#C9A227';
+      this.style.color = '#140A0A';
+      this.style.borderColor = '#C9A227';
+    }
+    lucide.createIcons();
+  });
+});
+
+// ===== GALLERY MODAL BUTTONS =====
+document.getElementById('gallery-submit-btn').addEventListener('click', function() {
+  submitGalleryPhoto();
+});
+document.getElementById('gallery-cancel-btn').addEventListener('click', function() {
+  document.getElementById('gallery-modal').style.display = 'none';
+});
+
+// ===== INIT =====
+renderWeatherGrid();
+renderRoster();
+renderLeaderboard();
+renderGallery();
+renderRsvpSummary();
+</script>
+</body>
+</html>

@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<title>Fore! Fathers Golf Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Press+Start+2P&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        bg: '#1A1A14',
+        surface: '#22221A',
+        card: '#2A2A20',
+        border: '#4A4030',
+        neon: '#C9922A',
+        gold: '#E8C96A',
+        danger: '#8B2635',
+        muted: '#7A6A50',
+        txt: '#E8DCC8',
+        dim: '#9A8A70',
+        green: '#2D5A27',
+        cream: '#F5F0E0',
+      },
+      fontFamily: {
+        orbitron: ['Orbitron', 'sans-serif'],
+        rajdhani: ['Rajdhani', 'sans-serif'],
+        pixel: ['"Press Start 2P"', 'monospace'],
+      },
+    },
+  },
+};
+</script>
+<style>
+:root {
+  --bg: #1A1A14;
+  --surface: #22221A;
+  --card: #2A2A20;
+  --border: #4A4030;
+  --neon: #C9922A;
+  --gold: #E8C96A;
+  --red: #8B2635;
+  --muted: #7A6A50;
+  --text: #E8DCC8;
+  --dim: #9A8A70;
+  --green: #2D5A27;
+  --cream: #F5F0E0;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  background-image: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.3) 100%);
+  background-attachment: fixed;
+}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 3px; }
+scrollbar-color: var(--neon) var(--bg);
+
+.font-orbitron { font-family: 'Orbitron', sans-serif; }
+.font-rajdhani { font-family: 'Rajdhani', sans-serif; }
+.font-pixel { font-family: 'Press Start 2P', monospace; }
+
+.neon-glow { text-shadow: 0 0 10px rgba(201,146,42,0.5), 0 0 20px rgba(201,146,42,0.3); }
+.neon-glow-box { box-shadow: 0 0 12px rgba(201,146,42,0.2); }
+.gold-glow-box { box-shadow: 0 0 16px rgba(232,201,106,0.25); }
+.card-base {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.card-base:hover { box-shadow: 0 0 16px rgba(201,146,42,0.2); }
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.blink { animation: blink 1.5s ease-in-out infinite; }
+@keyframes blink-cursor { 0%,100%{opacity:1} 50%{opacity:0} }
+.blink-cursor { animation: blink-cursor 1s step-end infinite; }
+
+@keyframes achievementSlide {
+  0% { transform: translateY(-80px); opacity: 0; }
+  15% { transform: translateY(0); opacity: 1; }
+  85% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.achievement-animate { animation: achievementSlide 1.2s ease-out forwards; }
+
+@keyframes slideInLeft {
+  from { transform: translateX(-60px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.slide-in { animation: slideInLeft 0.5s ease-out forwards; opacity: 0; }
+
+.flip-container { perspective: 1000px; }
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  transform-style: preserve-3d;
+}
+.flip-container.flipped .flip-inner { transform: rotateY(180deg); }
+.flip-front, .flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 4px;
+  overflow-y: auto;
+}
+.flip-back { transform: rotateY(180deg); }
+
+@keyframes typewriterCursor { 0%,100%{border-color:var(--neon)} 50%{border-color:transparent} }
+.tw-cursor { border-right: 2px solid var(--neon); animation: typewriterCursor 0.8s step-end infinite; }
+
+#hero-canvas-a1b2 {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes marquee { 0%{transform:translateX(100%)} 100%{transform:translateX(-100%)} }
+.marquee-text { animation: marquee 20s linear infinite; white-space: nowrap; }
+
+.section-header {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: var(--neon);
+  text-shadow: 0 0 8px rgba(201,146,42,0.4);
+}
+
+.nav-link { position: relative; transition: color 0.2s; }
+.nav-link.active { color: var(--neon); }
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 2px;
+  background: var(--neon);
+  box-shadow: 0 0 6px var(--neon);
+}
+
+.diff-block { width: 16px; height: 10px; border-radius: 2px; }
+
+.lightbox-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+.lightbox-overlay.open { opacity: 1; pointer-events: all; }
+
+.progress-fill { transition: width 1s ease-out; }
+
+.sparkline { fill: none; stroke: var(--neon); stroke-width: 1.5; }
+
+#mobile-menu-x9k2 {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: translateY(-20px);
+  opacity: 0;
+}
+#mobile-menu-x9k2.open {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.score-input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  width: 100%;
+}
+.score-input:focus {
+  outline: none;
+  border-color: var(--neon);
+  box-shadow: 0 0 6px rgba(201,146,42,0.3);
+}
+.score-select {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  width: 100%;
+  appearance: auto;
+}
+.score-select:focus {
+  outline: none;
+  border-color: var(--neon);
+}
+.post-score-btn {
+  background: var(--neon);
+  color: var(--bg);
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s;
+}
+.post-score-btn:hover { background: var(--gold); }
+</style>
+</head>
+<body data-id="0" class="min-h-screen">
+<app-icon data-id="1" hidden data-icon="flag" data-palette="Earth"></app-icon>
+
+<!-- ===== STICKY NAV ===== -->
+<nav data-id="2" id="navbar-f4g0" class="fixed top-0 left-0 right-0 z-50 border-b" style="background:var(--surface);border-color:var(--border);">
+  <div data-id="3" class="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-6 h-14 md:h-16">
+    <div data-id="4" class="flex items-center gap-2 shrink-0">
+      <svg data-id="5" width="32" height="32" viewBox="0 0 32 32" class="shrink-0">
+        <rect data-id="6" x="4" y="2" width="4" height="22" rx="1" fill="#C9922A" opacity="0.9" transform="rotate(-20 8 13)"/>
+        <rect data-id="7" x="24" y="2" width="4" height="22" rx="1" fill="#C9922A" opacity="0.9" transform="rotate(20 24 13)"/>
+        <circle data-id="8" cx="8" cy="3" r="3" fill="#C9922A"/>
+        <circle data-id="9" cx="24" cy="3" r="3" fill="#C9922A"/>
+        <rect data-id="10" x="10" y="26" width="12" height="4" rx="2" fill="#4A4030"/>
+      </svg>
+      <div data-id="11" class="flex flex-col leading-none">
+        <span data-id="12" class="font-orbitron text-base md:text-lg font-bold text-neon neon-glow tracking-wider">FORE! FATHERS</span>
+        <span data-id="13" class="font-pixel text-[7px] md:text-[8px] text-dim mt-0.5">EST. 2026</span>
+      </div>
+    </div>
+    <div data-id="14" class="hidden md:flex items-center gap-6">
+      <a data-id="15" href="#home" class="nav-link font-rajdhani text-sm font-semibold uppercase tracking-wider text-txt hover:text-neon cursor-pointer" data-nav="home">HOME</a>
+      <a data-id="16" href="#roster" class="nav-link font-rajdhani text-sm font-semibold uppercase tracking-wider text-txt hover:text-neon cursor-pointer" data-nav="roster">ROSTER</a>
+      <a data-id="17" href="#leaderboard" class="nav-link font-rajdhani text-sm font-semibold uppercase tracking-wider text-txt hover:text-neon cursor-pointer" data-nav="leaderboard">LEADERBOARD</a>
+      <a data-id="18" href="#teetimes" class="nav-link font-rajdhani text-sm font-semibold uppercase tracking-wider text-txt hover:text-neon cursor-pointer" data-nav="teetimes">TEE TIMES</a>
+      <a data-id="19" href="#gallery" class="nav-link font-rajdhani text-sm font-semibold uppercase tracking-wider text-txt hover:text-neon cursor-pointer" data-nav="gallery">GALLERY</a>
+      <a data-id="20" href="#rules" class="nav-link font-rajdhani text-sm font-semibold uppercase tracking-wider text-txt hover:text-neon cursor-pointer" data-nav="rules">RULES</a>
+    </div>
+    <div data-id="21" class="hidden md:flex items-center gap-2">
+      <span data-id="22" class="w-2 h-2 rounded-full bg-neon blink"></span>
+      <span data-id="23" class="font-rajdhani text-xs font-semibold uppercase tracking-widest text-neon">SEASON ACTIVE</span>
+    </div>
+    <button data-id="24" id="mobile-btn-h8j3" class="md:hidden p-2 text-neon cursor-pointer" aria-label="Open menu">
+      <i data-id="25" data-lucide="menu" class="w-6 h-6"></i>
+    </button>
+  </div>
+  <div data-id="26" id="mobile-menu-x9k2" class="hidden md:hidden flex-col px-4 pb-4 gap-2" style="background:var(--surface);">
+    <div data-id="27" class="flex justify-between items-center mb-2">
+      <div data-id="28" class="flex items-center gap-2">
+        <span data-id="29" class="w-2 h-2 rounded-full bg-neon blink"></span>
+        <span data-id="30" class="font-rajdhani text-xs font-semibold uppercase text-neon">SEASON ACTIVE</span>
+      </div>
+      <button data-id="31" id="mobile-close-k2m4" class="p-2 text-neon cursor-pointer" aria-label="Close menu">
+        <i data-id="32" data-lucide="x" class="w-6 h-6"></i>
+      </button>
+    </div>
+    <a data-id="33" href="#home" class="font-rajdhani text-base font-semibold uppercase tracking-wider text-txt hover:text-neon py-2 border-b border-border cursor-pointer mobile-nav-link">HOME</a>
+    <a data-id="34" href="#roster" class="font-rajdhani text-base font-semibold uppercase tracking-wider text-txt hover:text-neon py-2 border-b border-border cursor-pointer mobile-nav-link">ROSTER</a>
+    <a data-id="35" href="#leaderboard" class="font-rajdhani text-base font-semibold uppercase tracking-wider text-txt hover:text-neon py-2 border-b border-border cursor-pointer mobile-nav-link">LEADERBOARD</a>
+    <a data-id="36" href="#teetimes" class="font-rajdhani text-base font-semibold uppercase tracking-wider text-txt hover:text-neon py-2 border-b border-border cursor-pointer mobile-nav-link">TEE TIMES</a>
+    <a data-id="37" href="#gallery" class="font-rajdhani text-base font-semibold uppercase tracking-wider text-txt hover:text-neon py-2 border-b border-border cursor-pointer mobile-nav-link">GALLERY</a>
+    <a data-id="38" href="#rules" class="font-rajdhani text-base font-semibold uppercase tracking-wider text-txt hover:text-neon py-2 cursor-pointer mobile-nav-link">RULES</a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section data-id="39" id="home" class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16" style="background: radial-gradient(ellipse at center, #2A2A18 0%, #1A1A14 70%);">
+  <canvas data-id="40" id="hero-canvas-a1b2"></canvas>
+  <div data-id="41" class="relative z-10 flex flex-col items-center px-4 text-center max-w-4xl mx-auto">
+    <div data-id="42" id="achievement-popup-c3d4" class="achievement-animate mb-6 md:mb-8 card-base px-4 py-2 md:px-6 md:py-3 flex items-center gap-3" style="border-color:var(--gold);">
+      <span data-id="43" class="text-2xl">🏆</span>
+      <div data-id="44" class="text-left">
+        <div data-id="45" class="font-pixel text-[8px] md:text-[9px] text-gold tracking-wider">ACHIEVEMENT UNLOCKED</div>
+        <div data-id="46" class="font-rajdhani text-sm md:text-base text-txt font-semibold">Sunday Golf Crew Established</div>
+      </div>
+    </div>
+    <h1 data-id="47" class="font-orbitron font-black text-neon neon-glow leading-none mb-4" style="font-size: clamp(3.5rem, 10vw, 7.5rem);">FORE! FATHERS</h1>
+    <p data-id="48" class="font-rajdhani text-lg md:text-2xl text-dim mb-6 md:mb-8 font-semibold tracking-wide">Sunday Golf. Serious Players. Zero Chill.</p>
+    <div data-id="49" class="flex flex-wrap justify-center gap-3 md:gap-4 mb-6 md:mb-8">
+      <div data-id="50" class="px-4 py-2 rounded border border-neon bg-bg/60 font-rajdhani text-sm md:text-base font-semibold text-neon flex items-center gap-2">
+        <span data-id="51">👥</span> <span data-id="52">9 MEMBERS</span>
+      </div>
+      <div data-id="53" class="px-4 py-2 rounded border border-neon bg-bg/60 font-rajdhani text-sm md:text-base font-semibold text-neon flex items-center gap-2">
+        <span data-id="54">📅</span> <span data-id="55">SEASON 1 — 2026</span>
+      </div>
+    </div>
+    <a data-id="56" href="#leaderboard" id="cta-leaderboard-e5f6" class="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 border-2 border-neon rounded font-orbitron text-sm md:text-base font-bold text-neon hover:bg-neon hover:text-bg transition-all duration-200 cursor-pointer neon-glow-box">
+      VIEW LEADERBOARD <i data-id="57" data-lucide="arrow-right" class="w-5 h-5"></i>
+    </a>
+  </div>
+  <div data-id="58" class="absolute bottom-0 left-0 right-0 z-10 border-t overflow-hidden" style="background:var(--surface);border-color:var(--border);height:32px;">
+    <div data-id="59" class="marquee-text font-pixel text-[8px] md:text-[9px] text-dim leading-[32px] whitespace-nowrap">
+      LOCATION: FORT WORTH, TX &nbsp;⬥&nbsp; TEE DAY: EVERY SUNDAY &nbsp;⬥&nbsp; COURSES: PECAN VALLEY HILLS · MEADOWBROOK · ROCKWOOD &nbsp;⬥&nbsp; CREW SIZE: 9 ACTIVE OPERATIVES &nbsp;⬥&nbsp; SEASON 1 IN PROGRESS &nbsp;⬥&nbsp; SIGNAL STRENGTH: ████████░░ 80% &nbsp;⬥&nbsp;
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section data-id="60" id="about" class="py-16 md:py-24 px-4 md:px-6">
+  <div data-id="61" class="max-w-6xl mx-auto">
+    <h2 data-id="62" class="section-header text-2xl md:text-3xl mb-2">// ABOUT THE CREW</h2>
+    <div data-id="63" class="w-16 h-0.5 bg-neon mb-8 md:mb-12" style="box-shadow:0 0 8px var(--neon);"></div>
+    <div data-id="64" class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+      <div data-id="65" class="card-base p-4 md:p-6 font-mono text-sm md:text-base" style="min-height:300px;">
+        <div data-id="66" class="flex items-center gap-2 mb-4">
+          <span data-id="67" class="w-3 h-3 rounded-full bg-danger"></span>
+          <span data-id="68" class="w-3 h-3 rounded-full bg-gold"></span>
+          <span data-id="69" class="w-3 h-3 rounded-full bg-neon"></span>
+          <span data-id="70" class="font-rajdhani text-xs text-dim ml-2">terminal@forefathers</span>
+        </div>
+        <div data-id="71" id="terminal-output-g7h8" class="text-neon leading-relaxed whitespace-pre-wrap" style="min-height:200px;"></div>
+      </div>
+      <div data-id="72" class="flex flex-col gap-4">
+        <div data-id="73" class="card-base p-4 md:p-5 flex items-start gap-4">
+          <div data-id="74" class="text-3xl">🕐</div>
+          <div data-id="75">
+            <div data-id="76" class="font-orbitron text-base md:text-lg font-bold text-neon mb-1">TEE TIME</div>
+            <div data-id="77" class="font-rajdhani text-sm md:text-base text-txt">Every Sunday AM — Fort Worth area courses</div>
+            <div data-id="78" class="font-rajdhani text-xs text-dim mt-1">Rotating course selection voted on by crew</div>
+          </div>
+        </div>
+        <div data-id="79" class="card-base p-4 md:p-5 flex items-start gap-4">
+          <div data-id="80" class="text-3xl">🏌️</div>
+          <div data-id="81">
+            <div data-id="82" class="font-orbitron text-base md:text-lg font-bold text-neon mb-1">FORMAT</div>
+            <div data-id="83" class="font-rajdhani text-sm md:text-base text-txt">Stroke play + weekly skins game</div>
+            <div data-id="84" class="font-rajdhani text-xs text-dim mt-1">$5 per skin · Ties carry over · No mercy</div>
+          </div>
+        </div>
+        <div data-id="85" class="card-base p-4 md:p-5 flex items-start gap-4">
+          <div data-id="86" class="text-3xl">🍺</div>
+          <div data-id="87">
+            <div data-id="88" class="font-orbitron text-base md:text-lg font-bold text-neon mb-1">POST-ROUND</div>
+            <div data-id="89" class="font-rajdhani text-sm md:text-base text-txt">19th hole debrief — mandatory attendance</div>
+            <div data-id="90" class="font-rajdhani text-xs text-dim mt-1">Scorecards reviewed · Trash talked · Beers consumed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ROSTER ===== -->
+<section data-id="91" id="roster" class="py-16 md:py-24 px-4 md:px-6" style="background:var(--surface);">
+  <div data-id="92" class="max-w-7xl mx-auto">
+    <h2 data-id="93" class="section-header text-2xl md:text-3xl mb-1">// SELECT YOUR PLAYER</h2>
+    <p data-id="94" class="font-rajdhani text-sm uppercase tracking-widest text-dim mb-8 md:mb-12">SEASON 1 ROSTER</p>
+    <div data-id="95" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6" id="roster-grid-i9j0">
+    </div>
+  </div>
+</section>
+
+<!-- ===== LEADERBOARD ===== -->
+<section data-id="96" id="leaderboard" class="py-16 md:py-24 px-4 md:px-6">
+  <div data-id="97" class="max-w-6xl mx-auto">
+    <h2 data-id="98" class="section-header text-2xl md:text-3xl mb-1">// WEEKLY LEADERBOARD</h2>
+    <p data-id="99" class="font-rajdhani text-xs md:text-sm uppercase tracking-widest text-dim mb-8 md:mb-10">ROUND 18 — MAY 25, 2026 — PECAN VALLEY HILLS GOLF COURSE, BENBROOK, TX · PAR 72</p>
+
+    <div data-id="100" class="overflow-x-auto mb-10">
+      <table data-id="101" class="w-full text-left min-w-[640px]" id="weekly-table-k1l2">
+        <thead data-id="102">
+          <tr data-id="103" class="border-b-2" style="border-color:var(--neon);background:var(--green);">
+            <th data-id="104" class="font-orbitron text-xs font-bold text-cream px-3 py-3 uppercase tracking-wider">Rank</th>
+            <th data-id="105" class="font-orbitron text-xs font-bold text-cream px-3 py-3 uppercase tracking-wider">Player</th>
+            <th data-id="106" class="font-orbitron text-xs font-bold text-cream px-3 py-3 uppercase tracking-wider text-right">Gross</th>
+            <th data-id="107" class="font-orbitron text-xs font-bold text-cream px-3 py-3 uppercase tracking-wider text-right">Net</th>
+            <th data-id="108" class="font-orbitron text-xs font-bold text-cream px-3 py-3 uppercase tracking-wider text-right">vs Par</th>
+            <th data-id="109" class="font-orbitron text-xs font-bold text-cream px-3 py-3 uppercase tracking-wider text-right">Skins</th>
+            <th data-id="110" class="font-orbitron text-xs font-bold text-cream px-3 py-3 uppercase tracking-wider text-right">Points</th>
+            <th data-id="111" class="font-orbitron text-xs font-bold text-cream px-3 py-3 uppercase tracking-wider text-center">Status</th>
+          </tr>
+        </thead>
+        <tbody data-id="112" id="lb-body-m3n4" class="font-rajdhani text-sm md:text-base">
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Season Standings -->
+    <div data-id="113" class="card-base p-4 md:p-6 mb-10">
+      <h3 data-id="114" class="font-orbitron text-base md:text-lg font-bold text-neon mb-4">SEASON 1 STANDINGS</h3>
+      <div data-id="115" class="overflow-x-auto">
+        <table data-id="116" class="w-full text-left min-w-[500px]">
+          <thead data-id="117">
+            <tr data-id="118" class="border-b" style="border-color:var(--border);">
+              <th data-id="119" class="font-rajdhani text-xs font-semibold text-dim px-3 py-2 uppercase">Rank</th>
+              <th data-id="120" class="font-rajdhani text-xs font-semibold text-dim px-3 py-2 uppercase">Player</th>
+              <th data-id="121" class="font-rajdhani text-xs font-semibold text-dim px-3 py-2 uppercase text-right">Total Pts</th>
+              <th data-id="122" class="font-rajdhani text-xs font-semibold text-dim px-3 py-2 uppercase text-right">Rounds</th>
+              <th data-id="123" class="font-rajdhani text-xs font-semibold text-dim px-3 py-2 uppercase text-right">Best</th>
+              <th data-id="124" class="font-rajdhani text-xs font-semibold text-dim px-3 py-2 uppercase text-center">Streak</th>
+            </tr>
+          </thead>
+          <tbody data-id="125" class="font-rajdhani" id="season-standings-body">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Achievement Badges -->
+    <div data-id="126">
+      <h3 data-id="127" class="font-orbitron text-base md:text-lg font-bold text-neon mb-6">ACHIEVEMENTS UNLOCKED THIS SEASON</h3>
+      <div data-id="128" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div data-id="129" class="card-base p-4 hover:border-gold/60 transition-colors" style="border-color:rgba(232,201,106,0.3);">
+          <div data-id="130" class="text-3xl mb-2">🏌️</div>
+          <div data-id="131" class="font-pixel text-[9px] text-gold mb-1">LONG BOMB</div>
+          <div data-id="132" class="font-rajdhani text-sm text-txt mb-2">Drive 300+ yards</div>
+          <div data-id="133" class="font-rajdhani text-xs text-dim">Earned by <span data-id="134" class="text-neon font-semibold">Brady Allan</span></div>
+        </div>
+        <div data-id="135" class="card-base p-4 hover:border-gold/60 transition-colors" style="border-color:rgba(232,201,106,0.3);">
+          <div data-id="136" class="text-3xl mb-2">🐦</div>
+          <div data-id="137" class="font-pixel text-[9px] text-gold mb-1">BIRDIE MACHINE</div>
+          <div data-id="138" class="font-rajdhani text-sm text-txt mb-2">3 birdies in one round</div>
+          <div data-id="139" class="font-rajdhani text-xs text-dim">Earned by <span data-id="140" class="text-neon font-semibold">Brady Allan</span></div>
+        </div>
+        <div data-id="141" class="card-base p-4 hover:border-gold/60 transition-colors" style="border-color:rgba(232,201,106,0.3);">
+          <div data-id="142" class="text-3xl mb-2">⛳</div>
+          <div data-id="143" class="font-pixel text-[9px] text-gold mb-1">IRON WILL</div>
+          <div data-id="144" class="font-rajdhani text-sm text-txt mb-2">Most consistent scorer — 3 weeks running</div>
+          <div data-id="145" class="font-rajdhani text-xs text-dim">Earned by <span data-id="146" class="text-neon font-semibold">Greg Hennessey</span></div>
+        </div>
+        <div data-id="147" class="card-base p-4 hover:border-gold/60 transition-colors" style="border-color:rgba(232,201,106,0.3);">
+          <div data-id="148" class="text-3xl mb-2">🎯</div>
+          <div data-id="149" class="font-pixel text-[9px] text-gold mb-1">PRECISION STRIKES</div>
+          <div data-id="150" class="font-rajdhani text-sm text-txt mb-2">Hit 10+ fairways in a round</div>
+          <div data-id="151" class="font-rajdhani text-xs text-dim">Earned by <span data-id="152" class="text-neon font-semibold">Walt Stevens</span></div>
+        </div>
+        <div data-id="153" class="card-base p-4 hover:border-gold/60 transition-colors" style="border-color:rgba(232,201,106,0.3);">
+          <div data-id="154" class="text-3xl mb-2">🏖️</div>
+          <div data-id="155" class="font-pixel text-[9px] text-gold mb-1">BEACH BALLER</div>
+          <div data-id="156" class="font-rajdhani text-sm text-txt mb-2">Made par from a bunker</div>
+          <div data-id="157" class="font-rajdhani text-xs text-dim">Earned by <span data-id="158" class="text-neon font-semibold">Scott Ewing</span></div>
+        </div>
+        <div data-id="159" class="card-base p-4 hover:border-gold/60 transition-colors" style="border-color:rgba(232,201,106,0.3);">
+          <div data-id="160" class="text-3xl mb-2">🔥</div>
+          <div data-id="161" class="font-pixel text-[9px] text-gold mb-1">YOUNG GUN RISING</div>
+          <div data-id="162" class="font-rajdhani text-sm text-txt mb-2">Most improved over 5 rounds</div>
+          <div data-id="163" class="font-rajdhani text-xs text-dim">Earned by <span data-id="164" class="text-neon font-semibold">Cody Sears</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEE TIMES / MISSION BOARD ===== -->
+<section data-id="165" id="teetimes" class="py-16 md:py-24 px-4 md:px-6" style="background:var(--surface);">
+  <div data-id="166" class="max-w-5xl mx-auto">
+    <h2 data-id="167" class="section-header text-2xl md:text-3xl mb-1">// MISSION BOARD</h2>
+    <p data-id="168" class="font-rajdhani text-xs md:text-sm uppercase tracking-widest text-dim mb-8 md:mb-10">UPCOMING ROUNDS — ACCEPT YOUR MISSION</p>
+
+    <div data-id="169" class="space-y-6">
+      <!-- Mission 1: ACTIVE -->
+      <div data-id="170" class="card-base p-5 md:p-6 relative overflow-hidden" style="border-color:var(--neon);box-shadow:0 0 20px rgba(201,146,42,0.12);">
+        <div data-id="171" class="absolute top-0 right-0 px-3 py-1 font-pixel text-[8px] text-bg bg-neon rounded-bl">MISSION: ACTIVE</div>
+        <div data-id="172" class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
+          <div data-id="173" class="flex-1">
+            <div data-id="174" class="font-orbitron text-lg md:text-xl font-bold text-neon mb-1">Pecan Valley Hills Golf Course</div>
+            <div data-id="175" class="font-rajdhani text-sm text-dim mb-3">Benbrook, TX</div>
+            <div data-id="176" class="grid grid-cols-2 gap-x-6 gap-y-2 font-rajdhani text-sm mb-4">
+              <div data-id="177"><span data-id="178" class="text-dim">DATE:</span> <span data-id="179" class="text-txt font-semibold">Sunday, June 1, 2026</span></div>
+              <div data-id="180"><span data-id="181" class="text-dim">TEE TIME:</span> <span data-id="182" class="text-txt font-semibold">7:30 AM</span></div>
+              <div data-id="183"><span data-id="184" class="text-dim">FORMAT:</span> <span data-id="185" class="text-txt font-semibold">Stroke Play + Skins ($5/skin)</span></div>
+              <div data-id="186"><span data-id="187" class="text-dim">PAR / YDS:</span> <span data-id="188" class="text-txt font-semibold">72 / 6,600</span></div>
+            </div>
+            <div data-id="189" class="flex items-center gap-1 mb-3">
+              <span data-id="190" class="font-rajdhani text-xs text-dim mr-2">DIFFICULTY:</span>
+              <span data-id="191" class="diff-block bg-neon"></span>
+              <span data-id="192" class="diff-block bg-neon"></span>
+              <span data-id="193" class="diff-block bg-neon"></span>
+              <span data-id="194" class="diff-block" style="background:var(--border);"></span>
+              <span data-id="195" class="diff-block" style="background:var(--border);"></span>
+              <span data-id="196" class="font-pixel text-[8px] text-gold ml-2">MEDIUM</span>
+            </div>
+            <div data-id="197" class="font-rajdhani text-xs text-gold italic mb-4">⚠️ Special Rule: "No mulligans on par 3s"</div>
+            <div data-id="198" class="flex flex-wrap items-center gap-2 font-rajdhani text-sm" id="rsvp-mission1">
+              <span data-id="199" class="text-dim">RSVP:</span>
+            </div>
+          </div>
+          <div data-id="200" class="shrink-0">
+            <button data-id="201" class="confirm-btn font-orbitron text-xs font-bold px-4 py-3 border-2 border-neon text-neon rounded hover:bg-neon hover:text-bg transition-all cursor-pointer flex items-center gap-2" data-mission="m1">
+              <i data-id="202" data-lucide="check-circle" class="w-4 h-4"></i> CONFIRM ATTENDANCE
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mission 2: QUEUED -->
+      <div data-id="203" class="card-base p-5 md:p-6 relative overflow-hidden">
+        <div data-id="204" class="absolute top-0 right-0 px-3 py-1 font-pixel text-[8px] text-bg bg-muted rounded-bl">MISSION: QUEUED</div>
+        <div data-id="205" class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
+          <div data-id="206" class="flex-1">
+            <div data-id="207" class="font-orbitron text-lg md:text-xl font-bold text-txt mb-1">Meadowbrook Golf Course</div>
+            <div data-id="208" class="font-rajdhani text-sm text-dim mb-3">Fort Worth, TX</div>
+            <div data-id="209" class="grid grid-cols-2 gap-x-6 gap-y-2 font-rajdhani text-sm mb-4">
+              <div data-id="210"><span data-id="211" class="text-dim">DATE:</span> <span data-id="212" class="text-txt font-semibold">June 8, 2026</span></div>
+              <div data-id="213"><span data-id="214" class="text-dim">TEE TIME:</span> <span data-id="215" class="text-txt font-semibold">8:00 AM</span></div>
+              <div data-id="216"><span data-id="217" class="text-dim">FORMAT:</span> <span data-id="218" class="text-txt font-semibold">Match Play</span></div>
+              <div data-id="219"><span data-id="220" class="text-dim">PAR / YDS:</span> <span data-id="221" class="text-txt font-semibold">71 / 6,100</span></div>
+            </div>
+            <div data-id="222" class="flex items-center gap-1 mb-3">
+              <span data-id="223" class="font-rajdhani text-xs text-dim mr-2">DIFFICULTY:</span>
+              <span data-id="224" class="diff-block bg-neon"></span>
+              <span data-id="225" class="diff-block bg-neon"></span>
+              <span data-id="226" class="diff-block" style="background:var(--border);"></span>
+              <span data-id="227" class="diff-block" style="background:var(--border);"></span>
+              <span data-id="228" class="diff-block" style="background:var(--border);"></span>
+              <span data-id="229" class="font-pixel text-[8px] text-gold ml-2">EASY-MEDIUM</span>
+            </div>
+            <div data-id="230" class="flex flex-wrap items-center gap-3 font-rajdhani text-sm">
+              <span data-id="231" class="text-dim">RSVP:</span>
+              <span data-id="232" class="text-gold">All ❓</span>
+            </div>
+          </div>
+          <div data-id="233" class="shrink-0">
+            <button data-id="234" class="confirm-btn font-orbitron text-xs font-bold px-4 py-3 border-2 border-muted text-muted rounded hover:border-neon hover:text-neon transition-all cursor-pointer flex items-center gap-2" data-mission="m2">
+              <i data-id="235" data-lucide="check-circle" class="w-4 h-4"></i> CONFIRM ATTENDANCE
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mission 3: QUEUED -->
+      <div data-id="236" class="card-base p-5 md:p-6 relative overflow-hidden">
+        <div data-id="237" class="absolute top-0 right-0 px-3 py-1 font-pixel text-[8px] text-bg bg-muted rounded-bl">MISSION: QUEUED</div>
+        <div data-id="238" class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
+          <div data-id="239" class="flex-1">
+            <div data-id="240" class="font-orbitron text-lg md:text-xl font-bold text-txt mb-1">Rockwood Golf Course</div>
+            <div data-id="241" class="font-rajdhani text-sm text-dim mb-3">Fort Worth, TX</div>
+            <div data-id="242" class="grid grid-cols-2 gap-x-6 gap-y-2 font-rajdhani text-sm mb-4">
+              <div data-id="243"><span data-id="244" class="text-dim">DATE:</span> <span data-id="245" class="text-txt font-semibold">June 15, 2026</span></div>
+              <div data-id="246"><span data-id="247" class="text-dim">TEE TIME:</span> <span data-id="248" class="text-txt font-semibold">7:45 AM</span></div>
+              <div data-id="249"><span data-id="250" class="text-dim">FORMAT:</span> <span data-id="251" class="text-txt font-semibold">Scramble</span></div>
+              <div data-id="252"><span data-id="253" class="text-dim">PAR / YDS:</span> <span data-id="254" class="text-txt font-semibold">71 / 6,200</span></div>
+            </div>
+            <div data-id="255" class="flex items-center gap-1 mb-3">
+              <span data-id="256" class="font-rajdhani text-xs text-dim mr-2">DIFFICULTY:</span>
+              <span data-id="257" class="diff-block bg-neon"></span>
+              <span data-id="258" class="diff-block bg-neon"></span>
+              <span data-id="259" class="diff-block bg-neon"></span>
+              <span data-id="260" class="diff-block" style="background:var(--border);"></span>
+              <span data-id="261" class="diff-block" style="background:var(--border);"></span>
+              <span data-id="262" class="font-pixel text-[8px] text-gold ml-2">MEDIUM</span>
+            </div>
+            <div data-id="263" class="flex flex-wrap items-center gap-3 font-rajdhani text-sm">
+              <span data-id="264" class="text-dim">RSVP:</span>
+              <span data-id="265" class="text-gold">All ❓</span>
+            </div>
+          </div>
+          <div data-id="266" class="shrink-0">
+            <button data-id="267" class="confirm-btn font-orbitron text-xs font-bold px-4 py-3 border-2 border-muted text-muted rounded hover:border-neon hover:text-neon transition-all cursor-pointer flex items-center gap-2" data-mission="m3">
+              <i data-id="268" data-lucide="check-circle" class="w-4 h-4"></i> CONFIRM ATTENDANCE
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GALLERY ===== -->
+<section data-id="269" id="gallery" class="py-16 md:py-24 px-4 md:px-6">
+  <div data-id="270" class="max-w-6xl mx-auto">
+    <h2 data-id="271" class="section-header text-2xl md:text-3xl mb-1">// SCREENSHOT GALLERY</h2>
+    <p data-id="272" class="font-rajdhani text-xs md:text-sm uppercase tracking-widest text-dim mb-8 md:mb-10">FIELD RECORDINGS — SEASON 1</p>
+    <div data-id="273" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5" id="gallery-grid-o5p6">
+      <div data-id="274" class="gallery-card card-base p-4 cursor-pointer" data-idx="0">
+        <div data-id="275" class="aspect-video rounded flex items-center justify-center mb-3" style="background:var(--bg);">
+          <svg data-id="276" width="64" height="64" viewBox="0 0 64 64"><path data-id="277" d="M32 8 L34 40 L30 40 Z" fill="#C9922A" opacity="0.7"/><circle data-id="278" cx="32" cy="44" r="6" fill="none" stroke="#C9922A" stroke-width="1.5"/><rect data-id="279" x="28" y="42" width="8" height="4" fill="#C9922A" opacity="0.3"/><path data-id="280" d="M30 8 L26 4 L38 4 L34 8" fill="#8B2635" opacity="0.7"/></svg>
+        </div>
+        <div data-id="281" class="font-pixel text-[8px] text-gold leading-relaxed">⛳ OPENING DAY</div>
+        <div data-id="282" class="font-rajdhani text-xs text-dim mt-1">MAY 25, 2026</div>
+      </div>
+      <div data-id="283" class="gallery-card card-base p-4 cursor-pointer" data-idx="1">
+        <div data-id="284" class="aspect-video rounded flex items-center justify-center mb-3" style="background:var(--bg);">
+          <svg data-id="285" width="64" height="64" viewBox="0 0 64 64"><circle data-id="286" cx="32" cy="48" r="4" fill="#C9922A" opacity="0.5"/><path data-id="287" d="M32 48 L32 16" stroke="#C9922A" stroke-width="2"/><path data-id="288" d="M32 16 Q48 20 44 32 Q40 40 32 36" fill="#C9922A" opacity="0.3"/><path data-id="289" d="M16 52 Q32 44 48 52" stroke="#4A4030" stroke-width="2" fill="none"/></svg>
+        </div>
+        <div data-id="290" class="font-pixel text-[8px] text-gold leading-relaxed">🏌️ BRADY'S 310YD BOMB</div>
+        <div data-id="291" class="font-rajdhani text-xs text-dim mt-1">ROUND 3</div>
+      </div>
+      <div data-id="292" class="gallery-card card-base p-4 cursor-pointer" data-idx="2">
+        <div data-id="293" class="aspect-video rounded flex items-center justify-center mb-3" style="background:var(--bg);">
+          <svg data-id="294" width="64" height="64" viewBox="0 0 64 64"><ellipse data-id="295" cx="32" cy="44" rx="20" ry="8" fill="#9A8A70" opacity="0.4"/><circle data-id="296" cx="32" cy="38" r="3" fill="white" opacity="0.7"/><path data-id="297" d="M20 44 Q24 36 28 44" stroke="#9A8A70" stroke-width="1" fill="none"/><path data-id="298" d="M36 44 Q40 38 44 44" stroke="#9A8A70" stroke-width="1" fill="none"/><text data-id="299" x="32" y="56" text-anchor="middle" fill="#9A8A70" font-size="6" font-family="Rajdhani">AGAIN...</text></svg>
+        </div>
+        <div data-id="300" class="font-pixel text-[8px] text-gold leading-relaxed">🛞 SAM IN THE SAND</div>
+        <div data-id="301" class="font-rajdhani text-xs text-dim mt-1">ROUND 5</div>
+      </div>
+      <div data-id="302" class="gallery-card card-base p-4 cursor-pointer" data-idx="3">
+        <div data-id="303" class="aspect-video rounded flex items-center justify-center mb-3" style="background:var(--bg);">
+          <svg data-id="304" width="64" height="64" viewBox="0 0 64 64"><rect data-id="305" x="20" y="12" width="24" height="32" rx="2" fill="#E8C96A" opacity="0.3"/><rect data-id="306" x="24" y="8" width="16" height="8" rx="2" fill="#E8C96A" opacity="0.5"/><circle data-id="307" cx="32" cy="6" r="4" fill="#E8C96A" opacity="0.7"/><text data-id="308" x="32" y="34" text-anchor="middle" fill="#E8C96A" font-size="8" font-family="Orbitron" font-weight="bold">S1</text><rect data-id="309" x="26" y="38" width="12" height="2" fill="#E8C96A" opacity="0.3"/></svg>
+        </div>
+        <div data-id="310" class="font-pixel text-[8px] text-gold leading-relaxed">🏆 SEASON 1 TROPHY REVEAL</div>
+        <div data-id="311" class="font-rajdhani text-xs text-dim mt-1">COMING SOON</div>
+      </div>
+      <div data-id="312" class="gallery-card card-base p-4 cursor-pointer" data-idx="4">
+        <div data-id="313" class="aspect-video rounded flex items-center justify-center mb-3" style="background:var(--bg);">
+          <svg data-id="314" width="64" height="64" viewBox="0 0 64 64"><circle data-id="315" cx="32" cy="20" r="12" fill="none" stroke="#E8C96A" stroke-width="1.5" opacity="0.5"/><path data-id="316" d="M32 20 L32 12" stroke="#E8C96A" stroke-width="1"/><path data-id="317" d="M26 32 Q32 28 38 32" stroke="#C9922A" stroke-width="1.5" opacity="0.5" fill="none"/><path data-id="318" d="M8 48 L56 48" stroke="#4A4030" stroke-width="1"/><path data-id="319" d="M12 48 L12 40 Q20 36 28 40 L28 48" fill="#2D5A27" opacity="0.5"/></svg>
+        </div>
+        <div data-id="320" class="font-pixel text-[8px] text-gold leading-relaxed">🌅 DAWN PATROL — 6:30AM</div>
+        <div data-id="321" class="font-rajdhani text-xs text-dim mt-1">EVERY SUNDAY</div>
+      </div>
+      <div data-id="322" class="gallery-card card-base p-4 cursor-pointer" data-idx="5">
+        <div data-id="323" class="aspect-video rounded flex items-center justify-center mb-3 border border-dashed" style="background:var(--bg);border-color:var(--muted);">
+          <div data-id="324" class="text-center">
+            <i data-id="325" data-lucide="camera" class="w-8 h-8 mx-auto text-muted mb-1"></i>
+            <div data-id="326" class="font-rajdhani text-xs text-dim">YOUR PHOTO HERE</div>
+          </div>
+        </div>
+        <div data-id="327" class="font-pixel text-[8px] text-dim leading-relaxed">📸 UPLOAD COMING</div>
+        <div data-id="328" class="font-rajdhani text-xs text-dim mt-1">SEASON 2</div>
+      </div>
+    </div>
+    <div data-id="329" class="mt-8 text-center card-base p-3 inline-flex items-center gap-2 mx-auto" style="display:flex;justify-content:center;">
+      <i data-id="330" data-lucide="upload" class="w-4 h-4 text-muted"></i>
+      <span data-id="331" class="font-pixel text-[8px] text-dim">PHOTO UPLOAD PORTAL COMING SOON — SEASON 2</span>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div data-id="332" id="lightbox-q7r8" class="lightbox-overlay">
+  <div data-id="333" class="relative max-w-lg w-full mx-4">
+    <button data-id="334" id="lightbox-close-s9t0" class="absolute -top-10 right-0 text-neon cursor-pointer p-2" aria-label="Close lightbox">
+      <i data-id="335" data-lucide="x" class="w-6 h-6"></i>
+    </button>
+    <div data-id="336" id="lightbox-content-u1v2" class="card-base p-6"></div>
+  </div>
+</div>
+
+<!-- ===== RULES & HANDICAP ===== -->
+<section data-id="337" id="rules" class="py-16 md:py-24 px-4 md:px-6" style="background:var(--surface);">
+  <div data-id="338" class="max-w-6xl mx-auto">
+    <h2 data-id="339" class="section-header text-2xl md:text-3xl mb-1">// GAME RULES & CODEX</h2>
+    <p data-id="340" class="font-rajdhani text-xs md:text-sm uppercase tracking-widest text-dim mb-8 md:mb-10">READ BEFORE YOU TEE OFF</p>
+
+    <div data-id="341" class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+      <div data-id="342" class="card-base p-5 md:p-6">
+        <h3 data-id="343" class="font-pixel text-[9px] md:text-[10px] text-gold mb-6 leading-relaxed">THE SACRED LAWS OF FORE! FATHERS</h3>
+        <ol data-id="344" class="space-y-3 font-rajdhani text-sm md:text-base">
+          <li data-id="345" class="flex gap-3"><span data-id="346" class="font-orbitron text-sm font-bold text-neon shrink-0 w-6 text-right">01</span><span data-id="347" class="text-txt">Tee time is tee time. Late = automatic +2 strokes.</span></li>
+          <li data-id="348" class="flex gap-3"><span data-id="349" class="font-orbitron text-sm font-bold text-neon shrink-0 w-6 text-right">02</span><span data-id="350" class="text-txt">Mulligans: 1 per round, front 9 only. No mulligan on par 3s.</span></li>
+          <li data-id="351" class="flex gap-3"><span data-id="352" class="font-orbitron text-sm font-bold text-neon shrink-0 w-6 text-right">03</span><span data-id="353" class="text-txt">Skins game: $5 per skin. Ties carry over. No cap.</span></li>
+          <li data-id="354" class="flex gap-3"><span data-id="355" class="font-orbitron text-sm font-bold text-neon shrink-0 w-6 text-right">04</span><span data-id="356" class="text-txt">Trash talk is encouraged. Crying is not.</span></li>
+          <li data-id="357" class="flex gap-3"><span data-id="358" class="font-orbitron text-sm font-bold text-neon shrink-0 w-6 text-right">05</span><span data-id="359" class="text-txt">Every birdie earns a victory lap (or a beer — your call).</span></li>
+          <li data-id="360" class="flex gap-3"><span data-id="361" class="font-orbitron text-sm font-bold text-neon shrink-0 w-6 text-right">06</span><span data-id="362" class="text-txt">Sandbagging your handicap will result in public shaming.</span></li>
+          <li data-id="363" class="flex gap-3"><span data-id="364" class="font-orbitron text-sm font-bold text-neon shrink-0 w-6 text-right">07</span><span data-id="365" class="text-txt">The 19th hole is mandatory. This is non-negotiable.</span></li>
+          <li data-id="366" class="flex gap-3"><span data-id="367" class="font-orbitron text-sm font-bold text-neon shrink-0 w-6 text-right">08</span><span data-id="368" class="text-txt">Lost ball = stroke + distance. No exceptions. We're gentlemen.</span></li>
+          <li data-id="369" class="flex gap-3"><span data-id="370" class="font-orbitron text-sm font-bold text-neon shrink-0 w-6 text-right">09</span><span data-id="371" class="text-txt">Slow play = group vote = penalty stroke.</span></li>
+          <li data-id="372" class="flex gap-3"><span data-id="373" class="font-orbitron text-sm font-bold text-neon shrink-0 w-6 text-right">10</span><span data-id="374" class="text-txt">The Fore! Fathers group chat is sacred. No muting allowed.</span></li>
+        </ol>
+      </div>
+
+      <div data-id="375" class="card-base p-5 md:p-6">
+        <h3 data-id="376" class="font-orbitron text-base md:text-lg font-bold text-neon mb-6">HANDICAP INDEX TRACKER</h3>
+        <div data-id="377" class="grid grid-cols-1 md:grid-cols-3 gap-4" id="handicap-tracker-grid">
+        </div>
+        <div data-id="378" class="mt-6 pt-4 border-t" style="border-color:var(--border);">
+          <p data-id="379" class="font-rajdhani text-xs text-dim italic">Handicaps updated after each round per USGA Handicap System. Posting scores is the responsibility of each member.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer data-id="380" class="py-12 md:py-16 px-4 md:px-6 text-center border-t" style="background:var(--surface);border-color:var(--border);">
+  <div data-id="381" class="max-w-4xl mx-auto">
+    <div data-id="382" class="flex justify-center mb-4">
+      <svg data-id="383" width="40" height="40" viewBox="0 0 32 32">
+        <rect data-id="384" x="4" y="2" width="4" height="22" rx="1" fill="#C9922A" opacity="0.9" transform="rotate(-20 8 13)"/>
+        <rect data-id="385" x="24" y="2" width="4" height="22" rx="1" fill="#C9922A" opacity="0.9" transform="rotate(20 24 13)"/>
+        <circle data-id="386" cx="8" cy="3" r="3" fill="#C9922A"/>
+        <circle data-id="387" cx="24" cy="3" r="3" fill="#C9922A"/>
+        <rect data-id="388" x="10" y="26" width="12" height="4" rx="2" fill="#4A4030"/>
+      </svg>
+    </div>
+    <div data-id="389" class="font-orbitron text-lg font-bold text-neon neon-glow mb-3">FORE! FATHERS</div>
+    <div data-id="390" class="font-rajdhani text-sm text-dim mb-2">FORT WORTH, TX · EST. MAY 2026 · SEASON 1 ACTIVE</div>
+    <div data-id="391" class="font-rajdhani text-xs text-dim mb-4">Made by Copilot · Designed for the Crew · Played on Sundays</div>
+    <div data-id="392" class="font-rajdhani text-xs text-muted mb-2">© 2026 Fore! Fathers Golf Club · All Rights Reserved · No Sandbagging</div>
+    <div data-id="393" class="text-neon blink-cursor inline-block text-lg leading-none mt-2">▋</div>
+  </div>
+</footer>
+
+<script>
+// ===== DATA =====
+const MEMBERS = [
+  { id:'greg', name:'Greg Hennessey', nick:'"THE ORIGINAL"', badge:'⭐ ORIGINAL FOUNDER', badgeColor:'#E8C96A', avatarBg:'#1A3A2A', avatarBody:'#2D5A27', avatarEyes:'#8AB870', handicap:12, avg:84, wins:14, rounds:312, trend:'stable', sig:'The Methodical Iron', kryp:'Rushing his pre-shot', last5:[84,86,82,85,83], sparkColor:'#C9922A', dotColor:'#2D5A27' },
+  { id:'scott', name:'Scott Ewing', nick:'"THE ARCHITECT"', badge:'🖥️ CO-FOUNDER · WEB DESIGN', badgeColor:'#39B0C8', avatarBg:'#0A2A3A', avatarBody:'#1A5A6A', avatarEyes:'#39D9E8', handicap:14, avg:88, wins:7, rounds:198, trend:'improving', sig:'The Precision Long Iron', kryp:'Par 3s over water', last5:[88,91,86,89,85], sparkColor:'#C9922A', dotColor:'#39B0C8' },
+  { id:'wayne', name:'Wayne Roberson', nick:'"STEADY HAND"', badge:'🏌️ MEMBER', badgeColor:'#9A8A70', avatarBg:'#2A1A0A', avatarBody:'#8A6A3A', avatarEyes:'#C9922A', handicap:16, avg:90, wins:4, rounds:145, trend:'stable', sig:'The Fairway Keeper', kryp:'Long par 5s', last5:[90,92,88,91,90], sparkColor:'#C9922A', dotColor:'#8A6A3A' },
+  { id:'brady', name:'Brady Allan', nick:'"THE CLOSER"', badge:'🏌️ MEMBER', badgeColor:'#9A8A70', avatarBg:'#2A2A14', avatarBody:'#AA8A3A', avatarEyes:'#E8C96A', handicap:10, avg:83, wins:9, rounds:267, trend:'improving', sig:'The Clutch Putt', kryp:'First tee nerves', last5:[83,81,85,82,80], sparkColor:'#C9922A', dotColor:'#E8C96A' },
+  { id:'juan', name:'Juan Hernandez', nick:'"EL JEFE"', badge:'🏌️ MEMBER', badgeColor:'#9A8A70', avatarBg:'#2A1A0A', avatarBody:'#6A5A2A', avatarEyes:'#C9922A', handicap:18, avg:93, wins:3, rounds:112, trend:'improving', sig:'The High Draw', kryp:'Tight doglegs', last5:[93,96,91,94,90], sparkColor:'#C9922A', dotColor:'#6A5A2A' },
+  { id:'sam', name:'Sam Coleridge', nick:'"DOC"', badge:'🩺 THE DOC', badgeColor:'#8B2635', avatarBg:'#2A1A1A', avatarBody:'#6A2A2A', avatarEyes:'#C97070', handicap:20, avg:95, wins:2, rounds:178, trend:'stable', sig:'The Surgical Chip', kryp:'Sand traps', last5:[95,97,93,96,94], sparkColor:'#C9922A', dotColor:'#8B2635' },
+  { id:'cody', name:'Cody Sears', nick:'"YOUNG GUN"', badge:'🏌️ MEMBER', badgeColor:'#9A8A70', avatarBg:'#2A1A00', avatarBody:'#AA6A1A', avatarEyes:'#FFAA3A', handicap:22, avg:97, wins:1, rounds:67, trend:'improving', sig:'The Aggressive Driver', kryp:'Course management', last5:[97,101,95,98,94], sparkColor:'#C9922A', dotColor:'#AA6A1A' },
+  { id:'chad', name:'Chad Kirkland', nick:'"IRONMAN"', badge:'🏌️ MEMBER', badgeColor:'#9A8A70', avatarBg:'#1A1A1A', avatarBody:'#4A4A4A', avatarEyes:'#9A9A9A', handicap:15, avg:89, wins:5, rounds:201, trend:'stable', sig:'The Reliable Mid-Iron', kryp:'Short game', last5:[89,91,87,90,88], sparkColor:'#C9922A', dotColor:'#4A4A4A' },
+  { id:'walt', name:'Walt Stevens', nick:'"THE VETERAN"', badge:'🎖️ SENIOR STATESMAN', badgeColor:'#8A9AAA', avatarBg:'#1A1A2A', avatarBody:'#3A3A6A', avatarEyes:'#AAAACC', handicap:13, avg:86, wins:11, rounds:389, trend:'stable', sig:'Old School Knockdown', kryp:'Modern tech (uses a blade)', last5:[86,88,84,87,85], sparkColor:'#C9922A', dotColor:'#3A3A6A' },
+];
+
+const HANDICAP_DATA = {
+  greg: [13,13,12,12,12,12,12,12],
+  scott: [16,15,15,14,15,14,14,14],
+  wayne: [17,17,16,16,16,16,16,16],
+  brady: [11,11,10,11,10,10,10,10],
+  juan: [20,19,19,18,19,18,18,18],
+  sam: [19,20,20,20,20,20,20,20],
+  cody: [25,24,23,23,22,23,22,22],
+  chad: [16,15,15,15,15,15,15,15],
+  walt: [14,13,13,13,13,13,13,13],
+};
+
+const SEASON_STANDINGS = [
+  { rank:1, name:'Brady Allan', pts:'1,420', rounds:10, best:80, streak:'🔥 3W', gold:true },
+  { rank:2, name:'Greg Hennessey', pts:'1,310', rounds:14, best:82, streak:'🔥 2W', gold:false },
+  { rank:3, name:'Walt Stevens', pts:'1,190', rounds:13, best:84, streak:'—', gold:false },
+  { rank:4, name:'Scott Ewing', pts:'890', rounds:12, best:85, streak:'—', gold:false },
+  { rank:5, name:'Chad Kirkland', pts:'820', rounds:11, best:87, streak:'—', gold:false },
+  { rank:6, name:'Wayne Roberson', pts:'710', rounds:10, best:88, streak:'—', gold:false },
+  { rank:7, name:'Juan Hernandez', pts:'590', rounds:9, best:91, streak:'—', gold:false },
+  { rank:8, name:'Sam Coleridge', pts:'480', rounds:11, best:93, streak:'❄️ L2', gold:false },
+  { rank:9, name:'Cody Sears', pts:'310', rounds:8, best:94, streak:'—', gold:false },
+];
+
+const LB_DATA = [
+  { rank:1, icon:'👑', player:'Brady Allan', gross:81, net:71, par:'-1', skins:3, points:'+150', status:'👑 WINNER', gold:true },
+  { rank:2, icon:'⚔️', player:'Greg Hennessey', gross:84, net:72, par:'E', skins:2, points:'+100', status:'⚔️', gold:false },
+  { rank:3, icon:'🛡️', player:'Walt Stevens', gross:86, net:73, par:'+1', skins:1, points:'+70', status:'🛡️', gold:false },
+  { rank:4, icon:'', player:'Scott Ewing', gross:88, net:74, par:'+2', skins:1, points:'+50', status:'', gold:false },
+  { rank:5, icon:'', player:'Chad Kirkland', gross:89, net:74, par:'+3', skins:0, points:'+30', status:'', gold:false },
+  { rank:6, icon:'', player:'Wayne Roberson', gross:90, net:74, par:'+4', skins:0, points:'+20', status:'', gold:false },
+  { rank:7, icon:'', player:'Juan Hernandez', gross:93, net:75, par:'+5', skins:0, points:'+10', status:'', gold:false },
+  { rank:8, icon:'', player:'Sam Coleridge', gross:95, net:75, par:'+7', skins:0, points:'+10', status:'', gold:false },
+  { rank:9, icon:'💀', player:'Cody Sears', gross:97, net:75, par:'+9', skins:0, points:'+10', status:'💀', gold:false },
+];
+
+// Load persisted scores
+function loadScores(memberId) {
+  try {
+    const raw = window.AppSDK ? null : null;
+    // Use localStorage fallback for score data
+  } catch(e) {}
+  return null;
+}
+
+function getMemberScores(memberId) {
+  const key = 'ff_scores_' + memberId;
+  try {
+    const stored = window.localStorage.getItem(key);
+    if (stored) return JSON.parse(stored);
+  } catch(e) {}
+  return null;
+}
+
+function saveMemberScores(memberId, scores) {
+  const key = 'ff_scores_' + memberId;
+  try {
+    window.localStorage.setItem(key, JSON.stringify(scores));
+  } catch(e) {}
+}
+
+// Persist via AppSDK
+async function persistScores(memberId, scores) {
+  if (window.AppSDK) {
+    try {
+      await AppSDK.upsert('scores', memberId, { scores });
+    } catch(e) {}
+  }
+  saveMemberScores(memberId, scores);
+}
+
+async function loadAllScoresFromSDK() {
+  if (window.AppSDK) {
+    try {
+      const { documents } = await AppSDK.list('scores');
+      documents.forEach(doc => {
+        if (doc.data && doc.data.scores) {
+          saveMemberScores(doc.entityType, doc.data.scores);
+        }
+      });
+    } catch(e) {}
+  }
+}
+
+// ===== LUCIDE ICONS =====
+lucide.createIcons();
+
+// ===== MOBILE MENU =====
+const mobileBtn = document.getElementById('mobile-btn-h8j3');
+const mobileMenu = document.getElementById('mobile-menu-x9k2');
+const mobileClose = document.getElementById('mobile-close-k2m4');
+
+mobileBtn.addEventListener('click', () => {
+  mobileMenu.classList.remove('hidden');
+  mobileMenu.classList.add('flex');
+  requestAnimationFrame(() => mobileMenu.classList.add('open'));
+});
+mobileClose.addEventListener('click', () => {
+  mobileMenu.classList.remove('open');
+  setTimeout(() => { mobileMenu.classList.add('hidden'); mobileMenu.classList.remove('flex'); }, 300);
+});
+document.querySelectorAll('.mobile-nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    setTimeout(() => { mobileMenu.classList.add('hidden'); mobileMenu.classList.remove('flex'); }, 300);
+  });
+});
+
+// ===== HERO PARTICLES =====
+(function() {
+  const canvas = document.getElementById('hero-canvas-a1b2');
+  const ctx = canvas.getContext('2d');
+  let w, h;
+  const particles = [];
+  const COUNT = 60;
+
+  function resize() {
+    const section = canvas.parentElement;
+    w = canvas.width = section.offsetWidth;
+    h = canvas.height = section.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < COUNT; i++) {
+    particles.push({
+      x: Math.random() * 2000,
+      y: Math.random() * 1200,
+      r: Math.random() * 1.5 + 1,
+      speed: Math.random() * 0.3 + 0.1,
+      alpha: Math.random() * 0.3 + 0.15,
+      drift: (Math.random() - 0.5) * 0.2
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (const p of particles) {
+      p.y -= p.speed;
+      p.x += p.drift;
+      if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
+      if (p.x < -10) p.x = w + 10;
+      if (p.x > w + 10) p.x = -10;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201, 146, 42, ${p.alpha})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ===== NAV ACTIVE STATE =====
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link[data-nav]');
+
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(l => {
+        l.classList.toggle('active', l.dataset.nav === id);
+      });
+    }
+  });
+}, { threshold: 0.3, rootMargin: '-80px 0px 0px 0px' });
+
+sections.forEach(s => navObserver.observe(s));
+
+// ===== TYPEWRITER EFFECT =====
+const terminalLines = [
+  '> INITIALIZING FORE! FATHERS...',
+  '> CREW TYPE: Sunday Golf Syndicate',
+  '> BASE: Fort Worth, TX',
+  '> FOUNDED: May 2026',
+  '> MEMBERS: 9 ACTIVE',
+  '> MISSION: Show up every Sunday.',
+  '          Hit far. Putt clean.',
+  '          Talk trash respectfully.',
+  '> FOUNDER: Greg Hennessey',
+  '> CO-FOUNDER: Scott Ewing',
+  '> STATUS: ACTIVE ✓',
+  '> COURSES: Pecan Valley Hills',
+  '           Meadowbrook GC',
+  '           Rockwood GC',
+  '> MOTTO: "Charge the fairway."'
+];
+
+let terminalStarted = false;
+const terminalEl = document.getElementById('terminal-output-g7h8');
+
+function typeWriter() {
+  if (terminalStarted) return;
+  terminalStarted = true;
+  let lineIdx = 0, charIdx = 0, output = '';
+  function type() {
+    if (lineIdx >= terminalLines.length) {
+      terminalEl.innerHTML = output + '<span class="tw-cursor">&nbsp;</span>';
+      return;
+    }
+    const line = terminalLines[lineIdx];
+    if (charIdx < line.length) {
+      output += line[charIdx];
+      charIdx++;
+      terminalEl.innerHTML = output + '<span class="tw-cursor">&nbsp;</span>';
+      setTimeout(type, 20 + Math.random() * 30);
+    } else {
+      output += '\n';
+      lineIdx++;
+      charIdx = 0;
+      setTimeout(type, 150);
+    }
+  }
+  type();
+}
+
+const aboutSection = document.getElementById('about');
+const terminalObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) typeWriter();
+}, { threshold: 0.2 });
+terminalObserver.observe(aboutSection);
+
+// ===== BUILD ROSTER CARDS =====
+function buildSVGAvatar(m) {
+  return `<svg width="56" height="56" viewBox="0 0 56 56" class="shrink-0">
+    <rect width="56" height="56" rx="4" fill="${m.avatarBg}"/>
+    <rect x="14" y="12" width="28" height="24" rx="4" fill="${m.avatarBody}"/>
+    <rect x="18" y="18" width="7" height="5" rx="1" fill="${m.avatarEyes}" opacity="0.8"/>
+    <rect x="31" y="18" width="7" height="5" rx="1" fill="${m.avatarEyes}" opacity="0.8"/>
+    <rect x="22" y="28" width="12" height="3" rx="1" fill="${m.avatarEyes}" opacity="0.4"/>
+    <rect x="10" y="38" width="36" height="14" rx="4" fill="${m.avatarBody}"/>
+  </svg>`;
+}
+
+function buildSparkline(scores, color) {
+  if (scores.length < 2) return '';
+  const mn = Math.min(...scores) - 3;
+  const mx = Math.max(...scores) + 3;
+  const range = mx - mn || 1;
+  const w = 200, h = 50;
+  const step = (w - 20) / (scores.length - 1);
+  let pts = scores.map((s, i) => {
+    const x = 10 + i * step;
+    const y = h - 8 - ((s - mn) / range) * (h - 16);
+    return `${x},${y}`;
+  }).join(' ');
+  const lastPt = pts.split(' ').pop().split(',');
+  let labels = scores.map((s, i) => {
+    const x = 10 + i * step;
+    return `<text x="${x}" y="${h}" fill="#9A8A70" font-size="7" text-anchor="middle" font-family="Rajdhani">${s}</text>`;
+  }).join('');
+  return `<svg viewBox="0 0 ${w} ${h + 6}" class="w-full h-14">
+    <polyline points="${pts}" fill="none" stroke="${color || '#C9922A'}" stroke-width="2"/>
+    <circle cx="${lastPt[0]}" cy="${lastPt[1]}" r="2.5" fill="${color || '#C9922A'}"/>
+    ${labels}
+  </svg>`;
+}
+
+function getHandicapTarget(hc) {
+  return Math.max(5, Math.min(95, 100 - (hc * 2.5)));
+}
+
+const rosterGrid = document.getElementById('roster-grid-i9j0');
+
+function renderRoster() {
+  rosterGrid.innerHTML = '';
+  MEMBERS.forEach((m, idx) => {
+    const stored = getMemberScores(m.id);
+    const last5 = stored || [...m.last5];
+    const avg = Math.round(last5.reduce((a,b) => a+b, 0) / last5.length);
+    const trendArrow = m.trend === 'improving' ? '↓' : '→';
+    const trendColor = m.trend === 'improving' ? 'text-neon' : 'text-dim';
+
+    const card = document.createElement('div');
+    card.className = 'flip-container cursor-pointer';
+    card.style.height = '420px';
+    card.dataset.player = m.id;
+
+    card.innerHTML = `
+      <div class="flip-inner">
+        <div class="flip-front card-base p-4 flex flex-col relative overflow-hidden">
+          <div class="absolute top-3 right-3 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-neon blink"></span>
+            <span class="font-pixel text-[7px] text-neon">ACTIVE</span>
+          </div>
+          <div class="flex items-center gap-3 mb-3">
+            ${buildSVGAvatar(m)}
+            <div>
+              <div class="font-orbitron text-base font-bold text-txt">${m.name.toUpperCase()}</div>
+              <div class="font-pixel text-[7px] text-gold mt-1">${m.nick}</div>
+            </div>
+          </div>
+          <div class="flex-1 space-y-2">
+            <div>
+              <div class="flex justify-between font-rajdhani text-xs text-dim mb-1"><span>HANDICAP</span><span class="text-neon font-semibold">${m.handicap}</span></div>
+              <div class="w-full h-2 rounded-full" style="background:#3A3020;"><div class="h-2 rounded-full bg-neon progress-fill" style="width:0%;" data-target="${getHandicapTarget(m.handicap)}"></div></div>
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div class="p-1.5 rounded" style="background:var(--bg);"><div class="font-rajdhani text-[10px] text-dim">AVG</div><div class="font-orbitron text-base font-bold text-txt" data-avg="${m.id}">${avg}</div></div>
+              <div class="p-1.5 rounded" style="background:var(--bg);"><div class="font-rajdhani text-[10px] text-dim">WINS</div><div class="font-orbitron text-base font-bold text-gold">🏆 ${m.wins}</div></div>
+              <div class="p-1.5 rounded" style="background:var(--bg);"><div class="font-rajdhani text-[10px] text-dim">ROUNDS</div><div class="font-orbitron text-base font-bold text-txt">${m.rounds}</div></div>
+            </div>
+          </div>
+          <div class="mt-2 flex items-center justify-between">
+            <span class="font-rajdhani text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full border" style="border-color:${m.badgeColor};color:${m.badgeColor};">${m.badge}</span>
+            <span class="font-rajdhani text-[10px] ${trendColor}">${trendArrow}</span>
+          </div>
+        </div>
+        <div class="flip-back card-base p-4 flex flex-col" style="background:var(--card);">
+          <div class="font-orbitron text-xs font-bold text-neon mb-1">PLAYER HISTORY</div>
+          <div class="font-rajdhani text-[10px] text-dim mb-1">LAST 5 ROUNDS</div>
+          <div data-sparkline="${m.id}">${buildSparkline(last5, m.sparkColor)}</div>
+          <div class="grid grid-cols-2 gap-2 mt-1 mb-2">
+            <div><span class="font-pixel text-[6px] text-gold">SIGNATURE</span><div class="font-rajdhani text-xs text-txt mt-0.5">${m.sig}</div></div>
+            <div><span class="font-pixel text-[6px] text-danger">KRYPTONITE</span><div class="font-rajdhani text-xs text-txt mt-0.5">${m.kryp}</div></div>
+          </div>
+          <div class="border-t pt-2 mt-auto" style="border-color:var(--border);">
+            <div class="font-orbitron text-[10px] font-bold text-gold mb-2">LOG A ROUND</div>
+            <div class="space-y-1.5">
+              <select class="score-select" data-field="course-${m.id}">
+                <option value="Pecan Valley Hills">Pecan Valley Hills</option>
+                <option value="Meadowbrook">Meadowbrook</option>
+                <option value="Rockwood">Rockwood</option>
+              </select>
+              <input type="date" class="score-input" data-field="date-${m.id}" />
+              <input type="number" class="score-input" data-field="score-${m.id}" placeholder="Gross Score (55-150)" min="55" max="150" />
+              <button class="post-score-btn" data-post="${m.id}">POST SCORE ✓</button>
+              <div class="font-rajdhani text-[10px] text-dim h-4" data-msg="${m.id}"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    rosterGrid.appendChild(card);
+  });
+
+  // Re-init flip on click
+  document.querySelectorAll('.flip-container').forEach(card => {
+    card.addEventListener('click', function(e) {
+      if (e.target.closest('select, input, button, .post-score-btn')) return;
+      this.classList.toggle('flipped');
+    });
+  });
+
+  // Post score buttons
+  document.querySelectorAll('[data-post]').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const mid = this.dataset.post;
+      const scoreInput = document.querySelector(`[data-field="score-${mid}"]`);
+      const msgEl = document.querySelector(`[data-msg="${mid}"]`);
+      const score = parseInt(scoreInput.value);
+      if (!score || score < 55 || score > 150) {
+        msgEl.textContent = '⚠️ Enter a score between 55-150';
+        msgEl.style.color = '#8B2635';
+        return;
+      }
+      const member = MEMBERS.find(mm => mm.id === mid);
+      const stored = getMemberScores(mid) || [...member.last5];
+      stored.push(score);
+      if (stored.length > 5) stored.shift();
+      persistScores(mid, stored);
+
+      // Update front avg
+      const newAvg = Math.round(stored.reduce((a,b) => a+b, 0) / stored.length);
+      const avgEl = document.querySelector(`[data-avg="${mid}"]`);
+      if (avgEl) avgEl.textContent = newAvg;
+
+      // Update sparkline
+      const sparkEl = document.querySelector(`[data-sparkline="${mid}"]`);
+      if (sparkEl) sparkEl.innerHTML = buildSparkline(stored, member.sparkColor);
+
+      msgEl.textContent = 'Score posted! ✓';
+      msgEl.style.color = '#2D5A27';
+      scoreInput.value = '';
+      setTimeout(() => { msgEl.textContent = ''; }, 3000);
+    });
+  });
+
+  // Progress bar animation
+  const progressObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.progress-fill').forEach(bar => {
+          const target = bar.dataset.target;
+          setTimeout(() => { bar.style.width = target + '%'; }, 300);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.flip-container').forEach(c => progressObserver.observe(c));
+
+  lucide.createIcons();
+}
+
+// ===== LEADERBOARD =====
+const lbBody = document.getElementById('lb-body-m3n4');
+let lbRendered = false;
+
+function renderLeaderboard() {
+  if (lbRendered) return;
+  lbRendered = true;
+  LB_DATA.forEach((row, i) => {
+    const tr = document.createElement('tr');
+    tr.className = 'slide-in border-b';
+    tr.style.cssText = `border-color:var(--border);animation-delay:${i * 0.1}s;${row.gold ? 'background:rgba(232,201,106,0.06);' : ''}`;
+    tr.innerHTML = `
+      <td class="px-3 py-3 font-bold ${row.gold ? 'text-gold' : 'text-txt'}">${row.icon ? row.icon + ' ' : ''}#${row.rank}</td>
+      <td class="px-3 py-3 font-semibold text-txt">${row.player}</td>
+      <td class="px-3 py-3 text-right tabular-nums text-txt">${row.gross}</td>
+      <td class="px-3 py-3 text-right tabular-nums text-neon font-bold">${row.net}</td>
+      <td class="px-3 py-3 text-right tabular-nums ${row.par.startsWith('-') ? 'text-neon' : row.par === 'E' ? 'text-txt' : 'text-danger'}">${row.par}</td>
+      <td class="px-3 py-3 text-right tabular-nums text-gold">${row.skins}</td>
+      <td class="px-3 py-3 text-right tabular-nums text-neon font-bold">${row.points}</td>
+      <td class="px-3 py-3 text-center font-pixel text-[8px] ${row.gold ? 'text-gold' : 'text-dim'}">${row.status}</td>
+    `;
+    lbBody.appendChild(tr);
+  });
+}
+
+const lbSection = document.getElementById('leaderboard');
+const lbObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) renderLeaderboard();
+}, { threshold: 0.1 });
+lbObserver.observe(lbSection);
+
+// ===== SEASON STANDINGS =====
+const standingsBody = document.getElementById('season-standings-body');
+SEASON_STANDINGS.forEach(s => {
+  const tr = document.createElement('tr');
+  tr.className = 'border-b';
+  tr.style.cssText = `border-color:var(--border);${s.gold ? 'background:rgba(232,201,106,0.05);' : ''}`;
+  tr.innerHTML = `
+    <td class="px-3 py-3 ${s.gold ? 'text-gold' : 'text-txt'} font-bold">#${s.rank}</td>
+    <td class="px-3 py-3 text-txt font-semibold">${s.name}</td>
+    <td class="px-3 py-3 text-right text-neon font-bold tabular-nums">${s.pts}</td>
+    <td class="px-3 py-3 text-right text-txt tabular-nums">${s.rounds}</td>
+    <td class="px-3 py-3 text-right text-neon tabular-nums">${s.best}</td>
+    <td class="px-3 py-3 text-center ${s.streak.includes('🔥') ? '' : s.streak.includes('❄️') ? 'text-danger' : 'text-dim'}">${s.streak}</td>
+  `;
+  standingsBody.appendChild(tr);
+});
+
+// ===== RSVP TOGGLES =====
+const rsvpContainer = document.getElementById('rsvp-mission1');
+MEMBERS.forEach(m => {
+  const span = document.createElement('span');
+  span.className = 'text-gold cursor-pointer hover:text-neon transition-colors';
+  span.textContent = m.name.split(' ')[0] + ' ❓';
+  span.dataset.rsvp = m.id;
+  span.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (this.dataset.confirmed === 'true') {
+      this.dataset.confirmed = 'false';
+      this.textContent = m.name.split(' ')[0] + ' ❓';
+      this.className = 'text-gold cursor-pointer hover:text-neon transition-colors';
+    } else {
+      this.dataset.confirmed = 'true';
+      this.textContent = m.name.split(' ')[0] + ' ✅';
+      this.className = 'text-neon cursor-pointer hover:text-gold transition-colors';
+    }
+  });
+  rsvpContainer.appendChild(span);
+});
+
+// ===== CONFIRM ATTENDANCE BUTTONS =====
+document.querySelectorAll('.confirm-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const confirmed = this.dataset.confirmed === 'true';
+    if (confirmed) {
+      this.dataset.confirmed = 'false';
+      this.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4"></i> CONFIRM ATTENDANCE';
+      this.classList.remove('bg-neon', 'text-bg');
+      this.classList.add('text-neon');
+      this.style.borderColor = '';
+    } else {
+      this.dataset.confirmed = 'true';
+      this.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> CONFIRMED ✅';
+      this.classList.add('bg-neon', 'text-bg');
+      this.classList.remove('text-neon', 'text-muted');
+      this.style.borderColor = 'var(--neon)';
+    }
+    lucide.createIcons();
+  });
+});
+
+// ===== HANDICAP TRACKER =====
+const hcGrid = document.getElementById('handicap-tracker-grid');
+MEMBERS.forEach(m => {
+  const data = HANDICAP_DATA[m.id];
+  const current = data[data.length - 1];
+  const first = data[0];
+  const improving = current < first;
+  const stable = current === first;
+  const trendIcon = improving ? '↓' : stable ? '→' : '↑';
+  const trendClass = improving ? 'text-neon' : stable ? 'text-dim' : 'text-danger';
+
+  const mn = Math.min(...data) - 1;
+  const mx = Math.max(...data) + 1;
+  const range = mx - mn || 1;
+  const w = 120, h = 24;
+  const step = (w - 10) / (data.length - 1);
+  let pts = data.map((v, i) => {
+    const x = 5 + i * step;
+    const y = h - 2 - ((v - mn) / range) * (h - 4);
+    return `${x},${y}`;
+  }).join(' ');
+  const lastPt = pts.split(' ').pop().split(',');
+
+  const div = document.createElement('div');
+  div.className = 'flex items-center gap-2';
+  div.innerHTML = `
+    <div class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${m.dotColor};"></div>
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center justify-between mb-0.5">
+        <span class="font-rajdhani text-xs font-semibold text-txt truncate">${m.name.split(' ')[0]}</span>
+        <div class="flex items-center gap-1">
+          <span class="font-orbitron text-sm font-bold text-neon">${current}</span>
+          <span class="font-rajdhani text-xs ${trendClass}">${trendIcon}</span>
+        </div>
+      </div>
+      <svg viewBox="0 0 ${w} ${h}" class="w-full h-5">
+        <polyline points="${pts}" fill="none" stroke="${m.sparkColor}" stroke-width="1.5"/>
+        <circle cx="${lastPt[0]}" cy="${lastPt[1]}" r="2" fill="${m.sparkColor}"/>
+      </svg>
+    </div>
+  `;
+  hcGrid.appendChild(div);
+});
+
+// ===== GALLERY LIGHTBOX =====
+const galleryData = [
+  { emoji:'⛳', title:'OPENING DAY', sub:'MAY 25, 2026', desc:'The day the Fore! Fathers were forged. First tees, first bets, first trash talk. Pecan Valley never saw us coming.' },
+  { emoji:'🏌️', title:"BRADY'S 310YD BOMB", sub:'ROUND 3', desc:'The Closer unleashed a monster drive on hole 7. The ball landed, rolled, and kept going. 310 yards. Witnesses confirmed.' },
+  { emoji:'🛞', title:'SAM IN THE SAND... AGAIN', sub:'ROUND 5', desc:'Third bunker visit in 6 holes. The Doc earned his surgical chip the hard way. Spoiler: he got up and down.' },
+  { emoji:'🏆', title:'SEASON 1 TROPHY REVEAL', sub:'COMING SOON', desc:'The custom trophy is in production. Rumor has it, it features a golden putter and a cold beer. Stay tuned.' },
+  { emoji:'🌅', title:'DAWN PATROL — 6:30AM CREW', sub:'EVERY SUNDAY', desc:'When the dew is still on the green and the coffee is still hot. Early mornings, no excuses, no complaints (mostly).' },
+  { emoji:'📸', title:'YOUR PHOTO HERE', sub:'SEASON 2', desc:'Photo upload portal coming soon. Until then, take screenshots and send to the group chat.' },
+];
+
+const lightbox = document.getElementById('lightbox-q7r8');
+const lightboxContent = document.getElementById('lightbox-content-u1v2');
+const lightboxClose = document.getElementById('lightbox-close-s9t0');
+
+document.querySelectorAll('.gallery-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const idx = parseInt(card.dataset.idx);
+    const data = galleryData[idx];
+    lightboxContent.innerHTML = `
+      <div class="text-center">
+        <div class="text-5xl mb-4">${data.emoji}</div>
+        <div class="font-orbitron text-lg font-bold text-neon mb-1">${data.title}</div>
+        <div class="font-pixel text-[8px] text-dim mb-4">${data.sub}</div>
+        <p class="font-rajdhani text-sm text-txt leading-relaxed">${data.desc}</p>
+      </div>
+    `;
+    lightbox.classList.add('open');
+  });
+});
+
+lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) lightbox.classList.remove('open');
+});
+
+// ===== INIT =====
+async function init() {
+  await loadAllScoresFromSDK();
+  renderRoster();
+}
+init();
+</script>
+</body>
+</html>
